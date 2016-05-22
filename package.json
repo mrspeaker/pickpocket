@@ -1,0 +1,16 @@
+{
+  "name": "pickpocket",
+  "main": "./lib/pickpocket",
+  "author": "mrspeaker@gmail.com",
+  "version": "0.0.1",
+  "description": "Asset copy/paster for prototyping",
+  "keywords": [],
+  "activationCommands": {
+    "atom-workspace": "pickpocket:toggle"
+  },
+  "repository": "https://github.com/mrspeaker/pickpocket",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "menu": [{
+    "label": "Packages",
+    "submenu": [{
+      "label": "Pickpocket",
+      "submenu": [{
+        "label": "selector",
+        "command": "pickpocket:toggle"
+      }]
+    }]
+  }]
+}
