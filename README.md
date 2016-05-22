@@ -41,9 +41,14 @@ next todos:
   * [done] else path-selector
     * [done] if previous-chosen-in-session, pre-populate dir
   * Path should indicate error if not real path (dirs don't exist)
+  * if img doesn't exist, option to choose image?
+    * or create blank
+    * with X, Y size
+  * if you select path in tabs, then trigger - shows preview of img
   * Option to create folders if path doesn't exist
+  * [done] option to open in pixelmator/aseprite
 
-### bigger picture
+### bigger picture / later
   * asset generation
     * select dimensions
     * generate stylized circle/rectangle etc
@@ -56,9 +61,7 @@ next todos:
       * like Ableton - set of directories to search
     * synced to github
     * plugged in to opengameart etc
-
-### Maybe out-of-scope
-  * if you select path, then trigger - shows preview of img
-    * option to open in pixelmator/aseprite
-    * if img doesn't exist, option to choose image? or create blank
-      * with X, Y size
+  * SIP-style copy options. [copy as]:
+    * plain string: `"res/player.png"`
+    * Phaser.io image: `load.image( "player", "res/player.png" );`
+    * etc... maybe a template system `${path}/${name} - ${w} ${h}`
