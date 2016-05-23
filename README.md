@@ -11,17 +11,18 @@ Dump a bunch of images in `"/Users/mrspeaker/assets/"` (will be setting soon, pr
 ### Pickpocket
 
 next todos:
-  * show selected img
+  * preview selected img
   * esc to close
   * enter to select
   * move asset root to settings
   * move sprite editor to settings
   * show img size overlay on hover
   * tree folder selection
-  * [done] better name for project.
   * Disallow typing-in-current-tab when in modal
   * Arrow navigation
+  * handle missing path /'s anywhere
 
+  * [done] better name for project.
   * [done] on run -> copy any-old image from somewhere to current directory.
   * [done] click selects image, and populates texteditor path
     * [done] when come back, image name is gone, only path remains
