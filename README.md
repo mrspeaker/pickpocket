@@ -18,7 +18,7 @@ next todos:
   * move sprite editor to settings
   * show img size overlay on hover
   * tree folder selection
-  * better name for project.
+  * [done] better name for project.
   * Disallow typing-in-current-tab when in modal
   * Arrow navigation
 
@@ -65,3 +65,10 @@ next todos:
     * plain string: `"res/player.png"`
     * Phaser.io image: `load.image( "player", "res/player.png" );`
     * etc... maybe a template system `${path}/${name} - ${w} ${h}`
+  * on-import modifications
+    * Resize (up or down)
+    * flip x, y, x + y
+    * Create sprite sheet from single cell (flipped version)
+  * preview img on select
+    * x1, x2, x4 picture-in-picture
+    * change background-color
