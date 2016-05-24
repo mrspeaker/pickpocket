@@ -1,16 +1,16 @@
 # Pickpocket
 
-An atom Package for grabbing existing art assets from a collection, and copying them into the current project. A file manager for game prototyping.
+An Atom package for grabbing existing art assets from a collection, and copying them into the current project. A file manager for game prototyping.
 
 ![Pickpocket](https://cloud.githubusercontent.com/assets/129330/15506386/6c08650a-2195-11e6-9b22-d25fea6dc3a5.png)
 
-To use it, **dump a bunch of images in a directory** (it's `"/tmp/"` by default - change this location in settings).
+To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in `settings`).
 
 Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
 
-If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in settings).
+If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
 
-When you import an image, the local path is also copied to the clipboard.
+When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ### Pickpocket
 
