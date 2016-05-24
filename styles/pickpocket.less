@@ -4,8 +4,10 @@
 
   button {
 
-    border: 1px solid #888;
+    border: 0;
     background-color: #333;
+    padding: 5px 13px;
+    border-radius: 3px;
 
   }
 
@@ -27,34 +29,50 @@
       justify-content: center;
       align-items: center;
 
+      background-color: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
 
       float: left;
       position: relative;
 
-      max-width: 120px;
-      min-width: 120px;
-      min-height: 120px;
-      max-height: 120px;
+      max-width: 100px;
+      min-width: 100px;
+      min-height: 100px;
+      max-height: 100px;
 
-      border: 1px dotted #444;
       padding: 3px;
       margin: 3px;
+
+      img {
+
+        max-width: 94px;
+
+      }
 
       .meta {
 
         position: absolute;
         bottom: 0;
         right: 4px;
-        font-size: 8pt;
+        font-size: 6pt;
         color: #555;
 
       }
 
-      img {
-
-        max-width: 114px;
-
+      .metaName {
+        position: absolute;
+        bottom: 0;
+        left: 4px;
+        font-size: 6pt;
+        color: #555;
       }
+
+    }
+
+    .selected {
+
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid #000;
 
     }
 

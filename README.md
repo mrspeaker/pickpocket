@@ -14,6 +14,9 @@ next todos:
   * preview selected img
   * esc to close
   * enter to select
+  * no user-select on dialog
+  * selected thumbnail state
+    * toggle selected
   * move asset root to settings
   * move sprite editor to settings
   * show img size overlay on hover
@@ -21,6 +24,9 @@ next todos:
   * Disallow typing-in-current-tab when in modal
   * Arrow navigation
   * handle missing path /'s anywhere
+  * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
+  * ask to overwrite if img exists
+    * rename-if-overwriting option
 
   * [done] better name for project.
   * [done] on run -> copy any-old image from somewhere to current directory.
