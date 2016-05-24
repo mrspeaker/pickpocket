@@ -2,7 +2,7 @@
 
 Atom Package that copies existing art assets into current project for game prototyping. A filemanager for prototyping.
 
-Dump a bunch of images in `"/Users/mrspeaker/assets/"` (will be setting soon, promise).
+Dump a bunch of images in `"/tmp/"` (Change this in settings to somewhere you have a bunch of images in a directory!).
 
 `ctrl-alt-p` (`pickpocket:toggle`) to launch. Type directory to copy img to, select image (and rename it if you want) then hit `choose`. THe image is copy & renamed to the target dir.
 
@@ -24,11 +24,15 @@ next todos:
   * Disallow typing-in-current-tab when in modal
   * Arrow navigation
   * handle missing path /'s anywhere
+    * settings
+    * url bar
+    * onClose
   * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * note in status bar after copied "blah.png copied to /res/images"
   * proper error handling for file operations
+  * allow ~ in path
 
   * [done] better name for project.
   * [done] on run -> copy any-old image from somewhere to current directory.
