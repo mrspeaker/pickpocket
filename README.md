@@ -97,3 +97,8 @@ next todos:
     * search (by what? metadata?)
       * categories/tags
       * similar images
+  * library asset management
+    * rename images
+    * add meta data?
+      * isTilemap (tileW, tileH), licence, tags, crop params
+    * edit image: scale, hue, crop etc
