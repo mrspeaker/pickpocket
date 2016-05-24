@@ -29,14 +29,15 @@ next todos:
     * settings
     * url bar
     * onClose
+  * use atom package buttons
   * handle no root project
   * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
   * ask to overwrite if img exists
     * rename-if-overwriting option
-  * note in status bar after copied "blah.png copied to /res/images"
   * proper error handling for file operations
   * allow ~ in path
 
+  * [done] note in status bar after copied "blah.png copied to /res/images"
   * [done] selected thumbnail state
   * [done] move asset root to settings
   * [done] move sprite editor to settings
