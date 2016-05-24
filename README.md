@@ -28,6 +28,7 @@ next todos:
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * note in status bar after copied "blah.png copied to /res/images"
+  * proper error handling for file operations
 
   * [done] better name for project.
   * [done] on run -> copy any-old image from somewhere to current directory.
