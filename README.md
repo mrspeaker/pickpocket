@@ -15,7 +15,7 @@ next todos:
   * esc to close
   * enter to select
   * no user-select on dialog
-  * selected thumbnail state
+  * [done] selected thumbnail state
     * toggle selected
   * move asset root to settings
   * move sprite editor to settings
@@ -27,6 +27,7 @@ next todos:
   * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
   * ask to overwrite if img exists
     * rename-if-overwriting option
+  * note in status bar after copied "blah.png copied to /res/images"
 
   * [done] better name for project.
   * [done] on run -> copy any-old image from somewhere to current directory.
@@ -51,7 +52,6 @@ next todos:
   * if img doesn't exist, option to choose image?
     * or create blank
     * with X, Y size
-  * if you select path in tabs, then trigger - shows preview of img
   * Option to create folders if path doesn't exist
   * [done] option to open in pixelmator/aseprite
 
@@ -79,3 +79,10 @@ next todos:
   * preview img on select
     * x1, x2, x4 picture-in-picture
     * change background-color
+  * preview from string
+    * if you select path in current tabs, then open PP - shows preview of img
+    * option to copy, copy-with-resize, dsp.
+  * "discovery" tools
+    * favourites
+    * search (by what? metadata?)
+      * similar images
