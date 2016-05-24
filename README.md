@@ -16,14 +16,12 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 next todos:
   * preview selected img
-  * esc to close
   * enter to select
   * no user-select on dialog
   * toggle off selected thumbnail
   * show img size
   * tree folder selection
     * tree navigation
-  * defocus current tab when in modal
   * Arrow navigation of thumbnails
   * handle missing path /'s anywhere
     * settings
@@ -37,6 +35,8 @@ next todos:
   * proper error handling for file operations
   * allow ~ in path
 
+  * [done] defocus current tab when in modal
+  * [done] esc to close
   * [done] note in status bar after copied "blah.png copied to /res/images"
   * [done] selected thumbnail state
   * [done] move asset root to settings
@@ -103,3 +103,4 @@ next todos:
     * add meta data?
       * isTilemap (tileW, tileH), licence, tags, crop params
     * edit image: scale, hue, crop etc
+  * Convert to React
