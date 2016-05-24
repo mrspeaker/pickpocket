@@ -1,12 +1,12 @@
 # Pickpocket
 
-Copies generated or existing art assets into current project for game prototyping. A filemanager for prototyping.
+Atom Package that copies existing art assets into current project for game prototyping. A filemanager for prototyping.
 
 Dump a bunch of images in `"/Users/mrspeaker/assets/"` (will be setting soon, promise).
 
 `ctrl-alt-p` (`pickpocket:toggle`) to launch. Type directory to copy img to, select image (and rename it if you want) then hit `choose`. THe image is copy & renamed to the target dir.
 
-![Pickpocket](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![Pickpocket](https://cloud.githubusercontent.com/assets/129330/15506386/6c08650a-2195-11e6-9b22-d25fea6dc3a5.png)
 
 ### Pickpocket
 
