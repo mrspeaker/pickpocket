@@ -1,12 +1,16 @@
 # Pickpocket
 
-Atom Package that copies existing art assets into current project for game prototyping. A filemanager for prototyping.
-
-Dump a bunch of images in `"/tmp/"` (Change this in settings to somewhere you have a bunch of images in a directory!).
-
-`ctrl-alt-p` (`pickpocket:toggle`) to launch. Type directory to copy img to, select image (and rename it if you want) then hit `choose`. THe image is copy & renamed to the target dir.
+An atom Package for grabbing existing art assets from a collection, and copying them into the current project. A file manager for game prototyping.
 
 ![Pickpocket](https://cloud.githubusercontent.com/assets/129330/15506386/6c08650a-2195-11e6-9b22-d25fea6dc3a5.png)
+
+To use it, **dump a bunch of images in a directory** (it's `"/tmp/"` by default - change this location in settings).
+
+Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
+
+If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in settings).
+
+When you import an image, the local path is also copied to the clipboard.
 
 ### Pickpocket
 
@@ -39,15 +43,9 @@ next todos:
   * [done] click selects image, and populates texteditor path
     * [done] when come back, image name is gone, only path remains
   * [done] rename-on-copy    /res/images/[selectedname.png] <- can easily rename
-
-### choose-existing workflow
-  * choose where to save?
   * [done] reads directory/s of images
-    * categories/tags
-  * [done] lets you choose one
-  * lets you choose multiple
-  * lets you choose a tile from a tilemap
-  * [done] copies them to the save location
+    * [done] lets you choose one
+    * [done] copies them to the save location
 
 ### choosing where to save
   * [done] if string selected, use that as dir (and name?)
@@ -81,13 +79,16 @@ next todos:
     * Resize (up or down)
     * flip x, y, x + y
     * Create sprite sheet from single cell (flipped version)
+    * Choose a tile from a tilemap
   * preview img on select
     * x1, x2, x4 picture-in-picture
     * change background-color
   * preview from string
-    * if you select path in current tabs, then open PP - shows preview of img
-    * option to copy, copy-with-resize, dsp.
+    * if you select path in current tabs, then open PP
+  * option to copy, copy-with-resize, copy-with-dsp.
+  * Select/import multiple
   * "discovery" tools
     * favourites
     * search (by what? metadata?)
+      * categories/tags
       * similar images
