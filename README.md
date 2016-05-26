@@ -18,23 +18,23 @@ next todos:
   * preview selected img
   * enter to select
   * no user-select on dialog
-  * toggle off selected thumbnail
   * show img size
   * tree folder selection
     * tree navigation
-  * Arrow navigation of thumbnails
   * handle missing path /'s anywhere
     * settings
     * url bar
     * onClose
-  * use atom package buttons
-  * handle no root project
+  * make modal wider
+  * use atom buttons
+  * handle when no root project
   * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * proper error handling for file operations
-  * allow ~ in path
+  * allow ~ for home path
 
+  * [done] toggle off selected thumbnail
   * [done] defocus current tab when in modal
   * [done] esc to close
   * [done] note in status bar after copied "blah.png copied to /res/images"
@@ -51,7 +51,7 @@ next todos:
     * [done] copies them to the save location
 
 ### choosing where to save
-  * Path should indicate error if not real path (dirs don't exist)
+  * Path should indicate warning as typing if not real path (dirs don't exist)
   * if img doesn't exist, option to choose image?
     * or create blank
     * with X, Y size
@@ -62,15 +62,17 @@ next todos:
   * [done] else path-selector
     * [done] if previous-chosen-in-session, pre-populate dir
 
-
 ### bigger picture / later
   * asset generation
     * select dimensions
-    * generate stylized circle/rectangle etc
+    * generate stylized circle / rectangle etc
     * tilemaps
-  * multi-user, central store
+  * multi-user
+    * central store
+    * purchase-able
+    * sell-able
   * link via CDN instead of copying
-  * auto + manual tint/dsp to match game
+  * auto + manual tint / dsp to match game
   * create server/db? grab imgs from url?
     * should be able to do both: local directories+server
       * like Ableton - set of directories to search
@@ -103,4 +105,5 @@ next todos:
     * add meta data?
       * isTilemap (tileW, tileH), licence, tags, crop params
     * edit image: scale, hue, crop etc
-  * Convert to React
+    * read xml/json sprite atlas info
+  * Convert UI to React
