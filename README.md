@@ -33,6 +33,7 @@ next todos:
     * rename-if-overwriting option
   * proper error handling for file operations
   * allow ~ for home path
+  * option to copy file to clipboard on select
 
   * [done] toggle off selected thumbnail
   * [done] defocus current tab when in modal
@@ -63,6 +64,7 @@ next todos:
     * [done] if previous-chosen-in-session, pre-populate dir
 
 ### bigger picture / later
+  * infinte scroll, lazy load
   * asset generation
     * select dimensions
     * generate stylized circle / rectangle etc
@@ -103,6 +105,7 @@ next todos:
   * library asset management
     * rename images
     * add meta data?
+      * needs a client-side db?
       * isTilemap (tileW, tileH), licence, tags, crop params
     * edit image: scale, hue, crop etc
     * read xml/json sprite atlas info
