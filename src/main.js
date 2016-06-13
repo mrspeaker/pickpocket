@@ -5,14 +5,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
+import getInitialState from "./stores/getInitialState";
 
 import { CompositeDisposable } from "atom";
 import PickPocket from "./PickPocket";
 import fetchImagesFromFolder from "./fetchImagesFromFolder";
 
-const store = createStore((state = 0, action) => {
-  return state + 1;
-});
+const store = createStore(getInitialState);
 
 export default {
   root: null,
@@ -47,7 +46,6 @@ export default {
   },
 
   forceUpdate (assets) {
-
     const def = {
       dirs: [],
       imgs: []

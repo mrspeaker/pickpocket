@@ -1,7 +1,5 @@
 "use babel";
 
-/* global atom */
-
 import React from "react";
 import Assets from "./Assets";
 import MiniEditor from "./ui/MiniEditor";
