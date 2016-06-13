@@ -1,6 +1,6 @@
 {
   "name": "pickpocket",
-  "main": "./lib/pickpocket",
+  "main": "./src/main",
   "author": "mrspeaker@gmail.com",
   "version": "0.0.1",
   "description": "Asset copy/paster for prototyping",
@@ -12,5 +12,10 @@
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "react": "15.1.0",
+    "react-dom": "15.1.0",
+    "redux": "3.5.2"
   }
 }

@@ -4,7 +4,7 @@
     "submenu": [{
       "label": "Pickpocket",
       "submenu": [{
-        "label": "selector",
+        "label": "picker",
         "command": "pickpocket:toggle"
       }]
     }]
