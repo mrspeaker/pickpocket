@@ -1,5 +1,5 @@
 "use babel";
 
-export default (store = { images: [] }, action) => {
+export default (store = { images: [], selected: [] }, action) => {
   return store;
 };

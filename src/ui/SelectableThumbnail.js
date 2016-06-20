@@ -9,9 +9,9 @@ const {
 class SelectableThumbnail extends Component {
 
   render () {
-    const { src, selected } = this.props;
+    const { src, selected, onToggle } = this.props;
 
-    return <div className={`thumb ${selected ? "selected" :  ""}`}>
+    return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
       <img src={src} />
     </div>;
 

@@ -52,7 +52,11 @@ export default {
     };
 
     ReactDOM.render(
-      <PickPocket store={store} assets={assets || def} />,
+      <PickPocket
+        dir={this.getTreePath()}
+        store={store}
+        assets={assets || def}
+        onClose={this.toggle.bind(this)} />,
       this.root
     );
   },
@@ -69,6 +73,21 @@ export default {
     fetchImagesFromFolder(this.getAssetRoot())
       .then(res => this.forceUpdate(res));
 
+  },
+
+  getTreePath () {
+    // Grab current path from tree-view
+    const tree = atom.packages.getActivePackage("tree-view");
+    if ( !tree ) {
+      return "";
+    }
+    const { treeView } = tree.mainModule;
+    const { selectedPath } = treeView;
+    const isFile = !!( treeView.entryForPath( selectedPath ).file );
+    const folderPath = !isFile ? selectedPath : selectedPath.split( "/").slice( 0, -1 ).join( "/" );
+    const [ , relativePath ] = atom.project.relativizePath( folderPath );
+    const trailing = relativePath ? "/" : "";
+    return `/${ relativePath }${ trailing }`;
   },
 
   deactivate () {

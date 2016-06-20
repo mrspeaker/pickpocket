@@ -11,17 +11,20 @@ const {
 class Assets extends Component {
 
   static propTypes = {
-    assets: PropTypes.array.isRequired
+    assets: PropTypes.array.isRequired,
+    onToggle: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired
   };
 
   render () {
-    const { assets } = this.props;
+    const { assets, onToggle, selected } = this.props;
 
     return <div className="thumbs">{
-      assets.map(({fullPath}) =>
+      assets.map(asset =>
         <SelectableThumbnail
-          src={fullPath}
-          selected={false}
+          onToggle={() => onToggle(asset)}
+          src={asset.fullPath}
+          selected={selected.indexOf(asset) !== -1}
         />
       )
     }</div>;
