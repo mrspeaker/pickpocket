@@ -53,7 +53,7 @@ export default {
 
     ReactDOM.render(
       <PickPocket
-        dir={this.getTreePath()}
+        treePath={this.getTreePath()}
         store={store}
         assets={assets || def}
         onClose={this.toggle.bind(this)} />,

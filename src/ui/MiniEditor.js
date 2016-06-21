@@ -20,7 +20,7 @@ class MiniEditor extends Component {
   }
 
   componentWillReceiveProps ({selected, text = ""}) {
-    this.editor.setText(selected ? selected.fullPath : text);
+    this.editor.setText(text + ":" + (selected ? selected.fullPath : ""));
   }
 
   shouldComponentUpdate () {

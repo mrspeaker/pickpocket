@@ -36,7 +36,9 @@ class PickPocket extends Component {
     }));
   };
 
-  onImport = asset => {
+  onImport = () => {
+    console.log(this.state.selected[0]);
+    this.props.onClose();
     // Copy to current proj dir.
     //onChoosed ( localPath, assetName, doOpen ) {
 /*    const projectRoot = atom.project.getDirectories()[ 0 ].path;
@@ -53,17 +55,17 @@ class PickPocket extends Component {
   }
 
   render () {
-    const { assets, onClose, onImport, dir } = this.props;
+    const { assets, onClose, onImport, treePath } = this.props;
     const { selected } = this.state;
 
     return <div className="pickpocket">
       <div id="tools">
         <button id="close" onClick={onClose}>close</button>
-        <button id="choose" onClick={onImport}>import</button>
+        <button id="choose" onClick={this.onImport}>import</button>
         <input type="checkbox" id="doOpen" />
         <label htmlFor="doOpen">Open in editor</label>
       </div>
-      <MiniEditor text={dir} selected={selected.length ? selected[0] : null} />
+      <MiniEditor text={treePath} selected={selected.length ? selected[0] : null} />
       <Assets
         assets={assets.imgs}
         selected={selected}
