@@ -6,18 +6,16 @@ An Atom package for grabbing existing art assets from a collection, and copying 
 
 To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in `settings`).
 
-Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
+Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir. **BROKEN, while I React-ify things! Just copies to current tree directory, as whatever the source name is. Doesn't open in editor.**
 
 If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
 
 When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
-### Pickpocket
+### Pickpocket TODOs
 
-next todos:
   * preview selected img
   * enter to select
-  * no user-select on dialog
   * show img size
   * tree folder selection
     * tree navigation
@@ -35,35 +33,16 @@ next todos:
   * allow ~ for home path
   * option to copy file to clipboard on select
 
-  * [done] toggle off selected thumbnail
-  * [done] defocus current tab when in modal
-  * [done] esc to close
-  * [done] note in status bar after copied "blah.png copied to /res/images"
-  * [done] selected thumbnail state
-  * [done] move asset root to settings
-  * [done] move sprite editor to settings
-  * [done] better name for project.
-  * [done] on run -> copy any-old image from somewhere to current directory.
-  * [done] click selects image, and populates texteditor path
-    * [done] when come back, image name is gone, only path remains
-  * [done] rename-on-copy /res/images/[selectedname.png] <- can easily rename
-  * [done] reads directory/s of images
-    * [done] lets you choose one
-    * [done] copies them to the save location
-
 ### choosing where to save
+
   * Path should indicate warning as typing if not real path (dirs don't exist)
   * if img doesn't exist, option to choose image?
     * or create blank
     * with X, Y size
   * Option to create folders if path doesn't exist
 
-  * [done] option to open in pixelmator/aseprite
-  * [done] if string selected, use that as dir (and name?)
-  * [done] else path-selector
-    * [done] if previous-chosen-in-session, pre-populate dir
-
 ### bigger picture / later
+
   * infinte scroll, lazy load
   * asset generation
     * select dimensions
@@ -109,4 +88,3 @@ next todos:
       * isTilemap (tileW, tileH), licence, tags, crop params
     * edit image: scale, hue, crop etc
     * read xml/json sprite atlas info
-  * [done] Convert UI to React
