@@ -109,4 +109,4 @@ next todos:
       * isTilemap (tileW, tileH), licence, tags, crop params
     * edit image: scale, hue, crop etc
     * read xml/json sprite atlas info
-  * Convert UI to React
+  * [done] Convert UI to React

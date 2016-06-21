@@ -29,7 +29,6 @@ class PickPocket extends Component {
   isSelected = asset => this.state.selected.indexOf(asset) !== -1;
 
   updatePath = path => {
-    console.log("pathz")
     if (path !== this.state.path) {
       this.setState({
         path
@@ -39,12 +38,12 @@ class PickPocket extends Component {
 
   onToggle = asset => {
     if (this.isSelected(asset)) {
-      this.setState(({selected}) => ({
+      this.setState(() => ({
         selected: [] // selected.filter(a => a!== asset)
       }));
       return;
     }
-    this.setState(({selected}) => ({
+    this.setState(() => ({
       selected: [asset]// [...selected, asset]
     }));
   };
@@ -56,7 +55,7 @@ class PickPocket extends Component {
   }
 
   render () {
-    const { assets, onClose, onImport, treePath } = this.props;
+    const { assets, onClose, treePath } = this.props;
     const { selected } = this.state;
 
     return <div className="pickpocket">
