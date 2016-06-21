@@ -4,6 +4,10 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import fs from "fs";
+import proc from "child_process";
+const { exec } = proc;
+
 import { createStore } from "redux";
 import getInitialState from "./stores/getInitialState";
 
@@ -56,9 +60,28 @@ export default {
         treePath={this.getTreePath()}
         store={store}
         assets={assets || def}
-        onClose={this.toggle.bind(this)} />,
+        onClose={this.toggle.bind(this)}
+        onImport={this.onImport.bind(this)}
+      />,
       this.root
     );
+  },
+
+  onImport (asset, path, doOpen = false) {
+
+    const projectRoot = atom.project.getDirectories()[ 0 ].path;
+    const localPath = this.getTreePath();
+    const localFullPath = `${ projectRoot }${ localPath }${asset.name}`;
+
+    console.log("import file", asset, path, localFullPath);
+
+    // TODO: use fs-extras copy, and error check
+    fs.writeFileSync( localFullPath, fs.readFileSync( asset.fullPath ) );
+    atom.clipboard.write( `"${ localPath }"` );
+    atom.notifications.addSuccess(`Copied ${ asset.name } to ${ localPath }`);
+    doOpen && this.openEditor( localFullPath );
+
+    this.toggle();
   },
 
   toggle () {
@@ -72,7 +95,6 @@ export default {
     this.forceUpdate();
     fetchImagesFromFolder(this.getAssetRoot())
       .then(res => this.forceUpdate(res));
-
   },
 
   getTreePath () {
@@ -88,6 +110,15 @@ export default {
     const [ , relativePath ] = atom.project.relativizePath( folderPath );
     const trailing = relativePath ? "/" : "";
     return `/${ relativePath }${ trailing }`;
+  },
+
+  openEditor ( fullPath ) {
+
+    const ed = atom.config.get( "pickpocket.imageEditorAppName" );
+    if (ed) {
+      exec(`open -a ${ ed } ${ fullPath }`);
+    }
+
   },
 
   deactivate () {

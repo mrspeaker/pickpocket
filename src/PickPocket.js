@@ -12,22 +12,35 @@ const {
 class PickPocket extends Component {
 
   static propTypes = {
-    assets: PropTypes.array.isRequired
+    assets: PropTypes.array.isRequired,
+    onImport: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+    treePath: PropTypes.string
   };
 
   constructor () {
     super();
     this.state = {
       selected: [],
+      path: ""
     };
   }
 
   isSelected = asset => this.state.selected.indexOf(asset) !== -1;
 
+  updatePath = path => {
+    console.log("pathz")
+    if (path !== this.state.path) {
+      this.setState({
+        path
+      });
+    }
+  }
+
   onToggle = asset => {
     if (this.isSelected(asset)) {
       this.setState(({selected}) => ({
-        selected: []// selected.filter(a => a!== asset)
+        selected: [] // selected.filter(a => a!== asset)
       }));
       return;
     }
@@ -37,21 +50,9 @@ class PickPocket extends Component {
   };
 
   onImport = () => {
-    console.log(this.state.selected[0]);
-    this.props.onClose();
-    // Copy to current proj dir.
-    //onChoosed ( localPath, assetName, doOpen ) {
-/*    const projectRoot = atom.project.getDirectories()[ 0 ].path;
-    const assetRoot = this.getAssetRoot();
-    const assetFullPath = assetRoot + assetName;
-    const localFullPath = `${ projectRoot }/${ localPath }`;
-
-    // TODO: use fs-extras copy, and error check
-    fs.writeFileSync( localFullPath, fs.readFileSync( assetFullPath ) );
-
-    atom.clipboard.write( `"${ localPath }"` );
-    atom.notifications.addSuccess(`Copied ${ assetName } to ${ localPath }`);
-    doOpen && this.openEditor( localFullPath );*/
+    this.props.onImport(
+      this.state.selected[0],
+      this.state.path);
   }
 
   render () {
@@ -65,7 +66,10 @@ class PickPocket extends Component {
         <input type="checkbox" id="doOpen" />
         <label htmlFor="doOpen">Open in editor</label>
       </div>
-      <MiniEditor text={treePath} selected={selected.length ? selected[0] : null} />
+      <MiniEditor
+        text={treePath}
+        selected={selected.length ? selected[0] : null}
+        onChange={this.updatePath} />
       <Assets
         assets={assets.imgs}
         selected={selected}

@@ -11,6 +11,7 @@ class MiniEditor extends Component {
 
   componentDidMount () {
     const editor = this.editor = atom.workspace.buildTextEditor({ mini: true });
+    editor.onDidStopChanging(() => this.props.onChange(editor.getText()));
     this.view = atom.views.getView( editor );
     this.refs.ed.appendChild(this.view);
   }
