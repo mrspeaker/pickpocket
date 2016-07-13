@@ -24,9 +24,12 @@ class PickPocket extends Component {
     this.state = {
       selected: [],
       fileName: "",
-      path: ""
+      path: "",
+      doOpen: false
     };
   }
+
+  toggleDoOpen = () => this.setState(({doOpen}) => ({doOpen:!doOpen}));
 
   isSelected = asset => this.state.selected.indexOf(asset) !== -1;
 
@@ -53,30 +56,29 @@ class PickPocket extends Component {
   };
 
   onImport = () => {
-    const {selected, path, fileName} = this.state;
+    const {selected, path, fileName, doOpen} = this.state;
     this.props.onImport(
       selected[0],
+      path,
       fileName,
-      path);
+      doOpen);
   }
 
   componentWillReceiveProps ({treePath}) {
-    console.log("tp!", treePath);
-    //this.editor.setText(text);
     this.setState({
       path: treePath
     });
   }
 
   render () {
-    const { assets, onClose, treePath } = this.props;
-    const { path, fileName, selected } = this.state;
+    const { assets, onClose } = this.props;
+    const { path, fileName, selected, doOpen } = this.state;
 
     return <div className="pickpocket">
       <div id="tools">
         <button id="close" onClick={onClose}>close</button>
         <button id="choose" onClick={this.onImport}>import</button>
-        <input type="checkbox" id="doOpen" />
+        <input type="checkbox" value={doOpen} onChange={this.toggleDoOpen} />
         <label htmlFor="doOpen">Open in editor</label>
       </div>
       <MiniEditor

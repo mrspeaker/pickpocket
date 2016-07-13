@@ -30,7 +30,6 @@ class MiniEditor extends Component {
   }
 
   componentWillReceiveProps ({text}) {
-    console.log("set!", text);
     this.editor.setText(text);
   }
 

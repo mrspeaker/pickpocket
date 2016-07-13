@@ -6,7 +6,7 @@ An Atom package for grabbing existing art assets from a collection, and copying 
 
 To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in `settings`).
 
-Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir. **BROKEN, while I React-ify things! Just copies to current tree directory, as whatever the source name is. Doesn't open in editor.**
+Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
 
 If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
 
@@ -14,6 +14,13 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ### Pickpocket TODOs
 
+  * Finish react-fiying
+    * enter to import
+    * auto focus textbox
+    * reset treepath on delete-all-text
+    * esc to close
+
+  * store "open in editor" checkbox as pref
   * preview selected img
   * enter to select
   * show img size
@@ -59,7 +66,7 @@ When you import an image, the local path is also copied to the clipboard as a st
       * like Ableton - set of directories to search
     * synced to github
     * plugged in to opengameart etc
-  * SIP-style copy options. [copy as]:
+  * SIP-style format options. [copy as]:
     * plain string: `"res/player.png"`
     * Phaser.io image: `load.image( "player", "res/player.png" );`
     * etc... maybe a template system `${path}/${name} - ${w} ${h}`

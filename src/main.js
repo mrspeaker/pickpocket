@@ -67,18 +67,17 @@ export default {
     );
   },
 
-  onImport (asset, path, doOpen = false) {
+  onImport (asset, path, fileName, doOpen = false) {
 
     const projectRoot = atom.project.getDirectories()[ 0 ].path;
-    const localPath = this.getTreePath();
-    const localFullPath = `${ projectRoot }${ localPath }${asset.name}`;
-
-    console.log("import file", asset, path, localFullPath);
+    // const localPath = this.getTreePath();
+    const localPathAndName = `${ path }${fileName}`
+    const localFullPath = `${ projectRoot }${ localPathAndName }`;
 
     // TODO: use fs-extras copy, and error check
     fs.writeFileSync( localFullPath, fs.readFileSync( asset.fullPath ) );
-    atom.clipboard.write( `"${ localPath }"` );
-    atom.notifications.addSuccess(`Copied ${ asset.name } to ${ localPath }`);
+    atom.clipboard.write( `"${ localPathAndName }"` );
+    atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
     doOpen && this.openEditor( localFullPath );
 
     this.toggle();
