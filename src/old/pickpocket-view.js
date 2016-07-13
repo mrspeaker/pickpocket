@@ -53,7 +53,6 @@ export default class PickpocketView {
       return el;
 
     };
-
     $( "#close", this.onClose );
     $( "#choose", this.onChoose );
     $( "#thumbs", this.onThumbClicked );
@@ -106,6 +105,8 @@ export default class PickpocketView {
   }
 
   onThumbClicked ( { target } ) {
+
+    console.log("tign", target)
 
     if ( ! target.classList.contains( "thumb" ) ) {
       target = target.parentNode;

@@ -3,6 +3,7 @@
 import React from "react";
 import Assets from "./Assets";
 import MiniEditor from "./ui/MiniEditor";
+import utils from "./utils";
 
 const {
   Component,
@@ -22,41 +23,54 @@ class PickPocket extends Component {
     super();
     this.state = {
       selected: [],
+      fileName: "",
       path: ""
     };
   }
 
   isSelected = asset => this.state.selected.indexOf(asset) !== -1;
 
-  updatePath = path => {
-    if (path !== this.state.path) {
-      this.setState({
-        path
-      });
-    }
+  updatePath = text => {
+    const {path, fileName} = utils.splitPathAndFileName(text);
+    this.setState({
+      path,
+      fileName
+    });
   }
 
   onToggle = asset => {
     if (this.isSelected(asset)) {
       this.setState(() => ({
+        fileName: "",
         selected: [] // selected.filter(a => a!== asset)
       }));
       return;
     }
     this.setState(() => ({
-      selected: [asset]// [...selected, asset]
+      fileName: utils.splitPathAndFileName(asset.fullPath).fileName,
+      selected: [asset] // [...selected, asset]
     }));
   };
 
   onImport = () => {
+    const {selected, path, fileName} = this.state;
     this.props.onImport(
-      this.state.selected[0],
-      this.state.path);
+      selected[0],
+      fileName,
+      path);
+  }
+
+  componentWillReceiveProps ({treePath}) {
+    console.log("tp!", treePath);
+    //this.editor.setText(text);
+    this.setState({
+      path: treePath
+    });
   }
 
   render () {
     const { assets, onClose, treePath } = this.props;
-    const { selected } = this.state;
+    const { path, fileName, selected } = this.state;
 
     return <div className="pickpocket">
       <div id="tools">
@@ -66,8 +80,7 @@ class PickPocket extends Component {
         <label htmlFor="doOpen">Open in editor</label>
       </div>
       <MiniEditor
-        text={treePath}
-        selected={selected.length ? selected[0] : null}
+        text={`${path}${fileName}`}
         onChange={this.updatePath} />
       <Assets
         assets={assets.imgs}
