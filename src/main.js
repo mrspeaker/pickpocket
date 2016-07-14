@@ -65,6 +65,7 @@ export default {
         onChangePath={this.changePath.bind(this)}
         onClose={this.toggle.bind(this)}
         onImport={this.onImport.bind(this)}
+        onOpenAssets={this.onOpenAssets.bind(this)}
       /> : <div></div>,
       this.root
     );
@@ -133,6 +134,10 @@ export default {
     if (ed) {
       exec(`open -a ${ ed } ${ fullPath }`);
     }
+  },
+
+  onOpenAssets () {
+    exec(`open ${ this.getAssetRoot() }`);
   },
 
   deactivate () {

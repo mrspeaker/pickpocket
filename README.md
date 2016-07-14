@@ -43,6 +43,7 @@ When you import an image, the local path is also copied to the clipboard as a st
     * or create blank
     * with X, Y size
   * Option to create folders if path doesn't exist
+  * Open assets folder from plugin
 
 ### bigger picture / later
 

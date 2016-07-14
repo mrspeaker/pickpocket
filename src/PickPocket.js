@@ -16,6 +16,7 @@ class PickPocket extends Component {
     assets: PropTypes.array.isRequired,
     onImport: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onOpenAssets: PropTypes.func.isRequired,
     treePath: PropTypes.string
   };
 
@@ -75,13 +76,16 @@ class PickPocket extends Component {
   }
 
   render () {
-    const { assets, onClose } = this.props;
+    const { assets, onClose, onOpenAssets } = this.props;
     const { path, fileName, selected, doOpen } = this.state;
 
     return <div className="pickpocket">
       <div id="tools">
-        <button id="close" onClick={onClose}>close</button>
-        <button id="choose" onClick={this.onImport}>import</button>
+        <button onClick={onClose}>close</button>
+        &nbsp;
+        <button onClick={onOpenAssets}>Open Assets</button>
+        &nbsp;
+        <button onClick={this.onImport}>import</button>
         <input type="checkbox" value={doOpen} onChange={this.toggleDoOpen} />
         <label htmlFor="doOpen">Open in editor</label>
       </div>

@@ -31,7 +31,7 @@ class Assets extends Component {
         /> :
         <SelectableThumbnail
           onToggle={() => onToggle(asset)}
-          src={asset.fullPath}
+          asset={asset}
           selected={selected.indexOf(asset) !== -1}
         />)
 

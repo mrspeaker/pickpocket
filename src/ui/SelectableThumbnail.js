@@ -9,10 +9,12 @@ const {
 class SelectableThumbnail extends Component {
 
   render () {
-    const { src, selected, onToggle } = this.props;
+    const { asset, selected, onToggle } = this.props;
+    const { fullPath, size } = asset;
 
     return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
-      <img src={src} />
+      <img src={fullPath} />
+      <div className="meta">{ (size / 1000).toFixed(size < 1000 ? 1 : 0)}k</div>
     </div>;
 
   }
