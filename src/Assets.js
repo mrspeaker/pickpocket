@@ -2,6 +2,7 @@
 
 import React from "react";
 import SelectableThumbnail from "./ui/SelectableThumbnail";
+import SelectableFolder from "./ui/SelectableFolder";
 
 const {
   Component,
@@ -18,15 +19,22 @@ class Assets extends Component {
 
   render () {
     const { assets, onToggle, selected } = this.props;
+    const { dirs, imgs } = assets;
 
     return <div className="thumbs">{
-      assets.map(asset =>
+
+      [...dirs, ...imgs].map(asset => asset.type === "directory" ?
+        <SelectableFolder
+          onToggle={() => onToggle(asset)}
+          dir={asset}
+          selected={selected.indexOf(asset) !== -1}
+        /> :
         <SelectableThumbnail
           onToggle={() => onToggle(asset)}
           src={asset.fullPath}
           selected={selected.indexOf(asset) !== -1}
-        />
-      )
+        />)
+
     }</div>;
 
   }

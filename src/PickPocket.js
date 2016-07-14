@@ -42,6 +42,10 @@ class PickPocket extends Component {
   }
 
   onToggle = asset => {
+    if (asset.type === "directory") {
+      this.props.onChangePath(asset.fullPath + "/");
+      return;
+    }
     if (this.isSelected(asset)) {
       this.setState(() => ({
         fileName: "",
@@ -85,7 +89,7 @@ class PickPocket extends Component {
         text={`${path}${fileName}`}
         onChange={this.updatePath} />
       <Assets
-        assets={assets.imgs}
+        assets={assets}
         selected={selected}
         onToggle={this.onToggle} />
     </div>;

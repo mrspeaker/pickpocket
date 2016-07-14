@@ -8,7 +8,8 @@ const utils = {
       path,
       fileName
     };
-  }
+  },
+  parentPath: path => path.split("/").slice(0, -2).join("/")
 };
 
 export default utils;

@@ -5,15 +5,20 @@
 import React from "react";
 const {
   Component,
+  PropTypes
 } = React;
 
 class MiniEditor extends Component {
 
+  static propTypes = {
+    onChange: PropTypes.func.isRequired
+  };
+
   componentDidMount () {
     const editor = this.editor = atom.workspace.buildTextEditor({ mini: true });
     let text = editor.getText();
-    /*editor.onDidStopChanging(() => {});*/
-    this.view = atom.views.getView( editor );
+
+    this.view = atom.views.getView(editor);
     this.view.addEventListener("blur", () => {
       const newText = editor.getText();
       if (newText !== text) {
@@ -21,21 +26,15 @@ class MiniEditor extends Component {
         text = newText;
       }
     }, false);
+
     this.refs.ed.appendChild(this.view);
   }
 
-  componentWillUnmount () {
-    // Unhook ed events
-    //this.editor = null;
-  }
-
   componentWillReceiveProps ({text}) {
-    this.editor.setText(text);
-  }
+    // Why does it need setTimeout, dang it?!
+    setTimeout(() => this.view.focus(), 0);
 
-  shouldComponentUpdate () {
-    // When editor updates
-    return false;
+    this.editor.setText(text);
   }
 
   render () {

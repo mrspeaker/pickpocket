@@ -6,7 +6,7 @@ An Atom package for grabbing existing art assets from a collection, and copying 
 
 To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in `settings`).
 
-Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Type the directory to copy img to, select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
+Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
 
 If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
 
@@ -16,17 +16,16 @@ When you import an image, the local path is also copied to the clipboard as a st
 
   * Finish react-fiying
     * enter to import
-    * auto focus textbox
     * reset treepath on delete-all-text
     * esc to close
+    * don't lose focus on click
+    * don't unmodal on click
 
-  * store "open in editor" checkbox as pref
+  * store "open in editor" checkbox as pref (or storage)
   * preview selected img
   * enter to select
   * show img size
-  * tree folder selection
-    * tree navigation
-  * handle missing path /'s anywhere
+  * handle missing/extra path /'s anywhere
     * settings
     * url bar
     * onClose
@@ -39,9 +38,6 @@ When you import an image, the local path is also copied to the clipboard as a st
   * proper error handling for file operations
   * allow ~ for home path
   * option to copy file to clipboard on select
-
-### choosing where to save
-
   * Path should indicate warning as typing if not real path (dirs don't exist)
   * if img doesn't exist, option to choose image?
     * or create blank

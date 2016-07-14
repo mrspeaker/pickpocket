@@ -14,6 +14,7 @@ import getInitialState from "./stores/getInitialState";
 import { CompositeDisposable } from "atom";
 import PickPocket from "./PickPocket";
 import fetchImagesFromFolder from "./fetchImagesFromFolder";
+import utils from "./utils";
 
 const store = createStore(getInitialState);
 
@@ -56,13 +57,15 @@ export default {
     };
 
     ReactDOM.render(
+      this.visible ?
       <PickPocket
         treePath={this.getTreePath()}
         store={store}
         assets={assets || def}
+        onChangePath={this.changePath.bind(this)}
         onClose={this.toggle.bind(this)}
         onImport={this.onImport.bind(this)}
-      />,
+      /> : <div></div>,
       this.root
     );
   },
@@ -70,8 +73,7 @@ export default {
   onImport (asset, path, fileName, doOpen = false) {
 
     const projectRoot = atom.project.getDirectories()[ 0 ].path;
-    // const localPath = this.getTreePath();
-    const localPathAndName = `${ path }${fileName}`
+    const localPathAndName = `${ path }${fileName}`;
     const localFullPath = `${ projectRoot }${ localPathAndName }`;
 
     // TODO: use fs-extras copy, and error check
@@ -87,6 +89,7 @@ export default {
     if (this.visible) {
       this.visible = false;
       this.modal.hide();
+      this.forceUpdate();
       return;
     }
     this.visible = true;
@@ -111,13 +114,25 @@ export default {
     return `/${ relativePath }${ trailing }`;
   },
 
-  openEditor ( fullPath ) {
+  changePath (newPath) {
+    return fetchImagesFromFolder(newPath).then(res => {
+      if (newPath !== this.getAssetRoot()) {
+        res.dirs.splice(0, 0, {
+          type: "directory",
+          size: 0,
+          fullPath: utils.parentPath(newPath),
+          name: ".."
+        });
+      }
+      return this.forceUpdate(res);
+    });
+  },
 
-    const ed = atom.config.get( "pickpocket.imageEditorAppName" );
+  openEditor ( fullPath ) {
+    const ed = atom.config.get("pickpocket.imageEditorAppName");
     if (ed) {
       exec(`open -a ${ ed } ${ fullPath }`);
     }
-
   },
 
   deactivate () {
