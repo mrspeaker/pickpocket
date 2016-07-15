@@ -17,10 +17,6 @@ When you import an image, the local path is also copied to the clipboard as a st
   * Finish react-fiying
     * enter to import
     * reset treepath on delete-all-text
-    * esc to close
-    * don't lose focus on click
-    * don't unmodal on click
-
   * store "open in editor" checkbox as pref (or storage)
   * preview selected img
   * enter to select
@@ -32,7 +28,6 @@ When you import an image, the local path is also copied to the clipboard as a st
   * make modal wider
   * use atom buttons
   * handle when no root project
-  * copy-to-clipboard as "string", "phaser image", "phaser tilemap"
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * proper error handling for file operations
@@ -43,7 +38,6 @@ When you import an image, the local path is also copied to the clipboard as a st
     * or create blank
     * with X, Y size
   * Option to create folders if path doesn't exist
-  * Open assets folder from plugin
 
 ### bigger picture / later
 

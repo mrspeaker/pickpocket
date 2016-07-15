@@ -9,10 +9,10 @@ const {
 class SelectableFolder extends Component {
 
   render () {
-    const { dir, onToggle, selected } = this.props;
+    const { asset, onToggle, selected } = this.props;
 
     return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
-      {dir.name}
+      {asset.name}
     </div>;
 
   }
