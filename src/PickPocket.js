@@ -24,6 +24,7 @@ class PickPocket extends Component {
     super();
     this.state = {
       selected: [],
+      preview: null,
       fileName: "",
       path: "",
       doOpen: false
@@ -39,6 +40,18 @@ class PickPocket extends Component {
     this.setState({
       path,
       fileName
+    });
+  }
+
+  onPreview = asset => {
+    this.setState({
+      preview: asset
+    });
+  }
+
+  closePreview = () => {
+    this.setState({
+      preview: null
     });
   }
 
@@ -77,25 +90,49 @@ class PickPocket extends Component {
 
   render () {
     const { assets, onClose, onOpenAssets } = this.props;
-    const { path, fileName, selected, doOpen } = this.state;
+    const { path, fileName, selected, doOpen, preview } = this.state;
 
     return <div className="pickpocket">
-      <div id="tools">
-        <button onClick={onClose}>close</button>
-        &nbsp;
-        <button onClick={onOpenAssets}>Open Assets</button>
-        &nbsp;
-        <button onClick={this.onImport}>import</button>
-        <input type="checkbox" value={doOpen} onChange={this.toggleDoOpen} />
-        <label htmlFor="doOpen">Open in editor</label>
-      </div>
-      <MiniEditor
-        text={`${path}${fileName}`}
-        onChange={this.updatePath} />
-      <Assets
-        assets={assets}
-        selected={selected}
-        onToggle={this.onToggle} />
+      <section className="input-block find-container">
+        <div className="btn-group">
+          <button className="btn" onClick={onClose}>close</button>
+          &nbsp;
+          <button className="btn" onClick={onOpenAssets}>Open Assets</button>
+          &nbsp;
+          <button className="btn" onClick={this.onImport}>import</button>
+          <label htmlFor="doOpen">
+            <input type="checkbox" value={doOpen} onChange={this.toggleDoOpen} />
+            <div className="options" style={{display:"inline-block"}}>Open in editor</div>
+          </label>
+          <div className="icon icon-diff-modified" style={{display:"inline-block",float:"right"}}></div>
+        </div>
+      </section>
+      <section>
+        <MiniEditor
+          text={`${path}${fileName}`}
+          onChange={this.updatePath} />
+      </section>
+      <section>
+        <Assets
+          assets={assets}
+          selected={selected}
+          onToggle={this.onToggle}
+          onPreview={this.onPreview} />
+      </section>
+      <footer className="header">
+        <span className="header-item description">
+          <span className="subtle-info-message">Close this panel with the
+            <span className="highlight">esc</span> key
+          </span>
+        </span>
+        <span className="header-item options-label pull-right">
+          <span>Options: </span>
+          <span className="options">{"don't open editor"}</span>
+        </span>
+      </footer>
+      { preview && <div className="preview">
+        <div><img onClick={this.closePreview} src={preview.fullPath} width={300} height={300} /></div>
+      </div> }
     </div>;
   }
 

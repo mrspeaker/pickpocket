@@ -42,6 +42,16 @@ export default {
   activate () {
     const root = this.root = document.createElement("div");
 
+    /*
+    // Pretty sure this isn't how you're supposed to make
+    // a modal act like a modal, but whatever...
+    this.root.addEventListener( "mousedown", e => {
+      //atom.views.getView( this.editor ).focus();
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    */
+
     this.modal = atom.workspace.addModalPanel({item: root});
     this.subscriptions = new CompositeDisposable();
     this.subscriptions.add(

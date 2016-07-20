@@ -9,12 +9,12 @@ const {
 class SelectableThumbnail extends Component {
 
   render () {
-    const { asset, selected, onToggle } = this.props;
+    const { asset, selected, onToggle, onPreview } = this.props;
     const { fullPath, size } = asset;
 
-    return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
+    return <div onClick={onToggle} onDoubleClick={onPreview} className={`thumb ${selected ? "selected" :  ""}`}>
       <img src={fullPath} />
-      <div className="meta">{ (size / 1000).toFixed(size < 1000 ? 1 : 0)}k</div>
+      <div className="meta">{ (size / 1000).toFixed(size < 1000 ? 1 : 0)}K</div>
     </div>;
 
   }

@@ -14,11 +14,12 @@ class Assets extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
     onToggle: PropTypes.func.isRequired,
+    onPreview: PropTypes.func.isRequired,
     selected: PropTypes.array.isRequired
   };
 
   render () {
-    const { assets, onToggle, selected } = this.props;
+    const { assets, onToggle, onPreview, selected } = this.props;
     const { dirs, imgs } = assets;
 
     return <div className="thumbs">{
@@ -32,6 +33,7 @@ class Assets extends Component {
           /> :
           <SelectableThumbnail
             onToggle={() => onToggle(asset)}
+            onPreview={() => onPreview(asset)}
             asset={asset}
             selected={selected.indexOf(asset) !== -1}
           />)
