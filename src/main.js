@@ -51,6 +51,12 @@ export default {
       e.stopPropagation();
     });
     */
+    this.root.addEventListener("keyup", e => {
+      if (e.which !== 27) {
+        return;
+      }
+      this.toggle();
+    }, false);
 
     this.modal = atom.workspace.addModalPanel({item: root});
     this.subscriptions = new CompositeDisposable();

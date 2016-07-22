@@ -1,8 +1,5 @@
 {
   "atom-workspace": {
     "ctrl-alt-p": "pickpocket:toggle"
-  },
-  ".pickpocket": {
-    "escape": "pickpocket:toggle"
   }
 }

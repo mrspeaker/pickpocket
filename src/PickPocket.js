@@ -4,6 +4,8 @@ import React from "react";
 import Assets from "./Assets";
 import MiniEditor from "./ui/MiniEditor";
 import utils from "./utils";
+import Preview from "./ui/Preview";
+import Footer from "./ui/Footer";
 
 const {
   Component,
@@ -43,10 +45,13 @@ class PickPocket extends Component {
     });
   }
 
-  closePreview = () => {
-    this.setState({
-      preview: null
-    });
+  closePreview = (e) => {
+    if (this.state.preview) {
+      e.stopPropagation();
+      this.setState({
+        preview: null
+      });
+    }
   }
 
   onToggle = asset => {
@@ -57,14 +62,14 @@ class PickPocket extends Component {
     if (this.isSelected(asset)) {
       this.setState(() => ({
         fileName: "",
-        selected: [] // selected.filter(a => a!== asset)
+        selected: []
       }));
       return;
     }
     this.setState(() => ({
       fileName: utils.splitPathAndFileName(asset.fullPath).fileName,
       preview: asset,
-      selected: [asset] // [...selected, asset]
+      selected: [asset]
     }));
   };
 
@@ -105,7 +110,8 @@ class PickPocket extends Component {
       <section>
         <MiniEditor
           text={`${path}${fileName}`}
-          onChange={this.updatePath} />
+          onChange={this.updatePath}
+          onEscape={this.closePreview} />
       </section>
       <section>
         <Assets
@@ -113,21 +119,11 @@ class PickPocket extends Component {
           selected={selected}
           onToggle={this.onToggle}
           onPreview={this.onPreview} />
-        { preview && <div className="preview" onClick={this.closePreview}>
-          <div><img src={preview.fullPath} width={300} height={300} /></div>
-        </div> }
+        { preview &&
+          <Preview src={preview.fullPath} onClose={this.closePreview} />
+        }
       </section>
-      <footer className="header">
-        <span className="header-item description">
-          <span className="subtle-info-message">Close this panel with the
-            <span className="highlight">esc</span> key
-          </span>
-        </span>
-        <span className="header-item options-label pull-right">
-          <span>Options: </span>
-          <span className="options">{"don't open editor"}</span>
-        </span>
-      </footer>
+      <Footer />
     </div>;
   }
 

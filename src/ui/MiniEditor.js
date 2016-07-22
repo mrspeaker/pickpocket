@@ -26,6 +26,11 @@ class MiniEditor extends Component {
         text = newText;
       }
     }, false);
+    this.view.addEventListener("keyup", e => {
+      if (e.which === 27) {
+        this.props.onEscape(e);
+      }
+    }, false);
 
     this.refs.ed.appendChild(this.view);
   }

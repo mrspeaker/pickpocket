@@ -21,16 +21,13 @@ When you import an image, the local path is also copied to the clipboard as a st
     * reset treepath on delete-all-text
   * store "open in editor" checkbox as pref (or storage)
   * preview selected img
-    * move preview under input/buttons
     * min height 3xthumb height
+    * show img size
   * enter to select
-  * show img size
   * handle missing/extra path /'s anywhere
     * settings
     * url bar
     * onClose
-  * make modal wider
-  * use atom buttons
   * handle when no root project
   * ask to overwrite if img exists
     * rename-if-overwriting option
