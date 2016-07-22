@@ -12,11 +12,10 @@ If you select `open in editor`, the local copy will be opened in your image edit
 
 When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
-![Pickpocket](https://cloud.githubusercontent.com/assets/129330/15506386/6c08650a-2195-11e6-9b22-d25fea6dc3a5.png)
+![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
 ### Pickpocket TODOs
   * reset treepath on delete-all-text
-  * store "open in editor" checkbox as pref (or storage)
   * show img meta in preview
   * handle missing/extra path /'s anywhere
     * settings
