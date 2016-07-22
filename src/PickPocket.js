@@ -94,9 +94,7 @@ class PickPocket extends Component {
 
     return <div className="pickpocket">
       <section className="input-block find-container">
-        <div className="btn-group">
-          <button className="btn" onClick={onClose}>close</button>
-          &nbsp;
+        <div className="btn-group" style={{width:"100%"}}>
           <button className="btn" onClick={onOpenAssets}>Open Assets</button>
           &nbsp;
           <button className="btn" onClick={this.onImport}>import</button>
@@ -104,10 +102,12 @@ class PickPocket extends Component {
             <input type="checkbox" value={doOpen} onChange={this.toggleDoOpen} />
             <div className="options" style={{display:"inline-block"}}>Open in editor</div>
           </label>
-          <div className="icon icon-diff-modified" style={{display:"inline-block",float:"right"}}></div>
+          <div className="icon icon-x" onClick={onClose} style={{
+            cursor:"pointer",display:"inline-block",float:"right"}
+          }></div>
         </div>
       </section>
-      <section>
+      <section style={{paddingTop:4}}>
         <MiniEditor
           text={`${path}${fileName}`}
           onChange={this.updatePath}

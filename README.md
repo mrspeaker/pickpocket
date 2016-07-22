@@ -8,22 +8,17 @@ To use it, **install the package** (TODO: instructions!) then **dump a bunch of 
 
 Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
 
-If you select `open in editor` the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
+If you select `open in editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`).
 
 When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ![Pickpocket](https://cloud.githubusercontent.com/assets/129330/15506386/6c08650a-2195-11e6-9b22-d25fea6dc3a5.png)
 
 ### Pickpocket TODOs
-
-  * Finish react-fiying
-    * enter to import
-    * reset treepath on delete-all-text
+  * enter to import
+  * reset treepath on delete-all-text
   * store "open in editor" checkbox as pref (or storage)
-  * preview selected img
-    * min height 3xthumb height
-    * show img size
-  * enter to select
+  * show img meta on preview
   * handle missing/extra path /'s anywhere
     * settings
     * url bar
@@ -32,12 +27,7 @@ When you import an image, the local path is also copied to the clipboard as a st
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * proper error handling for file operations
-  * allow ~ for home path
-  * option to copy file to clipboard on select
   * Path should indicate warning as typing if not real path (dirs don't exist)
-  * if img doesn't exist, option to choose image?
-    * or create blank
-    * with X, Y size
   * Option to create folders if path doesn't exist
 
 ### bigger picture / later
@@ -47,6 +37,9 @@ When you import an image, the local path is also copied to the clipboard as a st
     * select dimensions
     * generate stylized circle / rectangle etc
     * tilemaps
+    * if img in path doesn't exist, option to choose image?
+      * or create blank
+      * with X, Y size
   * multi-user
     * central store
     * purchase-able
