@@ -2,7 +2,7 @@
 
 An Atom package for grabbing existing art assets from a collection, and copying them into the current project. A file manager for game prototyping.
 
-![pickpock](https://cloud.githubusercontent.com/assets/129330/16903046/672c4a1c-4c40-11e6-95a6-b857e086eca6.gif)
+![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
 To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in `settings`).
 
