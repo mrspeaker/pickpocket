@@ -113,8 +113,8 @@ class PickPocket extends Component {
           selected={selected}
           onToggle={this.onToggle}
           onPreview={this.onPreview} />
-        { preview && <div className="preview">
-          <div><img onClick={this.closePreview} src={preview.fullPath} width={300} height={300} /></div>
+        { preview && <div className="preview" onClick={this.closePreview}>
+          <div><img src={preview.fullPath} width={300} height={300} /></div>
         </div> }
       </section>
       <footer className="header">
