@@ -43,12 +43,6 @@ class PickPocket extends Component {
     });
   }
 
-  onPreview = asset => {
-    this.setState({
-      preview: asset
-    });
-  }
-
   closePreview = () => {
     this.setState({
       preview: null
@@ -69,6 +63,7 @@ class PickPocket extends Component {
     }
     this.setState(() => ({
       fileName: utils.splitPathAndFileName(asset.fullPath).fileName,
+      preview: asset,
       selected: [asset] // [...selected, asset]
     }));
   };
@@ -118,6 +113,9 @@ class PickPocket extends Component {
           selected={selected}
           onToggle={this.onToggle}
           onPreview={this.onPreview} />
+        { preview && <div className="preview">
+          <div><img onClick={this.closePreview} src={preview.fullPath} width={300} height={300} /></div>
+        </div> }
       </section>
       <footer className="header">
         <span className="header-item description">
@@ -130,9 +128,6 @@ class PickPocket extends Component {
           <span className="options">{"don't open editor"}</span>
         </span>
       </footer>
-      { preview && <div className="preview">
-        <div><img onClick={this.closePreview} src={preview.fullPath} width={300} height={300} /></div>
-      </div> }
     </div>;
   }
 

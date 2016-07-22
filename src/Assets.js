@@ -33,7 +33,6 @@ class Assets extends Component {
           /> :
           <SelectableThumbnail
             onToggle={() => onToggle(asset)}
-            onPreview={() => onPreview(asset)}
             asset={asset}
             selected={selected.indexOf(asset) !== -1}
           />)
