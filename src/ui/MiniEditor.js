@@ -30,6 +30,9 @@ class MiniEditor extends Component {
       if (e.which === 27) {
         this.props.onEscape(e);
       }
+      if (e.which === 13) {
+        this.props.onEnter(e);
+      }
     }, false);
 
     this.refs.ed.appendChild(this.view);

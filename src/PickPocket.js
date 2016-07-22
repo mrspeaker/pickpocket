@@ -111,7 +111,8 @@ class PickPocket extends Component {
         <MiniEditor
           text={`${path}${fileName}`}
           onChange={this.updatePath}
-          onEscape={this.closePreview} />
+          onEscape={this.closePreview}
+          onEnter={this.onImport} />
       </section>
       <section>
         <Assets
