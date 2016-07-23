@@ -21,12 +21,12 @@ When you import an image, the local path is also copied to the clipboard as a st
     * settings
     * url bar
     * onClose
-  * handle when no root project
   * ask to overwrite if img exists
     * rename-if-overwriting option
   * proper error handling for file operations
   * Path should indicate warning as typing if not real path (dirs don't exist)
   * Option to create folders if path doesn't exist
+  * Better display for folders
 
 ### bigger picture / later
 

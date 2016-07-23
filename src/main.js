@@ -89,7 +89,13 @@ export default {
 
   onImport (asset, path, fileName, doOpen = false) {
 
-    const projectRoot = atom.project.getDirectories()[ 0 ].path;
+    const dirs = atom.project.getDirectories();
+    if (!dirs.length) {
+      this.toggle();
+      atom.notifications.addError("Not in a project - can't copy here.");
+      return;
+    }
+    const projectRoot = dirs[ 0 ].path;
     const localPathAndName = `${ path }${fileName}`;
     const localFullPath = `${ projectRoot }${ localPathAndName }`;
 
@@ -123,7 +129,13 @@ export default {
       return "";
     }
     const { treeView } = tree.mainModule;
+    if (!treeView) {
+      return "";
+    }
     const { selectedPath } = treeView;
+    if ( !selectedPath ) {
+      return "";
+    }
     const isFile = !!( treeView.entryForPath( selectedPath ).file );
     const folderPath = !isFile ? selectedPath : selectedPath.split( "/").slice( 0, -1 ).join( "/" );
     const [ , relativePath ] = atom.project.relativizePath( folderPath );
