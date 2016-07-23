@@ -99,11 +99,20 @@ export default {
     const localPathAndName = `${ path }${fileName}`;
     const localFullPath = `${ projectRoot }${ localPathAndName }`;
 
-    // TODO: use fs-extras copy, and error check
-    fs.writeFileSync( localFullPath, fs.readFileSync( asset.fullPath ) );
-    atom.clipboard.write( `"${ localPathAndName }"` );
-    atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
-    doOpen && this.openEditor( localFullPath );
+    fs.stat(localFullPath, (err, stats) => {
+      if (stats && stats.isFile()) {
+        if (!confirm(`overwrite ${localPathAndName}?`)) {
+          return;
+        }
+      }
+      //stats.isDirectory()
+      // TODO: use fs-extras copy, and error check
+      fs.writeFileSync( localFullPath, fs.readFileSync( asset.fullPath ) );
+      atom.clipboard.write( `"${ localPathAndName }"` );
+      atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
+      doOpen && this.openEditor( localFullPath );
+
+    });
 
     this.toggle();
   },
