@@ -18,13 +18,13 @@ When you import an image, the local path is also copied to the clipboard as a st
 
   * reset treepath on delete-all-text
   * show img meta in preview
+  * Better display for folders
   * handle missing/extra path /'s anywhere
     * settings
     * url bar
     * onClose
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
-  * Better display for folders
 
 ### bigger picture / later
 
