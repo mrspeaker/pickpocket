@@ -26,7 +26,7 @@ When you import an image, the local path is also copied to the clipboard as a st
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
 
-### bigger picture / later
+### Bigger picture / later
 
   * infinte scroll, lazy load
   * asset generation
