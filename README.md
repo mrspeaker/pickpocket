@@ -16,9 +16,6 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ### Pickpocket TODOs
 
-  * reset treepath on delete-all-text
-  * show img meta in preview
-  * Better display for folders
   * handle missing/extra path /'s anywhere
     * settings
     * url bar

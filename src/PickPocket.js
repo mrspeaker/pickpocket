@@ -119,7 +119,7 @@ class PickPocket extends Component {
           onToggle={this.onToggle}
           onPreview={this.onPreview} />
         { preview &&
-          <Preview src={preview.fullPath} onClose={this.closePreview} />
+          <Preview asset={preview} onClose={this.closePreview} />
         }
       </section>
       <Footer />

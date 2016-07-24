@@ -8,13 +8,28 @@ const {
 
 class SelectableThumbnail extends Component {
 
+  state = {
+    width: -1,
+    height: -1
+  };
+
+  componentDidMount () {
+    this.refs.img.onload = () => {
+      this.setState({
+        width: this.refs.img.naturalWidth,
+        height: this.refs.img.naturalHeight
+      });
+    };
+  }
+
   render () {
     const { asset, selected, onToggle } = this.props;
-    const { fullPath, size } = asset;
+    const { width, height } = this.state;
+    const { fullPath } = asset;
 
     return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
-      <img src={fullPath} />
-      <div className="meta">{ (size / 1000).toFixed(size < 1000 ? 1 : 0)}K</div>
+      <img ref={"img"} src={fullPath} />
+      <div className="meta">{ width } x { height }</div>
     </div>;
 
   }

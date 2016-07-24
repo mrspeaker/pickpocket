@@ -9,7 +9,8 @@ const utils = {
       fileName
     };
   },
-  parentPath: path => path.split("/").slice(0, -2).join("/")
+  parentPath: path => path.split("/").slice(0, -2).join("/"),
+  toKb: size => (size / 1000).toFixed(size < 1000 ? 1 : 0) + "K"
 };
 
 export default utils;
