@@ -2,9 +2,9 @@
   "menu": [{
     "label": "Packages",
     "submenu": [{
-      "label": "Pickpocket",
+      "label": "PickPocket",
       "submenu": [{
-        "label": "picker",
+        "label": "PickPocket",
         "command": "pickpocket:toggle"
       }]
     }]

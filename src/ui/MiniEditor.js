@@ -11,7 +11,9 @@ const {
 class MiniEditor extends Component {
 
   static propTypes = {
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    onEscape: PropTypes.func.isRequired,
+    onEnter: PropTypes.func.isRequired,
   };
 
   componentDidMount () {
@@ -19,6 +21,7 @@ class MiniEditor extends Component {
     let text = editor.getText();
 
     this.view = atom.views.getView(editor);
+
     this.view.addEventListener("blur", () => {
       const newText = editor.getText();
       if (newText !== text) {
@@ -26,13 +29,10 @@ class MiniEditor extends Component {
         text = newText;
       }
     }, false);
+
     this.view.addEventListener("keyup", e => {
-      if (e.which === 27) {
-        this.props.onEscape(e);
-      }
-      if (e.which === 13) {
-        this.props.onEnter(e);
-      }
+      if (e.which === 27) this.props.onEscape(e);
+      if (e.which === 13) this.props.onEnter(e);
     }, false);
 
     this.refs.ed.appendChild(this.view);

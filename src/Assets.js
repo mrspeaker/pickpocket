@@ -14,12 +14,11 @@ class Assets extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
     onToggle: PropTypes.func.isRequired,
-    onPreview: PropTypes.func.isRequired,
     selected: PropTypes.array.isRequired
   };
 
   render () {
-    const { assets, onToggle, onPreview, selected } = this.props;
+    const { assets, onToggle, selected } = this.props;
     const { dirs, imgs } = assets;
 
     return <div className="thumbs">{
@@ -28,12 +27,12 @@ class Assets extends Component {
         asset.type === "directory" ?
           <SelectableFolder
             onToggle={() => onToggle(asset)}
-            asset={asset}
+            name={asset.name}
             selected={selected.indexOf(asset) !== -1}
           /> :
           <SelectableThumbnail
             onToggle={() => onToggle(asset)}
-            asset={asset}
+            src={asset.fullPath}
             selected={selected.indexOf(asset) !== -1}
           />)
 

@@ -4,13 +4,21 @@ import React from "react";
 import Assets from "./Assets";
 import MiniEditor from "./ui/MiniEditor";
 import utils from "./utils";
-import Preview from "./ui/Preview";
+import PreviewImage from "./ui/PreviewImage";
 import Footer from "./ui/Footer";
 
 const {
   Component,
   PropTypes
 } = React;
+
+const styles = {
+  closeIcon: {
+    cursor:"pointer",
+    display:"inline-block",
+    float:"right",
+  }
+};
 
 class PickPocket extends Component {
 
@@ -19,6 +27,7 @@ class PickPocket extends Component {
     onImport: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onOpenAssets: PropTypes.func.isRequired,
+    onChangePath: PropTypes.func.isRequired,
     treePath: PropTypes.string
   };
 
@@ -53,24 +62,28 @@ class PickPocket extends Component {
   }
 
   onToggle = asset => {
-    if (asset.type === "directory") {
-      this.props.onChangePath(asset.fullPath + "/");
+    const {type, fullPath} = asset;
+
+    if (type === "directory") {
+      this.props.onChangePath(fullPath + "/");
       return;
     }
+
     if (this.isSelected(asset)) {
       this.setState(() => ({
         fileName: "",
         selected: [],
         canImport: false
       }));
-      return;
     }
-    this.setState(() => ({
-      fileName: utils.splitPathAndFileName(asset.fullPath).fileName,
-      preview: asset,
-      selected: [asset],
-      canImport: true
-    }));
+    else {
+      this.setState(() => ({
+        fileName: utils.splitPathAndFileName(fullPath).fileName,
+        preview: asset,
+        selected: [asset],
+        canImport: true
+      }));
+    }
   };
 
   onImport = (edit = false) => {
@@ -82,12 +95,8 @@ class PickPocket extends Component {
       edit === true);
   }
 
-  onImport
-
-  componentWillReceiveProps ({treePath}) {
-    this.setState({
-      path: treePath
-    });
+  componentWillReceiveProps ({treePath:path}) {
+    this.setState({path});
   }
 
   render () {
@@ -95,16 +104,16 @@ class PickPocket extends Component {
     const { path, fileName, selected, preview, canImport } = this.state;
 
     return <div className="pickpocket">
+
       <section className="input-block find-container">
         <div className="btn-group" style={{width:"100%"}}>
           <button className="btn" onClick={this.onImport} disabled={!canImport}>import</button>
           <button className="btn" onClick={() => this.onImport(true)} disabled={!canImport}>import & edit</button>
           <button className="btn" onClick={onOpenAssets}>Open asset folder</button>
-          <div className="icon icon-x" onClick={onClose} style={{
-            cursor:"pointer",display:"inline-block",float:"right"}
-          }></div>
+          <div className="icon icon-x" onClick={onClose} style={styles.closeIcon}></div>
         </div>
       </section>
+
       <section style={{paddingTop:4}}>
         <MiniEditor
           text={`${path}${fileName}`}
@@ -112,17 +121,19 @@ class PickPocket extends Component {
           onEscape={this.closePreview}
           onEnter={this.onImport} />
       </section>
+
       <section>
         <Assets
           assets={assets}
           selected={selected}
-          onToggle={this.onToggle}
-          onPreview={this.onPreview} />
+          onToggle={this.onToggle} />
         { preview &&
-          <Preview asset={preview} onClose={this.closePreview} />
+          <PreviewImage asset={preview} onClose={this.closePreview} />
         }
       </section>
+
       <Footer />
+
     </div>;
   }
 

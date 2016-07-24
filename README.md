@@ -1,4 +1,4 @@
-# Pickpocket
+# PickPocket
 
 An Atom package for grabbing existing art assets from a collection, and copying them into the current project. A file manager for game prototyping.
 
@@ -14,7 +14,7 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
 
-### Pickpocket TODOs
+### PickPocket TODOs
 
   * handle missing/extra path /'s anywhere
     * settings

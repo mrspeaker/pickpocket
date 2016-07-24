@@ -4,9 +4,16 @@ import React from "react";
 
 const {
   Component,
+  PropTypes,
 } = React;
 
 class SelectableThumbnail extends Component {
+
+  static propTypes = {
+    src: PropTypes.string.isRequired,
+    selected: PropTypes.bool.isRequired,
+    onToggle: PropTypes.func.isRequired,
+  };
 
   state = {
     width: -1,
@@ -23,12 +30,11 @@ class SelectableThumbnail extends Component {
   }
 
   render () {
-    const { asset, selected, onToggle } = this.props;
+    const { src, selected, onToggle } = this.props;
     const { width, height } = this.state;
-    const { fullPath } = asset;
 
     return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
-      <img ref={"img"} src={fullPath} />
+      <img ref={"img"} src={src} />
       <div className="meta">{ width } x { height }</div>
     </div>;
 

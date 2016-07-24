@@ -46,7 +46,6 @@ export default assetRoot => new Promise( res => {
       imgs
     });
 
-    //this.pickpocketView.setThumbs( dirs, imgs, assetRoot );
   });
 
 });

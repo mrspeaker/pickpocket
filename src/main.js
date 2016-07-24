@@ -8,15 +8,10 @@ import fs from "fs";
 import proc from "child_process";
 const { exec } = proc;
 
-import { createStore } from "redux";
-import getInitialState from "./stores/getInitialState";
-
 import { CompositeDisposable } from "atom";
 import PickPocket from "./PickPocket";
 import fetchImagesFromFolder from "./fetchImagesFromFolder";
 import utils from "./utils";
-
-const store = createStore(getInitialState);
 
 export default {
   root: null,
@@ -78,7 +73,6 @@ export default {
       this.visible ?
       <PickPocket
         treePath={this.getTreePath()}
-        store={store}
         assets={assets || def}
         onChangePath={this.changePath.bind(this)}
         onClose={this.toggle.bind(this)}
