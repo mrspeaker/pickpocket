@@ -44,7 +44,7 @@ class Preview extends Component {
         backgroundColor: "rgba(0, 0, 0, 0.7)",
         color: "#888",
         padding: 4,
-        width: 80
+        width: 120
       }}>
         &nbsp;{`${width} x ${height}`},
         &nbsp;{ utils.toKb(size) }

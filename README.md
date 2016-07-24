@@ -19,7 +19,6 @@ When you import an image, the local path is also copied to the clipboard as a st
   * handle missing/extra path /'s anywhere
     * settings
     * url bar
-    * onClose
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
 
@@ -30,9 +29,7 @@ When you import an image, the local path is also copied to the clipboard as a st
     * select dimensions
     * generate stylized circle / rectangle etc
     * tilemaps
-    * if img in path doesn't exist, option to choose image?
-      * or create blank
-      * with X, Y size
+    * if img in path doesn't exist, option to create blank with X, Y size
   * multi-user
     * central store
     * purchase-able
