@@ -1,7 +1,7 @@
 "use babel";
 
 /* global atom */
-
+//atom.workspace.open("atom://config/packages/pickpocket")
 import React from "react";
 import ReactDOM from "react-dom";
 import fs from "fs";
@@ -52,9 +52,9 @@ export default {
     });
     */
     this.root.addEventListener("keyup", e => {
-      if (e.which !== 27) {
-        return;
-      }
+      // Handle escape key
+      if (e.which !== 27) return;
+
       this.toggle();
     }, false);
 
@@ -63,7 +63,9 @@ export default {
     this.subscriptions.add(
       atom.commands.add(
         "atom-workspace",
-        { "pickpocket:toggle": () => this.toggle() } ) );
+        { "pickpocket:toggle": () => this.toggle() }
+      )
+    );
   },
 
   forceUpdate (assets) {
@@ -88,6 +90,9 @@ export default {
   },
 
   onImport (asset, path, fileName, doOpen = false) {
+
+    //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
+    //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
 
     const dirs = atom.project.getDirectories();
     if (!dirs.length) {
