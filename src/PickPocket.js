@@ -119,13 +119,15 @@ class PickPocket extends Component {
           onEnter={this.onImport} />
       </section>
 
-      <Assets
-        assets={assets}
-        selected={selected}
-        onToggle={this.onToggle} />
-      { preview &&
-        <PreviewImage asset={preview} onClose={this.closePreview} />
-      }
+      <section>
+        <Assets
+          assets={assets}
+          selected={selected}
+          onToggle={this.onToggle} />
+        { preview &&
+          <PreviewImage asset={preview} onClose={this.closePreview} />
+        }
+      </section>
 
       <Footer />
 
