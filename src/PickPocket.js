@@ -1,9 +1,9 @@
 "use babel";
 
 import React from "react";
+import utils from "./utils";
 import Assets from "./Assets";
 import MiniEditor from "./ui/MiniEditor";
-import utils from "./utils";
 import PreviewImage from "./ui/PreviewImage";
 import Footer from "./ui/Footer";
 
@@ -31,16 +31,13 @@ class PickPocket extends Component {
     treePath: PropTypes.string
   };
 
-  constructor () {
-    super();
-    this.state = {
-      selected: [],
-      preview: null,
-      fileName: "",
-      path: "",
-      canImport: false
-    };
-  }
+  state = {
+    selected: [],
+    preview: null,
+    fileName: "",
+    path: "",
+    canImport: false
+  };
 
   isSelected = asset => this.state.selected.indexOf(asset) !== -1;
 
@@ -122,15 +119,13 @@ class PickPocket extends Component {
           onEnter={this.onImport} />
       </section>
 
-      <section>
-        <Assets
-          assets={assets}
-          selected={selected}
-          onToggle={this.onToggle} />
-        { preview &&
-          <PreviewImage asset={preview} onClose={this.closePreview} />
-        }
-      </section>
+      <Assets
+        assets={assets}
+        selected={selected}
+        onToggle={this.onToggle} />
+      { preview &&
+        <PreviewImage asset={preview} onClose={this.closePreview} />
+      }
 
       <Footer />
 
