@@ -17,9 +17,7 @@ When you import an image, the local path is also copied to the clipboard as a st
 ### PickPocket TODOs
 
   * Add install instructions
-  * handle missing/extra path /'s anywhere
-    * settings asset path
-    * url bar
+  * handle missing/extra path /'s in final path
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
 
@@ -32,6 +30,10 @@ When you import an image, the local path is also copied to the clipboard as a st
     * tilemaps
     * if img in path doesn't exist, option to create blank with X, Y size
   * sound preview/import
+  * set of directories to search
+    * how to "merge"?
+    * start with just a list in settings
+    * then let +/- from popup
   * multi-user
     * central store
     * purchase-able
@@ -40,7 +42,6 @@ When you import an image, the local path is also copied to the clipboard as a st
   * auto + manual tint / dsp to match game
   * create server/db? grab imgs from url?
     * should be able to do both: local directories+server
-      * like Ableton - set of directories to search
     * synced to github
     * plugged in to opengameart etc
   * SIP-style format options. [copy as]:

@@ -3,13 +3,17 @@
 import fs from "fs";
 import path from "path";
 
-export default assetRoot => new Promise( res => {
+export default assetRoot => new Promise((res, rej) => {
   //const assetRoot = folder; // this.getAssetRoot();
   // TODO: check if valid (even non-existant) dir, err if not.
   fs.readdir(assetRoot, ( err, files ) => {
 
     let dirs = [];
     let imgs = [];
+
+    if (err) {
+      return rej(err);
+    }
 
     files.forEach( f => {
       const fullPath = assetRoot + f;

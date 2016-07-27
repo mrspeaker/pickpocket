@@ -31,7 +31,11 @@ export default {
   },
 
   getAssetRoot () {
-    return atom.config.get( "pickpocket.assetFolder" );
+    let root = atom.config.get("pickpocket.assetFolder");
+    if (!root.endsWith("/")) {
+      root += "/";
+    }
+    return root;
   },
 
   activate () {
@@ -140,7 +144,11 @@ export default {
     this.modal.show();
     this.forceUpdate();
     fetchImagesFromFolder(this.getAssetRoot())
-      .then(res => this.forceUpdate(res));
+      .then(res => this.forceUpdate(res))
+      .catch(() => {
+        atom.notifications.addError("Can't open your asset folder: update it in settings");
+        this.toggle();
+      });
   },
 
   getTreePath () {
