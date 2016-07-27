@@ -91,6 +91,7 @@ export default {
 
     //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
     //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
+    //atom://config/packages/pickpocket
 
     const dirs = atom.project.getDirectories();
     if (!dirs.length) {
@@ -148,6 +149,9 @@ export default {
       .catch(() => {
         atom.notifications.addError("Can't open your asset folder: update it in settings");
         this.toggle();
+        atom.open({
+          pathsToOpen: ["atom://config/packages/pickpocket/"]
+        }, 500);
       });
   },
 
