@@ -4,9 +4,9 @@ An Atom package for grabbing existing art assets from a collection, and copying 
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
-To use it, **install the package** (TODO: instructions!) then **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in [`settings`](atom://config/packages/pickpocket)).
-
-Then **`ctrl-alt-p` (`pickpocket:toggle`) to launch**. Select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
+* **install the package** (TODO: add instructions)
+* **dump a bunch of images in a directory** (`"/tmp/"` by default - change this location in [`settings`](atom://config/packages/pickpocket)).
+* Launch PickPocket with **`ctrl-alt-p` (`pickpocket:toggle`)**. Select image (and rename it if you want) then hit `import`. The image is copy & renamed to the target dir.
 
 If you select `open in editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in [`settings`](atom://config/packages/pickpocket)).
 
@@ -16,8 +16,9 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ### PickPocket TODOs
 
+  * Add install instructions
   * handle missing/extra path /'s anywhere
-    * settings
+    * settings asset path
     * url bar
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
@@ -30,6 +31,7 @@ When you import an image, the local path is also copied to the clipboard as a st
     * generate stylized circle / rectangle etc
     * tilemaps
     * if img in path doesn't exist, option to create blank with X, Y size
+  * sound preview/import
   * multi-user
     * central store
     * purchase-able
