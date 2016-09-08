@@ -13,3 +13,7 @@ If you select `open in editor`, the local copy will be opened in your image edit
 When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
+
+## Roadmap
+
+Nope. Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3) though.
