@@ -16,10 +16,12 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ### PickPocket TODOs
 
+  * But: hit 'enter' after typing, it imports as old name
   * Add install instructions
   * handle missing/extra path /'s in final path
   * proper error handling for file operations
   * Option to create folders if path doesn't exist
+  * Pre-select name part of path
 
 ### Bigger picture / later
 
