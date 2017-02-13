@@ -4,14 +4,9 @@
 //atom.workspace.open("atom://config/packages/pickpocket")
 import React from "react";
 import ReactDOM from "react-dom";
-import fs from "fs";
-import proc from "child_process";
-const { exec } = proc;
 
 import { CompositeDisposable } from "atom";
-import PickPocket from "./PickPocket";
-import fetchImagesFromFolder from "./fetchImagesFromFolder";
-import utils from "./utils";
+import App from "./App";
 
 export default {
   root: null,
@@ -30,13 +25,6 @@ export default {
     }
   },
 
-  getAssetRoot () {
-    let root = atom.config.get("pickpocket.assetFolder");
-    if (!root.endsWith("/")) {
-      root += "/";
-    }
-    return root;
-  },
 
   activate () {
     const root = this.root = document.createElement("div");
@@ -53,7 +41,6 @@ export default {
     this.root.addEventListener("keyup", e => {
       // Handle escape key
       if (e.which !== 27) return;
-
       this.toggle();
     }, false);
 
@@ -67,71 +54,33 @@ export default {
     );
   },
 
-  forceUpdate (assets) {
-    const def = {
+  forceUpdate () {
+    /*const def = {
       dirs: [],
       imgs: []
-    };
+    };*/
 
-    ReactDOM.render(
-      this.visible ?
-      <PickPocket
-        treePath={this.getTreePath()}
-        assets={assets || def}
-        onChangePath={this.changePath.bind(this)}
+    /*const screen = !this.importedImage ? <PickPocket
+      treePath={this.getTreePath()}
+      assets={assets || def}
+      onChangePath={this.changePath.bind(this)}
+      onClose={this.toggle.bind(this)}
+      onImport={this.onImport.bind(this)}
+      onOpenAssets={this.onOpenAssets.bind(this)} />
+      :
+      <Effect
         onClose={this.toggle.bind(this)}
-        onImport={this.onImport.bind(this)}
-        onOpenAssets={this.onOpenAssets.bind(this)}
-      /> : <div></div>,
+        imgPath={this.importedImage}
+      />;
+*/
+
+    //ReactDOM.render(<App />, this.root);
+    ReactDOM.render(
+      <App toggle={() => this.toggle()} />,
+      this.root);
+    /*  this.visible ? screen : <div></div>,
       this.root
-    );
-  },
-
-  onImport (asset, path, fileName, doOpen = false) {
-
-    //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
-    //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
-    //atom://config/packages/pickpocket
-
-    const dirs = atom.project.getDirectories();
-    if (!dirs.length) {
-      this.toggle();
-      atom.notifications.addError("Not in a project - can't copy here.");
-      return;
-    }
-    const projectRoot = dirs[ 0 ].path;
-    const localFullDir = `${ projectRoot }${ path }`;
-    const localPathAndName = `${ path }${fileName}`;
-    const localFullPath = `${ projectRoot }${ localPathAndName }`;
-
-    // Test if path is legit
-    fs.stat(localFullDir, err => {
-      if (err) {
-        // Folder don't exist...
-        atom.notifications.addError(`Path ${ path } does not exist.`);
-        return;
-      }
-
-      // Check if local file already exists
-      fs.stat(localFullPath, (err, stats) => {
-        ////stats.isDirectory()
-        if (stats && stats.isFile()) {
-          if (!confirm(`overwrite ${localPathAndName}?`)) {
-            return;
-          }
-        }
-
-        // All good...
-        // TODO: use fs-extras copy, and error check
-        fs.writeFileSync(localFullPath, fs.readFileSync(asset.fullPath));
-        atom.clipboard.write( `"${ localPathAndName }"` );
-        atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
-        doOpen && this.openEditor( localFullPath );
-
-      });
-    });
-
-    this.toggle();
+    );*/
   },
 
   toggle () {
@@ -144,7 +93,7 @@ export default {
     this.visible = true;
     this.modal.show();
     this.forceUpdate();
-    fetchImagesFromFolder(this.getAssetRoot())
+    /*fetchImagesFromFolder(this.getAssetRoot())
       .then(res => this.forceUpdate(res))
       .catch(() => {
         atom.notifications.addError("Can't open your asset folder: update it in settings");
@@ -153,53 +102,9 @@ export default {
           pathsToOpen: ["atom://config/packages/pickpocket/"]
         }, 500);
       });
+    */
   },
 
-  getTreePath () {
-    // Grab current path from tree-view
-    const tree = atom.packages.getActivePackage("tree-view");
-    if ( !tree ) {
-      return "";
-    }
-    const { treeView } = tree.mainModule;
-    if (!treeView) {
-      return "";
-    }
-    const { selectedPath } = treeView;
-    if ( !selectedPath ) {
-      return "";
-    }
-    const isFile = !!( treeView.entryForPath( selectedPath ).file );
-    const folderPath = !isFile ? selectedPath : selectedPath.split( "/").slice( 0, -1 ).join( "/" );
-    const [ , relativePath ] = atom.project.relativizePath( folderPath );
-    const trailing = relativePath ? "/" : "";
-    return `/${ relativePath }${ trailing }`;
-  },
-
-  changePath (newPath) {
-    return fetchImagesFromFolder(newPath).then(res => {
-      if (newPath !== this.getAssetRoot()) {
-        res.dirs.splice(0, 0, {
-          type: "directory",
-          size: 0,
-          fullPath: utils.parentPath(newPath),
-          name: ".."
-        });
-      }
-      return this.forceUpdate(res);
-    });
-  },
-
-  openEditor ( fullPath ) {
-    const ed = atom.config.get("pickpocket.imageEditorAppName");
-    if (ed) {
-      exec(`open -a ${ ed } ${ fullPath }`);
-    }
-  },
-
-  onOpenAssets () {
-    exec(`open ${ this.getAssetRoot() }`);
-  },
 
   deactivate () {
     ReactDOM.unmountComponentAtNode(this.root);
