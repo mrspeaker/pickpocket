@@ -1,5 +1,6 @@
-"use babel";
 /* global atom */
+
+"use babel";
 
 import React from "react";
 import PickPocket from "./PickPocket";
@@ -13,12 +14,15 @@ import utils from "./utils";
 
 const {
   Component,
+  PropTypes
 } = React;
 
-// const styles = {};
-
 class App extends Component {
-  static propTypes = {};
+
+  static propTypes = {
+    toggle: PropTypes.func.isRequired
+  };
+
   state = {
     dirs: [],
     imgs: []
@@ -27,12 +31,11 @@ class App extends Component {
   constructor () {
     super();
     fetchImagesFromFolder(this.getAssetRoot())
-      .then(res => {
+      .then(({dirs, imgs}) => {
         this.setState({
-          dirs: res.dirs,
-          imgs: res.imgs
+          dirs,
+          imgs
         });
-        //this.forceUpdate(res);
       });
 
     this.changePath = this.changePath.bind(this);
@@ -86,12 +89,11 @@ class App extends Component {
         atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
         doOpen && this.openEditor( localFullPath );
         this.importedImage = asset.fullPath;
-        this.props.toggle();
-
       });
     });
 
-    //this.toggle();
+    this.props.toggle();
+
   };
 
   getTreePath () {
