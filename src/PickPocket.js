@@ -97,7 +97,7 @@ class PickPocket extends Component {
   }
 
   render () {
-    const { assets, onClose, onOpenAssets } = this.props;
+    const { assets, onClose, onOpenAssets, onSwitchMode } = this.props;
     const { path, fileName, selected, preview, canImport } = this.state;
 
     return <div className="pickpocket">
@@ -107,6 +107,7 @@ class PickPocket extends Component {
           <button className="btn" onClick={this.onImport} disabled={!canImport}>import</button>
           <button className="btn" onClick={() => this.onImport(true)} disabled={!canImport}>import & edit</button>
           <button className="btn" onClick={onOpenAssets}>Open asset folder</button>
+          <button className="btn" onClick={() => onSwitchMode(path, fileName)}>fx</button>
           <div className="icon icon-x" onClick={onClose} style={styles.closeIcon}></div>
         </div>
       </section>

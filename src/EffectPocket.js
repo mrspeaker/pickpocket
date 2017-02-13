@@ -41,8 +41,7 @@ class EffectPocket extends Component {
 
       <section>
         <div>
-          <div>{imgPath}</div>
-          <img src={ imgPath } />
+          <div>Will load for effectin': {imgPath}</div>
         </div>
       </section>
 

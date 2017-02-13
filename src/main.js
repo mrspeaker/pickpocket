@@ -27,7 +27,7 @@ export default {
   activate () {
     const root = this.root = document.createElement("div");
 
-    // TODO: is this correct? Never removeEventListener.
+    // TODO: Never removeEventListener - figure out plugin lifecycle.
     this.root.addEventListener("keyup", e => {
       // Handle escape key
       if (e.which !== 27) return;
@@ -56,7 +56,6 @@ export default {
     this.render();
   },
 
-  // TODO: when is deactivate called?
   deactivate () {
     ReactDOM.unmountComponentAtNode(this.root);
     this.subscriptions.dispose();

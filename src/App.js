@@ -1,10 +1,10 @@
-/* global atom */
-
 "use babel";
+
+/* global atom */
 
 import React from "react";
 import PickPocket from "./PickPocket";
-//import Effect from "./Effect";
+import EffectPocket from "./EffectPocket";
 
 import fs from "fs";
 import proc from "child_process";
@@ -25,11 +25,15 @@ class App extends Component {
 
   state = {
     dirs: [],
-    imgs: []
+    imgs: [],
+    mode: "pick",
+    path: "",
+    fileName: ""
   };
 
   constructor () {
     super();
+
     fetchImagesFromFolder(this.getAssetRoot())
       .then(({dirs, imgs}) => {
         this.setState({
@@ -147,13 +151,21 @@ class App extends Component {
 
 
   render () {
-    return <PickPocket
-      treePath={this.getTreePath()}
-      assets={this.state}
-      onChangePath={this.changePath}
-      onClose={this.props.toggle}
-      onImport={this.onImport}
-      onOpenAssets={() => this.onOpenAssets()} />;
+    const { toggle } = this.props;
+    const { dirs, imgs, mode, path, fileName } = this.state;
+    return mode === "pick" ?
+      <PickPocket
+        treePath={this.getTreePath()}
+        assets={{dirs, imgs}}
+        onChangePath={this.changePath}
+        onClose={toggle}
+        onImport={this.onImport}
+        onOpenAssets={() => this.onOpenAssets()}
+        onSwitchMode={(path, fileName) => this.setState({mode: "fx", path, fileName})} />
+      :
+      <EffectPocket
+        onClose={() => { this.setState({mode: "pick"}); toggle(); }}
+        imgPath={path + fileName} />;
   }
 }
 
