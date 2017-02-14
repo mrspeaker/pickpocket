@@ -31,9 +31,7 @@ class App extends Component {
     fileName: "",
   };
 
-  constructor () {
-    super();
-
+  componentDidMount () {
     fetchImagesFromFolder(this.getAssetRoot())
       .then(({dirs, imgs}) => {
         this.setState({
@@ -41,8 +39,6 @@ class App extends Component {
           imgs
         });
       });
-
-    this.changePath = this.changePath.bind(this);
   }
 
   getAssetRoot () {
@@ -168,7 +164,7 @@ class App extends Component {
     return `/${ relativePath }${ trailing }`;
   }
 
-  changePath (newPath) {
+  changePath = (newPath) => {
     return fetchImagesFromFolder(newPath).then(res => {
       if (newPath !== this.getAssetRoot()) {
         res.dirs.splice(0, 0, {
