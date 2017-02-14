@@ -28,6 +28,7 @@ class PickPocket extends Component {
     onClose: PropTypes.func.isRequired,
     onOpenAssets: PropTypes.func.isRequired,
     onChangePath: PropTypes.func.isRequired,
+    onSwitchMode: PropTypes.func.isRequired,
     treePath: PropTypes.string
   };
 
@@ -106,8 +107,8 @@ class PickPocket extends Component {
         <div className="btn-group" style={{width:"100%"}}>
           <button className="btn" onClick={this.onImport} disabled={!canImport}>import</button>
           <button className="btn" onClick={() => this.onImport(true)} disabled={!canImport}>import & edit</button>
+          <button className="btn" onClick={() => onSwitchMode(selected[0])} disabled={!canImport}>fx</button>
           <button className="btn" onClick={onOpenAssets}>Open asset folder</button>
-          <button className="btn" onClick={() => onSwitchMode(path, fileName)}>fx</button>
           <div className="icon icon-x" onClick={onClose} style={styles.closeIcon}></div>
         </div>
       </section>

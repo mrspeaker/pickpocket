@@ -27,8 +27,7 @@ class App extends Component {
     dirs: [],
     imgs: [],
     mode: "pick",
-    path: "",
-    fileName: ""
+    selectedAsset: null,
   };
 
   constructor () {
@@ -57,7 +56,6 @@ class App extends Component {
     //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
     //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
     //atom://config/packages/pickpocket
-
     const dirs = atom.project.getDirectories();
     if (!dirs.length) {
       this.props.toggle();
@@ -149,10 +147,9 @@ class App extends Component {
     exec(`open ${ this.getAssetRoot() }`);
   }
 
-
   render () {
     const { toggle } = this.props;
-    const { dirs, imgs, mode, path, fileName } = this.state;
+    const { dirs, imgs, mode, selectedAsset } = this.state;
     return mode === "pick" ?
       <PickPocket
         treePath={this.getTreePath()}
@@ -161,11 +158,11 @@ class App extends Component {
         onClose={toggle}
         onImport={this.onImport}
         onOpenAssets={() => this.onOpenAssets()}
-        onSwitchMode={(path, fileName) => this.setState({mode: "fx", path, fileName})} />
+        onSwitchMode={selectedAsset => selectedAsset && this.setState({mode: "fx", selectedAsset})} />
       :
       <EffectPocket
         onClose={() => { this.setState({mode: "pick"}); toggle(); }}
-        imgPath={path + fileName} />;
+        asset={selectedAsset} />;
   }
 }
 
