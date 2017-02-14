@@ -54,7 +54,8 @@ class PickPocket extends Component {
     if (this.state.preview) {
       e.stopPropagation();
       this.setState({
-        preview: null
+        preview: null,
+        fileName: ""
       });
     }
   }
