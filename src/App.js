@@ -2,14 +2,17 @@
 /* global atom */
 
 import React from "react";
+import proc from "child_process";
+const { exec } = proc;
+
 import PickPocket from "./PickPocket";
 import EffectPocket from "./EffectPocket";
 
-import proc from "child_process";
-const { exec } = proc;
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
 import copyFile from "./file/copyFile";
 import writeImage from "./file/writeImage";
+import getTreePath from "./file/writeImage";
+import getProjectRoot from "./file/getProjectRoot";
 import utils from "./utils";
 
 const {
@@ -55,19 +58,11 @@ class App extends Component {
     return root;
   }
 
-  getProjectRoot = () => {
-    const dirs = atom.project.getDirectories();
-    if (!dirs.length) {
-      atom.notifications.addError("Not in a project - can't copy here.");
-      this.props.toggle();
-      return;
-    }
-    return dirs[0].path;
-  }
-
   onImport = (asset, path, fileName, doOpen = false) => {
-    const projectRoot = this.getProjectRoot();
-    if (!projectRoot) return;
+    const projectRoot = getProjectRoot();
+    if (!projectRoot) {
+      return this.props.toggle();
+    }
 
     copyFile(asset.fullPath, projectRoot, path, fileName)
       .then(res => this.onImportSuccess({...res, doOpen}))
@@ -77,8 +72,10 @@ class App extends Component {
   };
 
   onImportCanvas = canvas => {
-    const projectRoot = this.getProjectRoot();
-    if (!projectRoot) return;
+    const projectRoot = getProjectRoot();
+    if (!projectRoot) {
+      return this.props.toggle();
+    }
 
     const {path, fileName} = this.state;
     const imgData = canvas.toDataURL("image/png");
@@ -105,22 +102,6 @@ class App extends Component {
         fileName
       });
     }
-  }
-
-  getTreePath () {
-    // Grab current path from tree-view
-    const tree = atom.packages.getActivePackage("tree-view");
-    if ( !tree ) { return ""; }
-    const { treeView } = tree.mainModule;
-    if (!treeView) { return ""; }
-    const { selectedPath } = treeView;
-    if ( !selectedPath ) { return ""; }
-
-    const isFile = !!( treeView.entryForPath( selectedPath ).file );
-    const folderPath = !isFile ? selectedPath : selectedPath.split( "/").slice( 0, -1 ).join( "/" );
-    const [ , relativePath ] = atom.project.relativizePath( folderPath );
-    const trailing = relativePath ? "/" : "";
-    return `/${ relativePath }${ trailing }`;
   }
 
   changePath = newPath => fetchImagesFromFolder(newPath)
@@ -159,7 +140,7 @@ class App extends Component {
     const { dirs, imgs, mode, selectedAsset } = this.state;
     return mode === "pick" ?
       <PickPocket
-        treePath={this.getTreePath()}
+        treePath={getTreePath()}
         assets={{dirs, imgs}}
         onChangePath={this.changePath}
         onClose={this.onClose}
