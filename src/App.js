@@ -1,5 +1,4 @@
 "use babel";
-
 /* global atom */
 
 import React from "react";
@@ -28,6 +27,8 @@ class App extends Component {
     imgs: [],
     mode: "pick",
     selectedAsset: null,
+    path: "",
+    fileName: "",
   };
 
   constructor () {
@@ -53,9 +54,6 @@ class App extends Component {
   }
 
   onImport = (asset, path, fileName, doOpen = false) => {
-    //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
-    //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
-    //atom://config/packages/pickpocket
     const dirs = atom.project.getDirectories();
     if (!dirs.length) {
       this.props.toggle();
@@ -90,28 +88,79 @@ class App extends Component {
         atom.clipboard.write( `"${ localPathAndName }"` );
         atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
         doOpen && this.openEditor( localFullPath );
-        this.importedImage = asset.fullPath;
       });
     });
 
     this.props.toggle();
-
   };
+
+  // TODO: refactor with regular import
+  onImportCanvas = (canvas) => {
+    const {path, fileName} = this.state;
+    const imgData = canvas.toDataURL("image/png");
+    const dirs = atom.project.getDirectories();
+    if (!dirs.length) {
+      this.props.toggle();
+      atom.notifications.addError("Not in a project - can't copy here.");
+      return;
+    }
+    const projectRoot = dirs[ 0 ].path;
+    const localFullDir = `${ projectRoot }${ path }`;
+    const localPathAndName = `${ path }${fileName}`;
+    const localFullPath = `${ projectRoot }${ localPathAndName }`;
+
+    // Test if path is legit
+    fs.stat(localFullDir, err => {
+      if (err) {
+        // Folder don't exist...
+        atom.notifications.addError(`Path ${ path } does not exist.`);
+        return;
+      }
+
+      // Check if local file already exists
+      fs.stat(localFullPath, (err, stats) => {
+        ////stats.isDirectory()
+        if (stats && stats.isFile()) {
+          if (!confirm(`overwrite ${localPathAndName}?`)) {
+            return;
+          }
+        }
+
+        // All good...
+        // TODO: use fs-extras copy, and error check
+        //fs.writeFileSync(localFullPath, fs.readFileSync(asset.fullPath));
+        const data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        const buf = new Buffer(data, "base64");
+        fs.writeFile(localFullPath, buf);
+        atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
+        atom.clipboard.write( `"${ localPathAndName }"` );
+      });
+    });
+
+    this.setState({mode: "pick"});
+    this.props.toggle();
+  }
+
+  switchMode = (selectedAsset, path, fileName) => {
+    if (selectedAsset) {
+      this.setState({
+        mode: "fx",
+        selectedAsset,
+        path,
+        fileName
+      });
+    }
+  }
 
   getTreePath () {
     // Grab current path from tree-view
     const tree = atom.packages.getActivePackage("tree-view");
-    if ( !tree ) {
-      return "";
-    }
+    if ( !tree ) { return ""; }
     const { treeView } = tree.mainModule;
-    if (!treeView) {
-      return "";
-    }
+    if (!treeView) { return ""; }
     const { selectedPath } = treeView;
-    if ( !selectedPath ) {
-      return "";
-    }
+    if ( !selectedPath ) { return ""; }
+
     const isFile = !!( treeView.entryForPath( selectedPath ).file );
     const folderPath = !isFile ? selectedPath : selectedPath.split( "/").slice( 0, -1 ).join( "/" );
     const [ , relativePath ] = atom.project.relativizePath( folderPath );
@@ -158,11 +207,13 @@ class App extends Component {
         onClose={toggle}
         onImport={this.onImport}
         onOpenAssets={() => this.onOpenAssets()}
-        onSwitchMode={selectedAsset => selectedAsset && this.setState({mode: "fx", selectedAsset})} />
+        onSwitchMode={this.switchMode} />
       :
       <EffectPocket
         onClose={() => { this.setState({mode: "pick"}); toggle(); }}
-        asset={selectedAsset} />;
+        onImport={this.onImportCanvas}
+        asset={selectedAsset}
+       />;
   }
 }
 

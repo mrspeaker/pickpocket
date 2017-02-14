@@ -20,6 +20,7 @@ class EffectPocket extends Component {
 
   static propTypes = {
     onClose: PropTypes.func.isRequired,
+    onImport: PropTypes.func.isRequired,
     asset: PropTypes.object.isRequired
   };
 
@@ -70,6 +71,10 @@ class EffectPocket extends Component {
     });
   }
 
+  onImport = () => {
+    this.props.onImport(this.refs.canvas);
+  }
+
   render () {
 
     const { onClose, asset } = this.props;
@@ -81,7 +86,7 @@ class EffectPocket extends Component {
 
       <section className="input-block find-container">
         <div className="btn-group" style={{width:"100%"}}>
-          <button className="btn" onClick={() => {}} >import</button>
+          <button className="btn" onClick={this.onImport}>import</button>
           <div className="icon icon-x" onClick={onClose} style={styles.closeIcon}></div>
         </div>
       </section>

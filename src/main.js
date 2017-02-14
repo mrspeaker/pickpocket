@@ -69,6 +69,9 @@ export default {
   atom.workspace.open("atom://config/packages/pickpocket")
   atom.notifications.addError("Can't open your asset folder: update it in settings");
   atom.open({ pathsToOpen: ["atom://config/packages/pickpocket/"]}, 500);
+  //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
+  //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
+  //atom://config/packages/pickpocket
 
 
   // Pretty sure this isn't how you're supposed to make
