@@ -1,6 +1,9 @@
 "use babel";
 
 /* global atom */
+
+// The base Atom plugin, that renders (or doesn't!) the App.
+
 import React from "react";
 import ReactDOM from "react-dom";
 

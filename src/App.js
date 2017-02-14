@@ -5,10 +5,11 @@ import React from "react";
 import PickPocket from "./PickPocket";
 import EffectPocket from "./EffectPocket";
 
-import fs from "fs";
 import proc from "child_process";
 const { exec } = proc;
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
+import copyFile from "./file/copyFile";
+import writeImage from "./file/writeImage";
 import utils from "./utils";
 
 const {
@@ -54,92 +55,45 @@ class App extends Component {
     return root;
   }
 
-  onImport = (asset, path, fileName, doOpen = false) => {
+  getProjectRoot = () => {
     const dirs = atom.project.getDirectories();
     if (!dirs.length) {
-      this.props.toggle();
       atom.notifications.addError("Not in a project - can't copy here.");
+      this.props.toggle();
       return;
     }
-    const projectRoot = dirs[ 0 ].path;
-    const localFullDir = `${ projectRoot }${ path }`;
-    const localPathAndName = `${ path }${fileName}`;
-    const localFullPath = `${ projectRoot }${ localPathAndName }`;
+    return dirs[0].path;
+  }
 
-    // Test if path is legit
-    fs.stat(localFullDir, err => {
-      if (err) {
-        // Folder don't exist...
-        atom.notifications.addError(`Path ${ path } does not exist.`);
-        return;
-      }
+  onImport = (asset, path, fileName, doOpen = false) => {
+    const projectRoot = this.getProjectRoot();
+    if (!projectRoot) return;
 
-      // Check if local file already exists
-      fs.stat(localFullPath, (err, stats) => {
-        ////stats.isDirectory()
-        if (stats && stats.isFile()) {
-          if (!confirm(`overwrite ${localPathAndName}?`)) {
-            return;
-          }
-        }
+    copyFile(asset.fullPath, projectRoot, path, fileName)
+      .then(res => this.onImportSuccess({...res, doOpen}))
+      .catch(err => err && atom.notifications.addError(err));
 
-        // All good...
-        // TODO: use fs-extras copy, and error check
-        fs.writeFileSync(localFullPath, fs.readFileSync(asset.fullPath));
-        atom.clipboard.write( `"${ localPathAndName }"` );
-        atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
-        doOpen && this.openEditor( localFullPath );
-      });
-    });
-
-    this.props.toggle();
+    this.onClose();
   };
 
-  // TODO: refactor with regular import
-  onImportCanvas = (canvas) => {
+  onImportCanvas = canvas => {
+    const projectRoot = this.getProjectRoot();
+    if (!projectRoot) return;
+
     const {path, fileName} = this.state;
     const imgData = canvas.toDataURL("image/png");
-    const dirs = atom.project.getDirectories();
-    if (!dirs.length) {
-      this.props.toggle();
-      atom.notifications.addError("Not in a project - can't copy here.");
-      return;
-    }
-    const projectRoot = dirs[ 0 ].path;
-    const localFullDir = `${ projectRoot }${ path }`;
-    const localPathAndName = `${ path }${fileName}`;
-    const localFullPath = `${ projectRoot }${ localPathAndName }`;
 
-    // Test if path is legit
-    fs.stat(localFullDir, err => {
-      if (err) {
-        // Folder don't exist...
-        atom.notifications.addError(`Path ${ path } does not exist.`);
-        return;
-      }
+    writeImage(imgData, projectRoot, path, fileName)
+      .then(this.onImportSuccess)
+      .catch(err => err && atom.notifications.addError(err));
 
-      // Check if local file already exists
-      fs.stat(localFullPath, (err, stats) => {
-        ////stats.isDirectory()
-        if (stats && stats.isFile()) {
-          if (!confirm(`overwrite ${localPathAndName}?`)) {
-            return;
-          }
-        }
+    this.onClose();
+  }
 
-        // All good...
-        // TODO: use fs-extras copy, and error check
-        //fs.writeFileSync(localFullPath, fs.readFileSync(asset.fullPath));
-        const data = imgData.replace(/^data:image\/\w+;base64,/, "");
-        const buf = new Buffer(data, "base64");
-        fs.writeFile(localFullPath, buf);
-        atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
-        atom.clipboard.write( `"${ localPathAndName }"` );
-      });
-    });
-
-    this.setState({mode: "pick"});
-    this.props.toggle();
+  onImportSuccess ({localPathAndName, localFullPath, fileName, path, doOpen = false}) {
+    atom.clipboard.write( `"${ localPathAndName }"` );
+    atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
+    doOpen && this.openEditor( localFullPath );
   }
 
   switchMode = (selectedAsset, path, fileName) => {
@@ -169,8 +123,8 @@ class App extends Component {
     return `/${ relativePath }${ trailing }`;
   }
 
-  changePath = (newPath) => {
-    return fetchImagesFromFolder(newPath).then(res => {
+  changePath = newPath => fetchImagesFromFolder(newPath)
+    .then(res => {
       if (newPath !== this.getAssetRoot()) {
         res.dirs.splice(0, 0, {
           type: "directory",
@@ -184,7 +138,6 @@ class App extends Component {
         imgs: res.imgs
       });
     });
-  }
 
   openEditor ( fullPath ) {
     const ed = atom.config.get("pickpocket.imageEditorAppName");
@@ -193,25 +146,29 @@ class App extends Component {
     }
   }
 
-  onOpenAssets () {
+  onOpenAssets = () => {
     exec(`open ${ this.getAssetRoot() }`);
   }
 
+  onClose = () => {
+    this.setState({mode: "pick"});
+    this.props.toggle();
+  }
+
   render () {
-    const { toggle } = this.props;
     const { dirs, imgs, mode, selectedAsset } = this.state;
     return mode === "pick" ?
       <PickPocket
         treePath={this.getTreePath()}
         assets={{dirs, imgs}}
         onChangePath={this.changePath}
-        onClose={toggle}
+        onClose={this.onClose}
         onImport={this.onImport}
-        onOpenAssets={() => this.onOpenAssets()}
+        onOpenAssets={this.onOpenAssets}
         onSwitchMode={this.switchMode} />
       :
       <EffectPocket
-        onClose={() => { this.setState({mode: "pick"}); toggle(); }}
+        onClose={this.onClose}
         onImport={this.onImportCanvas}
         asset={selectedAsset}
        />;
