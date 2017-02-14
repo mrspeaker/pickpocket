@@ -4,7 +4,6 @@ import fs from "fs";
 import path from "path";
 
 export default assetRoot => new Promise((res, rej) => {
-  //const assetRoot = folder; // this.getAssetRoot();
   // TODO: check if valid (even non-existant) dir, err if not.
   fs.readdir(assetRoot, ( err, files ) => {
 

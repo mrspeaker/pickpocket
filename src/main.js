@@ -14,7 +14,7 @@ export default {
   config: {
     assetFolder: {
       type: "string",
-      description: "A folder that contains a bunch of gif/png/jpgs",
+      description: "A folder (eg /Users/mrspeaker/assets/) that contains a bunch of gif/png/jpgs",
       default: "/tmp/"
     },
     imageEditorAppName: {

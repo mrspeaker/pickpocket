@@ -38,6 +38,11 @@ class App extends Component {
           dirs,
           imgs
         });
+      })
+      .catch(() => {
+        atom.notifications.addError("Please set asset folder set in preferences");
+        atom.notifications.addError(this.getAssetRoot());
+        this.props.toggle();
       });
   }
 
