@@ -9,6 +9,15 @@ import ReactDOM from "react-dom";
 
 import { CompositeDisposable } from "atom";
 import App from "./App";
+import path from "path";
+
+const defaultExamples = path.join(
+  path.dirname(
+    atom.config.getUserConfigPath()
+  ),
+  "packages",
+  "pickpocket",
+  "example");
 
 export default {
   root: null,
@@ -18,7 +27,7 @@ export default {
     assetFolder: {
       type: "string",
       description: "A folder (eg /Users/mrspeaker/assets/) that contains a bunch of gif/png/jpgs",
-      default: "/tmp/"
+      default: defaultExamples
     },
     imageEditorAppName: {
       type: "string",
@@ -29,6 +38,7 @@ export default {
 
   activate() {
     const root = this.root = document.createElement("div");
+    console.log(__dirname.slice(0, -3) + "example");
 
     // TODO: Never removeEventListener - figure out plugin lifecycle.
     this.root.addEventListener(
@@ -79,6 +89,11 @@ export default {
   //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
   //atom://config/packages/pickpocket
 
+  // https://atom.io/docs/api/v1.14.2/Config#instance-getUserConfigPath will
+  // get you to the `config.cson`, you can do
+  // `path.join(path.dirname(atom.config.getUserConfigPath()), 'packages', 'package-name')`
+  // to get the path to your package's directory ... or `__dirname` to get the
+  // directory that your current file is executing from and walk up from there
 
   // Pretty sure this isn't how you're supposed to make
   // a modal act like a modal, but whatever...
