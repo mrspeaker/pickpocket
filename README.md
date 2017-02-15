@@ -5,7 +5,7 @@ An Atom package for grabbing existing art assets from a collection and copying t
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
 * **Install the package** (TODO: add instructions)
-* **Dump a bunch of images in a directory** (`<plugin root>/example` by default - change this location in [`settings`](atom://config/packages/pickpocket)).
+* **Dump a bunch of images in a directory** ([`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example) by default - change this location in [`settings`](atom://config/packages/pickpocket)).
 * Launch PickPocket with **`ctrl-alt-p` (`pickpocket:toggle`)**.
 * Select image (and rename it if you want) then hit `import`.
 
