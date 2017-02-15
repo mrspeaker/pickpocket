@@ -21,7 +21,6 @@ const {
 } = React;
 
 class App extends Component {
-
   static propTypes = {
     toggle: PropTypes.func.isRequired
   };
@@ -32,25 +31,27 @@ class App extends Component {
     mode: "pick",
     selectedAsset: null,
     path: "",
-    fileName: "",
+    fileName: ""
   };
 
-  componentDidMount () {
+  componentDidMount() {
     fetchImagesFromFolder(this.getAssetRoot())
-      .then(({dirs, imgs}) => {
+      .then(({ dirs, imgs }) => {
         this.setState({
           dirs,
           imgs
         });
       })
       .catch(() => {
-        atom.notifications.addError("Please set asset folder set in preferences");
+        atom.notifications.addError(
+          "Please set asset folder set in preferences"
+        );
         atom.notifications.addError(this.getAssetRoot());
         this.props.toggle();
       });
   }
 
-  getAssetRoot () {
+  getAssetRoot() {
     let root = atom.config.get("pickpocket.assetFolder");
     if (!root.endsWith("/")) {
       root += "/";
@@ -65,7 +66,7 @@ class App extends Component {
     }
 
     copyFile(asset.fullPath, projectRoot, path, fileName)
-      .then(res => this.onImportSuccess({...res, doOpen}))
+      .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
 
     this.onClose();
@@ -77,7 +78,7 @@ class App extends Component {
       return this.props.toggle();
     }
 
-    const {path, fileName} = this.state;
+    const { path, fileName } = this.state;
     const imgData = canvas.toDataURL("image/png");
 
     writeImage(imgData, projectRoot, path, fileName)
@@ -85,12 +86,14 @@ class App extends Component {
       .catch(err => err && atom.notifications.addError(err));
 
     this.onClose();
-  }
+  };
 
-  onImportSuccess ({localPathAndName, localFullPath, fileName, path, doOpen = false}) {
-    atom.clipboard.write( `"${ localPathAndName }"` );
-    atom.notifications.addSuccess(`Copied ${ fileName } to ${ path }`);
-    doOpen && this.openEditor( localFullPath );
+  onImportSuccess(
+    { localPathAndName, localFullPath, fileName, path, doOpen = false }
+  ) {
+    atom.clipboard.write(`"${localPathAndName}"`);
+    atom.notifications.addSuccess(`Copied ${fileName} to ${path}`);
+    doOpen && this.openEditor(localFullPath);
   }
 
   switchMode = (selectedAsset, path, fileName) => {
@@ -101,64 +104,62 @@ class App extends Component {
         path,
         fileName
       });
-    }
-    else {
+    } else {
       this.setState({
         mode: "pick"
       });
     }
-  }
+  };
 
-  changePath = newPath => fetchImagesFromFolder(newPath)
-    .then(res => {
-      if (newPath !== this.getAssetRoot()) {
-        res.dirs.splice(0, 0, {
-          type: "directory",
-          size: 0,
-          fullPath: utils.parentPath(newPath),
-          name: ".."
-        });
-      }
-      this.setState({
-        dirs: res.dirs,
-        imgs: res.imgs
+  changePath = newPath => fetchImagesFromFolder(newPath).then(res => {
+    if (newPath !== this.getAssetRoot()) {
+      res.dirs.splice(0, 0, {
+        type: "directory",
+        size: 0,
+        fullPath: utils.parentPath(newPath),
+        name: ".."
       });
+    }
+    this.setState({
+      dirs: res.dirs,
+      imgs: res.imgs
     });
+  });
 
-  openEditor ( fullPath ) {
+  openEditor(fullPath) {
     const ed = atom.config.get("pickpocket.imageEditorAppName");
     if (ed) {
-      exec(`open -a ${ ed } ${ fullPath }`);
+      exec(`open -a ${ed} ${fullPath}`);
     }
   }
 
   onOpenAssets = () => {
-    exec(`open ${ this.getAssetRoot() }`);
-  }
+    exec(`open ${this.getAssetRoot()}`);
+  };
 
   onClose = () => {
-    this.setState({mode: "pick"});
+    this.setState({ mode: "pick" });
     this.props.toggle();
-  }
+  };
 
-  render () {
+  render() {
     const { dirs, imgs, mode, selectedAsset } = this.state;
-    return mode === "pick" ?
-      <PickPocket
-        treePath={getTreePath()}
-        assets={{dirs, imgs}}
-        onChangePath={this.changePath}
-        onClose={this.onClose}
-        onImport={this.onImport}
-        onOpenAssets={this.onOpenAssets}
-        onSwitchMode={this.switchMode} />
-      :
-      <EffectPocket
-        onClose={this.onClose}
-        onImport={this.onImportCanvas}
-        onSwitchMode={this.switchMode}
-        asset={selectedAsset}
-       />;
+    return mode === "pick"
+      ? <PickPocket
+          treePath={getTreePath()}
+          assets={{ dirs, imgs }}
+          onChangePath={this.changePath}
+          onClose={this.onClose}
+          onImport={this.onImport}
+          onOpenAssets={this.onOpenAssets}
+          onSwitchMode={this.switchMode}
+        />
+      : <EffectPocket
+          onClose={this.onClose}
+          onImport={this.onImportCanvas}
+          onSwitchMode={this.switchMode}
+          asset={selectedAsset}
+        />;
   }
 }
 

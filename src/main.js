@@ -27,45 +27,48 @@ export default {
     }
   },
 
-  activate () {
+  activate() {
     const root = this.root = document.createElement("div");
 
     // TODO: Never removeEventListener - figure out plugin lifecycle.
-    this.root.addEventListener("keyup", e => {
-      // Handle escape key
-      if (e.which !== 27) return;
-      this.toggle();
-    }, false);
+    this.root.addEventListener(
+      "keyup",
+      e => {
+        // Handle escape key
+        if (e.which !== 27) return;
+        this.toggle();
+      },
+      false
+    );
 
-    this.modal = atom.workspace.addModalPanel({item: root});
+    this.modal = atom.workspace.addModalPanel({ item: root });
     this.subscriptions = new CompositeDisposable();
     this.subscriptions.add(
-      atom.commands.add(
-        "atom-workspace",
-        { "pickpocket:toggle": () => this.toggle() }
-      )
+      atom.commands.add("atom-workspace", {
+        "pickpocket:toggle": () => this.toggle()
+      })
     );
   },
 
-  render () {
+  render() {
     ReactDOM.render(
       this.visible ? <App toggle={() => this.toggle()} /> : <div />,
-      this.root);
+      this.root
+    );
   },
 
-  toggle () {
+  toggle() {
     this.visible = !this.visible;
     this.modal[this.visible ? "show" : "hide"]();
     this.render();
   },
 
-  deactivate () {
+  deactivate() {
     ReactDOM.unmountComponentAtNode(this.root);
     this.subscriptions.dispose();
     this.modal.destroy();
   }
 };
-
 /*
   // atom functions...
 

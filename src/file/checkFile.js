@@ -3,14 +3,14 @@
 import fs from "fs";
 
 const checkFile = (toRoot, toPath, toName) => {
-  const localFullDir = `${ toRoot }${ toPath }`;
-  const localPathAndName = `${ toPath }${ toName }`;
-  const localFullPath = `${ toRoot }${ localPathAndName }`;
+  const localFullDir = `${toRoot}${toPath}`;
+  const localPathAndName = `${toPath}${toName}`;
+  const localFullPath = `${toRoot}${localPathAndName}`;
 
   return new Promise((res, rej) => {
     fs.stat(localFullDir, err => {
       if (err) {
-        return rej(`Path ${ toPath } does not exist.`);
+        return rej(`Path ${toPath} does not exist.`);
       }
 
       // Check if local file already exists
@@ -22,7 +22,12 @@ const checkFile = (toRoot, toPath, toName) => {
         }
 
         // All good...
-        return res({localPathAndName, localFullPath, path: toPath, fileName: toName});
+        return res({
+          localPathAndName,
+          localFullPath,
+          path: toPath,
+          fileName: toName
+        });
       });
     });
   });
