@@ -38,7 +38,6 @@ export default {
 
   activate() {
     const root = this.root = document.createElement("div");
-    console.log(__dirname.slice(0, -3) + "example");
 
     // TODO: Never removeEventListener - figure out plugin lifecycle.
     this.root.addEventListener(
