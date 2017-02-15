@@ -32,7 +32,10 @@ class MiniEditor extends Component {
 
     this.view.addEventListener("keyup", e => {
       if (e.which === 27) this.props.onEscape(e);
-      if (e.which === 13) this.props.onEnter(e);
+      if (e.which === 13) {
+        this.props.onChange(editor.getText());
+        this.props.onEnter(e);
+      }
     }, false);
 
     this.refs.ed.appendChild(this.view);
