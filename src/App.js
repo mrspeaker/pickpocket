@@ -102,6 +102,11 @@ class App extends Component {
         fileName
       });
     }
+    else {
+      this.setState({
+        mode: "pick"
+      });
+    }
   }
 
   changePath = newPath => fetchImagesFromFolder(newPath)
@@ -151,6 +156,7 @@ class App extends Component {
       <EffectPocket
         onClose={this.onClose}
         onImport={this.onImportCanvas}
+        onSwitchMode={this.switchMode}
         asset={selectedAsset}
        />;
   }

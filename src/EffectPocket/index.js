@@ -21,6 +21,7 @@ class EffectPocket extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     onImport: PropTypes.func.isRequired,
+    onSwitchMode: PropTypes.func.isRequired,
     asset: PropTypes.object.isRequired
   };
 
@@ -77,7 +78,7 @@ class EffectPocket extends Component {
 
   render () {
 
-    const { onClose, asset } = this.props;
+    const { onClose, onSwitchMode, asset } = this.props;
     const { r, g, b, a } = this.state;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
@@ -87,6 +88,7 @@ class EffectPocket extends Component {
       <section className="input-block find-container">
         <div className="btn-group" style={{width:"100%"}}>
           <button className="btn" onClick={this.onImport}>import</button>
+          <button className="btn" onClick={() => onSwitchMode()}>back</button>
           <div className="icon icon-x" onClick={onClose} style={styles.closeIcon}></div>
         </div>
       </section>
