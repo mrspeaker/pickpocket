@@ -49,14 +49,15 @@ class PickPocket extends Component {
     });
   };
 
-  closePreview = e => {
+  closePreview = (e) => {
     if (this.state.preview) {
       e.stopPropagation();
-      this.setState({
-        preview: null,
-        fileName: ""
-      });
     }
+    this.setState({
+      preview: null,
+      fileName: "",
+      canImport: false
+    });
   };
 
   onToggle = asset => {
@@ -67,20 +68,12 @@ class PickPocket extends Component {
       return;
     }
 
-    if (this.isSelected(asset)) {
-      this.setState(() => ({
-        fileName: "",
-        selected: [],
-        canImport: false
-      }));
-    } else {
-      this.setState(() => ({
-        fileName: utils.splitPathAndFileName(fullPath).fileName,
-        preview: asset,
-        selected: [asset],
-        canImport: true
-      }));
-    }
+    this.setState(() => ({
+      fileName: utils.splitPathAndFileName(fullPath).fileName,
+      preview: asset,
+      selected: [asset],
+      canImport: true
+    }));
   };
 
   onImport = (edit = false) => {
