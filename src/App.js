@@ -11,7 +11,7 @@ import EffectPocket from "./EffectPocket";
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
 import copyFile from "./file/copyFile";
 import writeImage from "./file/writeImage";
-import getTreePath from "./file/writeImage";
+import getTreePath from "./file/getTreePath";
 import getProjectRoot from "./file/getProjectRoot";
 import utils from "./utils";
 

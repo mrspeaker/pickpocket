@@ -1,3 +1,4 @@
+"use babel";
 /* global atom */
 
 const getProjectRoot = () => {
