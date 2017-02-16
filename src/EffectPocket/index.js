@@ -26,13 +26,7 @@ class EffectPocket extends Component {
   };
 
   state = {
-    hue: {
-      on: false,
-      r: 0,
-      g: 0,
-      b: 0,
-      a: 50
-    },
+    hueRotate: 0,
 
     flip: {
       x: false,
@@ -49,25 +43,18 @@ class EffectPocket extends Component {
   effect () {
 
     const canvas = this.refs.canvas;
-    if (!canvas) { return; }
-    const {hue, flip, rotate90} = this.state;
-    const {on: doHue, r, g, b, a} = hue;
+    if (!canvas || !canvas.getContext) { return; }
+    const {hueRotate, flip, rotate90} = this.state;
     const {x, y} = flip;
 
-    const tint = document.createElement("canvas");
-    const tintCtx = tint.getContext("2d");
-
-    if (!canvas.getContext) {
-      return;
-    }
     const ctx = canvas.getContext("2d");
     const img = new Image();
     img.src = this.props.asset.fullPath;
 
     img.onload = () => {
       const {width, height} = img;
-      canvas.width = tint.width = rotate90 ? height : width;
-      canvas.height = tint.height = rotate90 ? width : height;
+      canvas.width = rotate90 ? height : width;
+      canvas.height = rotate90 ? width : height;
 
       if (x || y) {
         ctx.translate(x ? canvas.width : 0, y ? canvas.height : 0);
@@ -80,31 +67,28 @@ class EffectPocket extends Component {
         ctx.translate(-img.width / 2, -img.height / 2);
       }
 
-      if (doHue) {
-        tintCtx.fillStyle = `rgb(${(r / 100) * 255 | 0}, ${(g / 100) * 255 | 0}, ${(b / 100) * 255 | 0})`;
-        tintCtx.fillRect(0, 0, tint.width, tint.height);
-        tintCtx.globalCompositeOperation = "destination-atop";
-        tintCtx.drawImage(img, 0, 0);
-      }
-
       ctx.drawImage(img, 0, 0);
 
-      if (doHue) {
-        ctx.globalAlpha = a / 100;
+      if (hueRotate !== 0) {
+        const tint = document.createElement("canvas");
+        tint.width = width;
+        tint.height = height;
+        const tintCtx = tint.getContext("2d");
+        //tintCtx.fillStyle = `rgb(${(r / 100) * 255 | 0}, ${(g / 100) * 255 | 0}, ${(b / 100) * 255 | 0})`;
+        //tintCtx.fillRect(0, 0, tint.width, tint.height);
+        tintCtx.filter = `hue-rotate(${(hueRotate / 100) * 360 | 0}deg)`;
+        tintCtx.globalCompositeOperation = "destination-atop";
+        tintCtx.drawImage(img, 0, 0);
+
+        //ctx.globalAlpha = a / 100;
         ctx.drawImage(tint, 0, 0);
       }
     };
   }
 
   onHueChange (component, e) {
-    const hue = Object.assign({}, this.state.hue);
-    if (component === "on") {
-      hue.on = !hue.on;
-    } else {
-      hue[component] = e.target.value;
-    }
     this.setState({
-      hue
+      hueRotate: e.target.value
     });
   }
 
@@ -127,8 +111,7 @@ class EffectPocket extends Component {
   render () {
 
     const { onClose, onSwitchMode, asset } = this.props;
-    const { hue, flip, rotate90 } = this.state;
-    const { on: hueOn, r, g, b, a } = hue;
+    const { flip, rotate90, hueRotate } = this.state;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
 
@@ -143,20 +126,10 @@ class EffectPocket extends Component {
       </section>
 
       <section>
-        Hue:<input type="checkbox" onChange={() => this.onHueChange("on")} checked={hueOn} />
-        {hueOn && <div>
-          <span style={{display: "inline-block", width: 20}}>r</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("r", e)} value={r} />
-          <span style={{display: "inline-block", width: 20, marginLeft: 30}}>a</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("a", e)} value={a} /><br/>
-          <span style={{display: "inline-block", width: 20}}>g</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("g", e)} value={g} /><br/>
-          <span style={{display: "inline-block", width: 20}}>b</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("b", e)} value={b} /><br/>
-        </div>}
-      </section>
-
-      <section>
-        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />
-        {" "}
-        Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />
-        {" "}
+        <span style={{display: "inline-block", width: 30}}>Hue: </span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("hueRotate", e)} value={hueRotate} />
+        <br/>
+        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
+        Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
         Rotate 90: <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
       </section>
 
