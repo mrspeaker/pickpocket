@@ -37,7 +37,9 @@ class EffectPocket extends Component {
     flip: {
       x: false,
       y: false
-    }
+    },
+
+    rotate90: false
   };
 
   componentDidMount () {
@@ -48,7 +50,7 @@ class EffectPocket extends Component {
 
     const canvas = this.refs.canvas;
     if (!canvas) { return; }
-    const {hue, flip} = this.state;
+    const {hue, flip, rotate90} = this.state;
     const {on: doHue, r, g, b, a} = hue;
     const {x, y} = flip;
 
@@ -63,12 +65,19 @@ class EffectPocket extends Component {
     img.src = this.props.asset.fullPath;
 
     img.onload = () => {
-      canvas.width = tint.width = img.width;
-      canvas.height = tint.height = img.height;
+      const {width, height} = img;
+      canvas.width = tint.width = rotate90 ? height : width;
+      canvas.height = tint.height = rotate90 ? width : height;
 
       if (x || y) {
         ctx.translate(x ? canvas.width : 0, y ? canvas.height : 0);
         ctx.scale(x ? -1 : 1, y ? -1 : 1);
+      }
+
+      if (rotate90) {
+        ctx.translate(canvas.width / 2,canvas.height / 2);
+        ctx.rotate(-Math.PI/2);
+        ctx.translate(-img.width / 2, -img.height / 2);
       }
 
       if (doHue) {
@@ -109,10 +118,16 @@ class EffectPocket extends Component {
     this.setState({flip});
   }
 
+  onRotate = () => {
+    this.setState(({rotate90}) => ({
+      rotate90: !rotate90
+    }));
+  }
+
   render () {
 
     const { onClose, onSwitchMode, asset } = this.props;
-    const { hue, flip } = this.state;
+    const { hue, flip, rotate90 } = this.state;
     const { on: hueOn, r, g, b, a } = hue;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
@@ -138,8 +153,11 @@ class EffectPocket extends Component {
       </section>
 
       <section>
-        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} /><br/>
+        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />
+        {" "}
         Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />
+        {" "}
+        Rotate 90: <input type="checkbox" onChange={() => this.onRotate()} checked={rotate90} />
       </section>
 
       <section>
