@@ -130,10 +130,10 @@ class EffectPocket extends Component {
       <section>
         Hue:<input type="checkbox" onChange={() => this.onHueChange("on")} checked={hueOn} />
         {hueOn && <div>
-          <input type="range" onChange={e => this.onHueChange("r", e)} value={r} />
-          <input type="range" onChange={e => this.onHueChange("g", e)} value={g} />
-          <input type="range" onChange={e => this.onHueChange("b", e)} value={b} />
-          <input type="range" onChange={e => this.onHueChange("a", e)} value={a} />
+          <span style={{display: "inline-block", width: 20}}>r</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("r", e)} value={r} />
+          <span style={{display: "inline-block", width: 20, marginLeft: 30}}>a</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("a", e)} value={a} /><br/>
+          <span style={{display: "inline-block", width: 20}}>g</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("g", e)} value={g} /><br/>
+          <span style={{display: "inline-block", width: 20}}>b</span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onHueChange("b", e)} value={b} /><br/>
         </div>}
       </section>
 
