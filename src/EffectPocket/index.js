@@ -66,7 +66,7 @@ class EffectPocket extends Component {
 
       if (rotate90) {
         ctx.translate(canvas.width / 2,canvas.height / 2);
-        ctx.rotate(-Math.PI/2);
+        ctx.rotate(Math.PI / 2);
         ctx.translate(-img.width / 2, -img.height / 2);
       }
 
