@@ -4,7 +4,16 @@ An Atom package for grabbing existing art assets from a collection and copying t
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
-* **Install the package** (TODO: add instructions)
+* **Install the package**
+
+In the process of making this a "real" plugin, for now you can manually install:
+```
+git clone git@github.com:mrspeaker/pickpocket.git
+cd pickpocket
+apm install
+apm link .
+```
+
 * **Dump a bunch of images in a directory** ([`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example) by default - change this location in [`settings`](atom://config/packages/pickpocket)).
 * Launch PickPocket with **`ctrl-alt-p` (`pickpocket:toggle`)**.
 * Select image (and rename it if you want) then hit `import`.
@@ -16,7 +25,7 @@ When you import an image, the local path is also copied to the clipboard as a st
 ## Effects
 
 Select an image and hit `fx`. This switches to effects mode where you can modify it before importing.
-Currently there are only a couple of functions: Flip x and y, rotate 90 degrees as well as a half-baked hue modification. More to come.
+Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
 
