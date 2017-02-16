@@ -2,8 +2,8 @@
   "name": "pickpocket",
   "main": "./src/main",
   "author": "mrspeaker@gmail.com",
-  "version": "0.0.2",
-  "description": "Asset copy/paster for prototyping",
+  "version": "0.0.0",
+  "description": "Asset manager for game prototyping",
   "keywords": [],
   "activationCommands": {
     "atom-workspace": "pickpocket:toggle"
