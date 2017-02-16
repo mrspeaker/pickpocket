@@ -6,21 +6,16 @@ An Atom package for grabbing existing art assets from a collection and copying t
 
 ## Usage
 
-* Install the package
-
-In the process of making this a "real" plugin, for now you can manually install:
-```
-git clone git@github.com:mrspeaker/pickpocket.git
-cd pickpocket
-apm install
-apm link .
-```
-
-* Dump a bunch of image assets in a directory ([`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example) by default - change this location in [`settings`](atom://config/packages/pickpocket)).
+* Install the package (Atom -> preferences -> install -> "pickpocket")
 * Launch PickPocket with **`ctrl-alt-p` (`pickpocket:toggle`)**.
 * Select image (and rename it if you want) then hit `import`.
 
-The image is copy & renamed to the target dir. If you select `open in editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in [`settings`](atom://config/packages/pickpocket)). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
+The image is copy & renamed to the target dir. However, the assets you can choose are just a few examples (from [`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example)) to get you started. You need to bring your own!
+
+* Dump a bunch of image assets in a directory somewhere, and put this location in [`settings`](atom://config/packages/pickpocket).
+
+
+If you select `open in editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in [`settings`](atom://config/packages/pickpocket)). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ## Effects
 
