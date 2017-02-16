@@ -27,9 +27,9 @@ class EffectPocket extends Component {
 
   state = {
     hueRotate: 0,
-    saturate: 0,
-    contrast: 0,
-    brightness: 0,
+    saturate: 100,
+    contrast: 100,
+    brightness: 100,
 
     flip: {
       x: false,
@@ -73,10 +73,10 @@ class EffectPocket extends Component {
       ctx.drawImage(img, 0, 0);
 
       const filters = [
-        hueRotate > 0 ? `hue-rotate(${(hueRotate / 100) * 360 | 0}deg)` : null,
-        saturate > 0 ? `saturate(${(saturate / 100) * 300}%)` : null,
-        contrast > 0 ? `contrast(${(contrast / 100) * 300}%)` : null,
-        brightness > 0 ? `brightness(${(brightness / 100) * 300}%)` : null
+        hueRotate > 0 ? `hue-rotate(${hueRotate}deg)` : null,
+        saturate !== 100 ? `saturate(${saturate}%)` : null,
+        contrast !== 100 ? `contrast(${contrast}%)` : null,
+        brightness !== 100 ? `brightness(${brightness}%)` : null
       ].filter(f => !!f);
 
       if (filters.length) {
@@ -136,11 +136,12 @@ class EffectPocket extends Component {
       </section>
 
       <section>
-        <span style={{display: "inline-block", width: 70}}>Hue rotate: </span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
-        <span style={{display: "inline-block", width: 70}}>Saturation: </span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
+        <span style={{display: "inline-block", width: 70}}>Hue rotate: </span>
+        <input style={{display: "inline", width: 200}} type="range" min="0" max="360" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
+        <span style={{display: "inline-block", width: 70}}>Saturation: </span><input style={{display: "inline", width: 200}} min="0" max="300" type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
         <br/>
-        <span style={{display: "inline-block", width: 70}}>Contast: </span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
-        <span style={{display: "inline-block", width: 70}}>Brightness: </span><input style={{display: "inline", width: 200}} type="range" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
+        <span style={{display: "inline-block", width: 70}}>Contast: </span><input style={{display: "inline", width: 200}} type="range" min="0" max="300" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
+        <span style={{display: "inline-block", width: 70}}>Brightness: </span><input style={{display: "inline", width: 200}} type="range" min="0" max="300" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
         <br/>
         Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
         Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
