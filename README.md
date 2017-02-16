@@ -27,8 +27,8 @@ When you import an image, the local path is also copied to the clipboard as a st
 Select an image and hit `fx`. This switches to effects mode where you can modify it before importing.
 Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
 
-![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
-
 ## Roadmap
 
 Nope. Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3) though.
+
+![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
