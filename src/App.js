@@ -107,6 +107,9 @@ class App extends Component {
     } else {
       this.setState({
         mode: "pick"
+      }, () => {
+        // Forces mini-editor update
+        this.forceUpdate();
       });
     }
   };

@@ -157,7 +157,7 @@ class EffectPocket extends Component {
         {" "}
         Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />
         {" "}
-        Rotate 90: <input type="checkbox" onChange={() => this.onRotate()} checked={rotate90} />
+        Rotate 90: <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
       </section>
 
       <section>
