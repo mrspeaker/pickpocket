@@ -26,10 +26,18 @@ class EffectPocket extends Component {
   };
 
   state = {
-    r: 0,
-    g: 0,
-    b: 0,
-    a: 50
+    hue: {
+      on: false,
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 50
+    },
+
+    flip: {
+      x: false,
+      y: false
+    }
   };
 
   componentDidMount () {
@@ -40,35 +48,54 @@ class EffectPocket extends Component {
 
     const canvas = this.refs.canvas;
     if (!canvas) { return; }
-    const {r, g, b, a} = this.state;
+    const {hue, flip} = this.state;
+    const {on: doHue, r, g, b, a} = hue;
+    const {x, y} = flip;
 
     const tint = document.createElement("canvas");
     const tintCtx = tint.getContext("2d");
 
-    if (canvas.getContext) {
-      const ctx = canvas.getContext("2d");
-      const img = new Image();
-      img.src = this.props.asset.fullPath;
+    if (!canvas.getContext) {
+      return;
+    }
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.src = this.props.asset.fullPath;
 
-      img.onload = () => {
-        canvas.width = tint.width = img.width;
-        canvas.height = tint.height = img.height;
+    img.onload = () => {
+      canvas.width = tint.width = img.width;
+      canvas.height = tint.height = img.height;
 
+      if (x || y) {
+        ctx.translate(x ? canvas.width : 0, y ? canvas.height : 0);
+        ctx.scale(x ? -1 : 1, y ? -1 : 1);
+      }
+
+      if (doHue) {
         tintCtx.fillStyle = `rgb(${(r / 100) * 255 | 0}, ${(g / 100) * 255 | 0}, ${(b / 100) * 255 | 0})`;
         tintCtx.fillRect(0, 0, tint.width, tint.height);
         tintCtx.globalCompositeOperation = "destination-atop";
         tintCtx.drawImage(img, 0, 0);
+      }
 
-        ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0);
+
+      if (doHue) {
         ctx.globalAlpha = a / 100;
         ctx.drawImage(tint, 0, 0);
-      };
-    }
+      }
+    };
   }
 
-  onSliderChange (component, e) {
+  onHueChange (component, e) {
+    const hue = Object.assign({}, this.state.hue);
+    if (component === "on") {
+      hue.on = !hue.on;
+    } else {
+      hue[component] = e.target.value;
+    }
     this.setState({
-      [component]: e.target.value
+      hue
     });
   }
 
@@ -76,10 +103,17 @@ class EffectPocket extends Component {
     this.props.onImport(this.refs.canvas);
   }
 
+  onFlip = (dir) => {
+    const flip = Object.assign({}, this.state.flip);
+    flip[dir] = !flip[dir];
+    this.setState({flip});
+  }
+
   render () {
 
     const { onClose, onSwitchMode, asset } = this.props;
-    const { r, g, b, a } = this.state;
+    const { hue, flip } = this.state;
+    const { on: hueOn, r, g, b, a } = hue;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
 
@@ -94,10 +128,18 @@ class EffectPocket extends Component {
       </section>
 
       <section>
-        <input type="range" onChange={e => this.onSliderChange("r", e)} value={r} />
-        <input type="range" onChange={e => this.onSliderChange("g", e)} value={g} />
-        <input type="range" onChange={e => this.onSliderChange("b", e)} value={b} />
-        <input type="range" onChange={e => this.onSliderChange("a", e)} value={a} />
+        Hue:<input type="checkbox" onChange={() => this.onHueChange("on")} checked={hueOn} />
+        {hueOn && <div>
+          <input type="range" onChange={e => this.onHueChange("r", e)} value={r} />
+          <input type="range" onChange={e => this.onHueChange("g", e)} value={g} />
+          <input type="range" onChange={e => this.onHueChange("b", e)} value={b} />
+          <input type="range" onChange={e => this.onHueChange("a", e)} value={a} />
+        </div>}
+      </section>
+
+      <section>
+        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} /><br/>
+        Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />
       </section>
 
       <section>
