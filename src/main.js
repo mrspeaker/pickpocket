@@ -93,6 +93,8 @@ export default {
   // `path.join(path.dirname(atom.config.getUserConfigPath()), 'packages', 'package-name')`
   // to get the path to your package's directory ... or `__dirname` to get the
   // directory that your current file is executing from and walk up from there
+  // or
+  // atom.packages.resolvePackagePath("pickpocket")
 
   // Pretty sure this isn't how you're supposed to make
   // a modal act like a modal, but whatever...

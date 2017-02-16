@@ -4,7 +4,14 @@ import fs from "fs";
 import path from "path";
 
 export default assetRoot => new Promise((res, rej) => {
-  // TODO: check if valid (even non-existant) dir, err if not.
+
+  if (!fs.existsSync(assetRoot)) {
+    return {
+      dirs: [],
+      imgs: []
+    };
+  }
+
   fs.readdir(assetRoot, (err, files) => {
     let dirs = [];
     let imgs = [];
@@ -15,7 +22,13 @@ export default assetRoot => new Promise((res, rej) => {
 
     files.forEach(f => {
       const fullPath = assetRoot + f;
-      const file = fs.statSync(fullPath);
+      let file;
+      try {
+        file = fs.statSync(fullPath);
+      } catch (e) {
+        return;
+      }
+
       if (file.isDirectory()) {
         dirs.push({
           type: "directory",
