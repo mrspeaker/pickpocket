@@ -15,7 +15,8 @@ When you import an image, the local path is also copied to the clipboard as a st
 
 ## Effects
 
-Just starting working on DSP. Don't use it yet!
+Select an image and hit `fx`. This switches to effects mode where you can modify it before importing.
+Currently there are only a couple of functions: Flip x and y, rotate 90 degrees as well as a half-baked hue modification. More to come.
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
 
