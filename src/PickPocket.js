@@ -28,6 +28,7 @@ class PickPocket extends Component {
     onOpenAssets: PropTypes.func.isRequired,
     onChangePath: PropTypes.func.isRequired,
     onSwitchMode: PropTypes.func.isRequired,
+    onOpenSettings: PropTypes.func.isRequired,
     treePath: PropTypes.string
   };
 
@@ -86,36 +87,45 @@ class PickPocket extends Component {
   }
 
   render() {
-    const { assets, onClose, onOpenAssets, onSwitchMode } = this.props;
+    const { assets, onClose, onOpenAssets, onSwitchMode, onOpenSettings } = this.props;
     const { path, fileName, selected, preview, canImport } = this.state;
 
     return (
       <div className="pickpocket">
 
-        <section className="input-block find-container">
-          <div className="btn-group" style={{ width: "100%" }}>
+        <section>
+          <div className="btn-group toolbar" style={{ width: "100%" }}>
             <button
+              title="import asset"
               className="btn"
               onClick={this.onImport}
               disabled={!canImport} >
-              import
+              <span className="icon icon-desktop-download"></span>
             </button>
             <button
+              title="import asset, then open in editor"
               className="btn"
               onClick={() => this.onImport(true)}
               disabled={!canImport} >
-              import & edit
+              <span className="icon icon-desktop-download"></span>
+              <span className="icon icon-pencil"></span>
             </button>
             <button
+              title="add some effects!"
               className="btn"
               onClick={() => onSwitchMode(selected[0], path, fileName)}
               disabled={!canImport} >
-              fx
+              <span className="icon icon-paintcan"></span>
             </button>
-            <button className="btn" onClick={onOpenAssets}>
-              Open asset folder
+            <span style={{float: "left", display: "inline-block", width: 10, height:10}}>{" "}</span>
+            <button className="btn" onClick={onOpenAssets} title="open asset folder">
+              <span className="icon icon-file-symlink-directory"></span>
+            </button>
+            <button className="btn" onClick={onOpenSettings} title="go to pickpocket settings">
+              <span className="icon icon-gear"></span>
             </button>
             <div
+              title="close pickpocket"
               className="icon icon-x"
               onClick={onClose}
               style={styles.closeIcon}

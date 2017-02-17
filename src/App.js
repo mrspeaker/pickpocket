@@ -145,6 +145,11 @@ class App extends Component {
     this.props.toggle();
   };
 
+  goToSettings = () => {
+    atom.workspace.open("atom://config/packages/pickpocket");
+    this.props.toggle();
+  };
+
   render() {
     const { dirs, imgs, mode, selectedAsset } = this.state;
     return mode === "pick"
@@ -156,6 +161,7 @@ class App extends Component {
           onImport={this.onImport}
           onOpenAssets={this.onOpenAssets}
           onSwitchMode={this.switchMode}
+          onOpenSettings={this.goToSettings}
         />
       : <EffectPocket
           onClose={this.onClose}
