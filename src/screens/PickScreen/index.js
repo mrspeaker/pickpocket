@@ -1,9 +1,9 @@
 "use babel";
 
 import React from "react";
-import utils from "./utils";
+import utils from "../../utils";
 import Assets from "./Assets";
-import PreviewImage from "./ui/PreviewImage";
+import PreviewImage from "../../ui/PreviewImage";
 
 const {
   Component,
@@ -19,9 +19,7 @@ class PickPocket extends Component {
   };
 
   state = {
-    selected: [],
-    fileName: "",
-    path: "",
+    selected: []
   };
 
   closePreview = (e) => {
@@ -29,8 +27,7 @@ class PickPocket extends Component {
       e.stopPropagation();
     }
     this.setState({
-      selected: [],
-      fileName: "",
+      selected: []
     });
     this.props.onSelectFile(null);
   };
@@ -47,7 +44,6 @@ class PickPocket extends Component {
     this.props.onSelectFile(path, fileName);
 
     this.setState(() => ({
-      fileName,
       selected: [asset],
     }));
   };
@@ -55,7 +51,7 @@ class PickPocket extends Component {
   render() {
     const { assets, assetName } = this.props;
     const { selected } = this.state;
-
+    const showPreview = assetName && selected.length;
     return (
       <div className="screen">
         <section>
@@ -64,8 +60,9 @@ class PickPocket extends Component {
             selected={selected}
             onToggle={this.onToggle}
           />
-          {assetName && selected.length &&
-            <PreviewImage asset={selected[0]} onClose={this.closePreview} />}
+          { showPreview && <PreviewImage
+              asset={selected[0]}
+              onClose={this.closePreview} />}
         </section>
 
       </div>

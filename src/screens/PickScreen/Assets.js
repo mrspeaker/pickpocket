@@ -1,8 +1,8 @@
 "use babel";
 
 import React from "react";
-import SelectableThumbnail from "./ui/SelectableThumbnail";
-import SelectableFolder from "./ui/SelectableFolder";
+import SelectableThumbnail from "../../ui/SelectableThumbnail";
+import SelectableFolder from "../../ui/SelectableFolder";
 
 const {
   Component,

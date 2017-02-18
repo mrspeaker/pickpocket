@@ -5,8 +5,8 @@ import React from "react";
 import proc from "child_process";
 const { exec } = proc;
 
-import PickPocket from "./PickPocket";
-import EffectPocket from "./EffectPocket";
+import PickScreen from "./screens/PickScreen";
+import EffectScreen from "./screens/EffectScreen";
 
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
 import copyFile from "./file/copyFile";
@@ -100,7 +100,7 @@ class App extends Component {
   onImportCanvas = (doOpen, projectRoot) => {
 
     const { importPath, importName, fxCanvas } = this.state;
-
+    if (!fxCanvas) return;
     const imgData = fxCanvas.toDataURL("image/png");
 
     writeImage(imgData, projectRoot, importPath, importName)
@@ -198,17 +198,14 @@ class App extends Component {
     const { dirs, imgs, mode, importPath, importName, assetPath, assetName } = this.state;
 
     const screen = mode === "pick"
-      ? <PickPocket
+      ? <PickScreen
           assets={{ dirs, imgs }}
           assetName={assetName}
           assetPath={assetPath}
           onChangePath={this.onChangeAssetPath}
           onSelectFile={this.onSelectAssetFile}
         />
-      : <EffectPocket
-          onClose={this.onClose}
-          onImport={this.onImportCanvas}
-          onSwitchMode={this.switchMode}
+      : <EffectScreen
           assetPath={assetPath}
           assetName={assetName}
           onSetFXCanvas={this.onSetFXCanvas}

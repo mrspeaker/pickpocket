@@ -1,20 +1,19 @@
 "use babel";
 
 import React from "react";
-import Footer from "../ui/Footer";
+import Footer from "../../ui/Footer";
 
 const {
   Component,
   PropTypes
 } = React;
 
-class EffectPocket extends Component {
+class EffectScreen extends Component {
 
   static propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onImport: PropTypes.func.isRequired,
-    onSwitchMode: PropTypes.func.isRequired,
-    asset: PropTypes.object.isRequired
+    assetName: PropTypes.string.isRequired,
+    assetPath: PropTypes.string.isRequired,
+    onSetFXCanvas: PropTypes.func.isRequired
   };
 
   state = {
@@ -96,10 +95,6 @@ class EffectPocket extends Component {
     });
   }
 
-  onImport = () => {
-    this.props.onImport(this.refs.canvas);
-  }
-
   onFlip = (dir) => {
     const flip = Object.assign({}, this.state.flip);
     flip[dir] = !flip[dir];
@@ -114,7 +109,7 @@ class EffectPocket extends Component {
 
   render () {
 
-    const { onClose, onSwitchMode, assetPath, assetName } = this.props;
+    const { assetPath, assetName } = this.props;
     const { flip, rotate90, hueRotate, saturate, contrast, brightness } = this.state;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
@@ -148,4 +143,4 @@ class EffectPocket extends Component {
 
 }
 
-export default EffectPocket;
+export default EffectScreen;
