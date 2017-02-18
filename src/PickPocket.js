@@ -3,7 +3,6 @@
 import React from "react";
 import utils from "./utils";
 import Assets from "./Assets";
-import MiniEditor from "./ui/MiniEditor";
 import PreviewImage from "./ui/PreviewImage";
 
 const {
@@ -14,27 +13,15 @@ const {
 class PickPocket extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
+    assetName: PropTypes.string,
     onChangePath: PropTypes.func.isRequired,
     onSelectFile: PropTypes.func.isRequired,
-    treePath: PropTypes.string
   };
 
   state = {
     selected: [],
-    preview: null,
     fileName: "",
     path: "",
-    canImport: false
-  };
-
-  isSelected = asset => this.state.selected.indexOf(asset) !== -1;
-
-  updatePath = text => {
-    const { path, fileName } = utils.splitPathAndFileName(text);
-    this.setState({
-      path,
-      fileName
-    });
   };
 
   closePreview = (e) => {
@@ -42,9 +29,8 @@ class PickPocket extends Component {
       e.stopPropagation();
     }
     this.setState({
-      preview: null,
+      selected: [],
       fileName: "",
-      canImport: false
     });
     this.props.onSelectFile(null);
   };
@@ -62,24 +48,13 @@ class PickPocket extends Component {
 
     this.setState(() => ({
       fileName,
-      preview: asset,
       selected: [asset],
-      canImport: true
     }));
   };
 
-  // onImport = (edit = false) => {
-  //   const { selected, path, fileName } = this.state;
-  //   this.props.onImport(selected[0], path, fileName, edit === true);
-  // };
-
-  componentWillReceiveProps({ treePath: path }) {
-    this.setState({ path });
-  }
-
   render() {
     const { assets, assetName } = this.props;
-    const { path, fileName, selected, preview } = this.state;
+    const { selected } = this.state;
 
     return (
       <div className="screen">
@@ -89,8 +64,8 @@ class PickPocket extends Component {
             selected={selected}
             onToggle={this.onToggle}
           />
-          {assetName &&
-            <PreviewImage asset={preview} onClose={this.closePreview} />}
+          {assetName && selected.length &&
+            <PreviewImage asset={selected[0]} onClose={this.closePreview} />}
         </section>
 
       </div>
