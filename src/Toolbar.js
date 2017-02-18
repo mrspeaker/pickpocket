@@ -20,28 +20,39 @@ const styles = {
 class Toolbar extends Component {
 
   render () {
-    const {onClose, onOpenAssets, onOpenSettings, onImport, onSwitchMode} = this.props;
+    const {onClose, onOpenAssets, onOpenSettings, onImport, onSwitchMode, canImport, mode} = this.props;
 
     return <div className="btn-group toolbar" style={{ width: "100%" }}>
       <button
         title="import asset"
         className="btn"
-        onClick={onImport} >
+        onClick={onImport}
+        disabled={!canImport} >
         <span className="icon icon-desktop-download"></span>
       </button>
       <button
         title="import asset, then open in editor"
         className="btn"
+        disabled={!canImport}
         onClick={() => onImport(true)} >
         <span className="icon icon-desktop-download"></span>
         <span className="icon icon-pencil"></span>
       </button>
-      <button
-        title="add some effects!"
-        className="btn"
-        onClick={onSwitchMode} >
-        <span className="icon icon-paintcan"></span>
-      </button>
+      {mode === "pick" ? <button
+          title="add some effects!"
+          className="btn"
+          disabled={!canImport}
+          onClick={onSwitchMode} >
+          <span className="icon icon-paintcan"></span>
+        </button> :
+        <button
+          title="back to picking"
+          className="btn"
+          onClick={onSwitchMode} >
+          <span className="icon icon-arrow-left"></span>
+        </button>
+      }
+
       <span style={{float: "left", display: "inline-block", width: 10, height:10}}>{" "}</span>
       <button className="btn" onClick={onOpenAssets} title="open asset folder">
         <span className="icon icon-file-symlink-directory"></span>

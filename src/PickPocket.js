@@ -78,18 +78,18 @@ class PickPocket extends Component {
   }
 
   render() {
-    const { assets } = this.props;
+    const { assets, assetName } = this.props;
     const { path, fileName, selected, preview } = this.state;
 
     return (
-      <div className="pickpocket">
+      <div className="screen">
         <section>
           <Assets
             assets={assets}
             selected={selected}
             onToggle={this.onToggle}
           />
-          {preview &&
+          {assetName &&
             <PreviewImage asset={preview} onClose={this.closePreview} />}
         </section>
 

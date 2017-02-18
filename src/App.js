@@ -34,7 +34,7 @@ class App extends Component {
     dirs: [],
     imgs: [],
     mode: "pick",
-    selectedAsset: null,
+    fxCanvas: null,
 
     importPath: getTreePath(),
     importName: "",
@@ -78,11 +78,16 @@ class App extends Component {
 
   onImport = (doOpenOrEvent) => {
     const doOpen = doOpenOrEvent === true;
-
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
       return this.props.toggle();
     }
+    const {mode} = this.state;
+    if (mode === "fx") {
+      this.onImportCanvas(doOpen, projectRoot);
+      return;
+    }
+
     const {importPath, importName, assetPath, assetName} = this.state;
 
     copyFile(assetPath + assetName, projectRoot, importPath, importName)
@@ -92,16 +97,13 @@ class App extends Component {
     this.onClose();
   };
 
-  onImportCanvas = canvas => {
-    const projectRoot = getProjectRoot();
-    if (!projectRoot) {
-      return this.props.toggle();
-    }
+  onImportCanvas = (doOpen, projectRoot) => {
 
-    const { importPath, importFileName } = this.state;
-    const imgData = canvas.toDataURL("image/png");
+    const { importPath, importName, fxCanvas } = this.state;
 
-    writeImage(imgData, projectRoot, importPath, importFileName)
+    const imgData = fxCanvas.toDataURL("image/png");
+
+    writeImage(imgData, projectRoot, importPath, importName)
       .then(this.onImportSuccess)
       .catch(err => err && atom.notifications.addError(err));
 
@@ -116,11 +118,11 @@ class App extends Component {
     doOpen && this.openEditor(localFullPath);
   }
 
-  onSwitchMode = (selectedAsset) => {
-    if (selectedAsset) {
+  onSwitchMode = () => {
+    const {mode} = this.state;
+    if (mode === "pick") {
       this.setState({
-        mode: "fx",
-        selectedAsset
+        mode: "fx"
       });
     } else {
       this.setState({
@@ -163,17 +165,43 @@ class App extends Component {
     }
   }
 
+  onEscape = () => {
+    const {mode, assetName} = this.state;
+    if (mode === "pick") {
+      if (assetName) {
+        this.onSelectAssetFile();
+      }
+      else {
+        this.onClose();
+      }
+    } else {
+      this.setState({
+        mode: "pick",
+        assetName: ""
+      });
+    }
+  }
+
   onClose = () => {
-    this.setState({ mode: "pick" });
-    this.props.toggle();
+    this.setState({ mode: "pick" }, () => {
+      this.props.toggle();
+    });
   };
 
+  onSetFXCanvas = ref => {
+    this.setState({
+      fxCanvas: ref
+    });
+  }
+
   render() {
-    const { dirs, imgs, mode, selectedAsset, importPath, importName } = this.state;
+    const { dirs, imgs, mode, importPath, importName, assetPath, assetName } = this.state;
 
     const screen = mode === "pick"
       ? <PickPocket
           assets={{ dirs, imgs }}
+          assetName={assetName}
+          assetPath={assetPath}
           onChangePath={this.onChangeAssetPath}
           onSelectFile={this.onSelectAssetFile}
         />
@@ -181,24 +209,28 @@ class App extends Component {
           onClose={this.onClose}
           onImport={this.onImportCanvas}
           onSwitchMode={this.switchMode}
-          asset={selectedAsset}
+          assetPath={assetPath}
+          assetName={assetName}
+          onSetFXCanvas={this.onSetFXCanvas}
         />;
 
-    return <div>
+    return <div className="pickpocket">
       <section>
         <Toolbar
+          mode={mode}
           onClose={this.onClose}
           onOpenSettings={this.onOpenSettings}
           onOpenAssets={this.onOpenAssets}
           onSwitchMode={this.onSwitchMode}
           onImport={this.onImport}
+          canImport={!!assetName}
         />
       </section>
       <section style={{ paddingTop: 4 }}>
         <MiniEditor
           text={`${importPath}${importName}`}
           onChange={this.changeImportPath}
-          onEscape={this.onClose}
+          onEscape={this.onEscape}
           onEnter={this.onImport}
         />
       </section>

@@ -22,7 +22,7 @@ class SelectableThumbnail extends Component {
 
   componentDidMount () {
     this.refs.img.onload = () => {
-      this.setState({
+      this.refs.img && this.setState({
         width: this.refs.img.naturalWidth,
         height: this.refs.img.naturalHeight
       });

@@ -8,14 +8,6 @@ const {
   PropTypes
 } = React;
 
-const styles = {
-  closeIcon: {
-    cursor:"pointer",
-    display:"inline-block",
-    float:"right",
-  }
-};
-
 class EffectPocket extends Component {
 
   static propTypes = {
@@ -41,18 +33,20 @@ class EffectPocket extends Component {
 
   componentDidMount () {
     this.effect();
+    this.props.onSetFXCanvas(this.refs.canvas);
   }
 
   effect () {
 
     const canvas = this.refs.canvas;
     if (!canvas || !canvas.getContext) { return; }
+    const {assetPath, assetName} = this.props;
     const {hueRotate, saturate, contrast, brightness, flip, rotate90} = this.state;
     const {x, y} = flip;
 
     const ctx = canvas.getContext("2d");
     const img = new Image();
-    img.src = this.props.asset.fullPath;
+    img.src = assetPath + assetName;
 
     img.onload = () => {
       const {width, height} = img;
@@ -120,25 +114,12 @@ class EffectPocket extends Component {
 
   render () {
 
-    const { onClose, onSwitchMode, asset } = this.props;
+    const { onClose, onSwitchMode, assetPath, assetName } = this.props;
     const { flip, rotate90, hueRotate, saturate, contrast, brightness } = this.state;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
 
-    return <div className="pickpocket">
-
-      <section className="input-block find-container">
-        <div className="btn-group toolbar" style={{width:"100%"}}>
-          <button className="btn" onClick={() => onSwitchMode()} title="back to pickpocket">
-            <span className="icon icon-arrow-left"></span>
-          </button>
-          <button className="btn" onClick={this.onImport} title="import asset">
-            <span className="icon icon-desktop-download"></span>
-          </button>
-
-          <div className="icon icon-x" onClick={onClose} style={styles.closeIcon} title="close pickpocket"></div>
-        </div>
-      </section>
+    return <div className="screen">
 
       <section>
         <span style={{display: "inline-block", width: 70}}>Hue rotate: </span>
@@ -155,7 +136,7 @@ class EffectPocket extends Component {
 
       <section>
         <div style={{textAlign: "center", paddingTop: 20, paddingBottom: 20}}>
-          <img src={ asset.fullPath } style={{ maxWidth: "50%" }} />
+          <img src={ assetPath + assetName } style={{ maxWidth: "50%" }} />
           <canvas ref="canvas" style={{verticalAlign:"middle", paddingLeft:20, maxWidth: "50%"}}/>
         </div>
       </section>
