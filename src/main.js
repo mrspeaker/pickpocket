@@ -39,16 +39,16 @@ export default {
   activate() {
     const root = this.root = document.createElement("div");
 
-    // TODO: Never removeEventListener - figure out plugin lifecycle.
-    this.root.addEventListener(
-      "keyup",
-      e => {
-        // Handle escape key
-        if (e.which !== 27) return;
-        this.toggle();
-      },
-      false
-    );
+    // // TO DO: Never removeEventListener - figure out plugin lifecycle.
+    // this.root.addEventListener(
+    //   "keyup",
+    //   e => {
+    //     // Handle escape key
+    //     if (e.which !== 27) return;
+    //     this.toggle();
+    //   },
+    //   false
+    // );
 
     this.modal = atom.workspace.addModalPanel({ item: root });
     this.subscriptions = new CompositeDisposable();
