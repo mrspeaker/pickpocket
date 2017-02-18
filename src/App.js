@@ -104,7 +104,7 @@ class App extends Component {
     const imgData = fxCanvas.toDataURL("image/png");
 
     writeImage(imgData, projectRoot, importPath, importName)
-      .then(this.onImportSuccess)
+      .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
 
     this.onClose();
