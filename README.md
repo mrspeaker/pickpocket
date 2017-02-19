@@ -19,11 +19,13 @@ If you select `open in editor`, the local copy will be opened in your image edit
 
 ## Effects
 
-Select an image and hit `fx`. This switches to effects mode where you can modify it before importing.
+Select an image and hit `effects` ![fx](https://cloud.githubusercontent.com/assets/129330/23103327/c67b95ee-f687-11e6-8fd7-3de171d18687.png). This switches to effects mode where you can modify it before importing.
 Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
+
+![effects screen](https://cloud.githubusercontent.com/assets/129330/23103291/101a4e94-f687-11e6-8dcc-a0da5a72105d.png)
 
 ## Roadmap
 
-Nope. Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3) though.
+Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3).
 
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
