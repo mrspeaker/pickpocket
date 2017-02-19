@@ -62,7 +62,7 @@ class PickPocket extends Component {
           />
           { showPreview ? <PreviewImage
               asset={selected[0]}
-              onClose={this.closePreview} /> : null}
+              onClose={this.closePreview} /> : null }
         </section>
 
       </div>
