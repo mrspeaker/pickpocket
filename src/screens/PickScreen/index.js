@@ -60,9 +60,9 @@ class PickPocket extends Component {
             selected={selected}
             onToggle={this.onToggle}
           />
-          { showPreview && <PreviewImage
+          { showPreview ? <PreviewImage
               asset={selected[0]}
-              onClose={this.closePreview} />}
+              onClose={this.closePreview} /> : null}
         </section>
 
       </div>
