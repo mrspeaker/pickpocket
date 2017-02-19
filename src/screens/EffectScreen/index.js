@@ -116,12 +116,14 @@ class EffectScreen extends Component {
 
     return <div className="screen">
 
-      <section>
+      <section className="controls">
         <span style={{display: "inline-block", width: 70}}>Hue rotate: </span>
         <input style={{display: "inline", width: 180}} type="range" min="0" max="360" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
+        <span>{" "}</span>
         <span style={{display: "inline-block", width: 70}}>Saturation: </span><input style={{display: "inline", width: 180}} min="0" max="300" type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
         <br/>
         <span style={{display: "inline-block", width: 70}}>Contast: </span><input style={{display: "inline", width: 180}} type="range" min="0" max="300" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
+        <span>{" "}</span>
         <span style={{display: "inline-block", width: 70}}>Brightness: </span><input style={{display: "inline", width: 180}} type="range" min="0" max="300" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
         <br/>
         Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}

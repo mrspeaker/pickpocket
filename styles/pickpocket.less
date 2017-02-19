@@ -88,5 +88,37 @@
     }
   }
 
+  .controls {
+    padding: 4px;
+    background-color: #1B1D23;
+    color: #666;
+
+    input[type=range] {
+      -webkit-appearance: none;
+      background-color: #1B1D23;
+
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      background: #282c34;
+      border-radius: 5px;
+      height: 12px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        background: #888;
+    }
+
+    input[type=checkbox] {
+      background-color: #888;
+    }
+
+
+  }
 
 }
