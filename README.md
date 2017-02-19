@@ -12,10 +12,10 @@ An Atom package for grabbing existing art assets from a collection and copying t
 
 The image is copy & renamed to the target dir. However, the assets you can choose are just a few examples (from [`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example)) to get you started. You need to bring your own!
 
-* Dump a bunch of image assets in a directory somewhere, and put this location in [`settings`](atom://config/packages/pickpocket).
+* Dump a bunch of image assets in a directory somewhere, and put this location in `settings`.
 
 
-If you select `open in editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in [`settings`](atom://config/packages/pickpocket)). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
+If you select `import, then editor`, the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ## Effects
 
