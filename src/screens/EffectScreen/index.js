@@ -128,10 +128,10 @@ class EffectScreen extends Component {
         <div>
           <label>Flip X:</label>
           <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
-          <span style={{display:"inline-block", width:41}} />
+          <span style={{display:"inline-block", width:45}} />
           <label>Flip Y:</label>
           <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
-          <span style={{display:"inline-block", width:41}} />
+          <span style={{display:"inline-block", width:45}} />
           <label>Rotate 90:</label>
           <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
         </div>
