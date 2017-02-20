@@ -117,18 +117,24 @@ class EffectScreen extends Component {
     return <div className="screen">
 
       <section className="controls">
-        <span style={{display: "inline-block", width: 70}}>Hue rotate: </span>
-        <input style={{display: "inline", width: 180}} type="range" min="0" max="360" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
+        <label>Hue rotate:</label>
+        <input className="slider" type="range" min="0" max="360" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
         <span>{" "}</span>
-        <span style={{display: "inline-block", width: 70}}>Saturation: </span><input style={{display: "inline", width: 180}} min="0" max="300" type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
+        <label>Saturation:</label><input className="slider" min="0" max="300" type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
         <br/>
-        <span style={{display: "inline-block", width: 70}}>Contast: </span><input style={{display: "inline", width: 180}} type="range" min="0" max="300" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
+        <label>Contast:</label><input className="slider" type="range" min="0" max="300" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
         <span>{" "}</span>
-        <span style={{display: "inline-block", width: 70}}>Brightness: </span><input style={{display: "inline", width: 180}} type="range" min="0" max="300" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
-        <br/>
-        Flip X: <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
-        Flip Y: <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
-        Rotate 90: <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
+        <label>Brightness:</label><input className="slider" type="range" min="0" max="300" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
+        <div>
+          <label>Flip X:</label>
+          <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
+          <span style={{display:"inline-block", width:41}} />
+          <label>Flip Y:</label>
+          <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
+          <span style={{display:"inline-block", width:41}} />
+          <label>Rotate 90:</label>
+          <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
+        </div>
       </section>
 
       <section>
