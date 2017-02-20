@@ -22,7 +22,7 @@ If you select `import, then edit`, the local copy will be opened in your image e
 Select an image and hit `effects` ![fx](https://cloud.githubusercontent.com/assets/129330/23103327/c67b95ee-f687-11e6-8fd7-3de171d18687.png). This switches to effects mode where you can modify it before importing.
 Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
 
-![effects screen](https://cloud.githubusercontent.com/assets/129330/23103382/c1502750-f688-11e6-8743-041e1157f4ee.png)
+![effects screen](https://cloud.githubusercontent.com/assets/129330/23129563/2fef09ec-f751-11e6-8c4d-21d229a582f0.png)
 
 ## Roadmap
 
