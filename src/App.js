@@ -126,7 +126,10 @@ class App extends Component {
       });
     } else {
       this.setState({
-        mode: "pick"
+        mode: "pick",
+        // Eh, easiest way to reconsile lost selection in PickScreen. FIXME!
+        assetName: "",
+        importName: ""
       }, () => {
         // Forces mini-editor update
         this.forceUpdate();
