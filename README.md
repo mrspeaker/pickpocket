@@ -14,7 +14,6 @@ The image is copy & renamed to the target dir. However, the assets you can choos
 
 * Dump a bunch of image assets in a directory somewhere, and put this location in `settings`.
 
-
 If you select `import, then edit`, the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
 
 ## Effects
