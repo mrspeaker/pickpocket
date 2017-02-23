@@ -200,6 +200,11 @@ class App extends Component {
   render() {
     const { dirs, imgs, mode, importPath, importName, assetPath, assetName } = this.state;
 
+    let range;
+    if (importPath && importName) {
+      range = [importPath.length, importPath.length + importName.length - 4];
+    }
+
     const screen = mode === "pick"
       ? <PickScreen
           assets={{ dirs, imgs }}
@@ -229,6 +234,7 @@ class App extends Component {
       <section style={{ paddingTop: 4 }}>
         <MiniEditor
           text={`${importPath}${importName}`}
+          range={range}
           onChange={this.changeImportPath}
           onEscape={this.onEscape}
           onEnter={this.onImport}

@@ -14,6 +14,7 @@ class MiniEditor extends Component {
     onChange: PropTypes.func.isRequired,
     onEscape: PropTypes.func.isRequired,
     onEnter: PropTypes.func.isRequired,
+    range: PropTypes.array
   };
 
   componentDidMount () {
@@ -41,11 +42,15 @@ class MiniEditor extends Component {
     this.refs.ed.appendChild(this.view);
   }
 
-  componentWillReceiveProps ({text}) {
+  componentWillReceiveProps ({text, range}) {
     // Why does it need setTimeout, dang it?!
     setTimeout(() => this.view.focus(), 0);
 
     this.editor.setText(text);
+
+    if (range) {
+      this.editor.setSelectedBufferRange([[0, range[0]], [0, range[1]]]);
+    }
   }
 
   render () {
