@@ -200,10 +200,9 @@ class App extends Component {
   render() {
     const { dirs, imgs, mode, importPath, importName, assetPath, assetName } = this.state;
 
-    let range;
-    if (importPath && importName) {
-      range = [importPath.length, importPath.length + importName.length - 4];
-    }
+    const range = importPath && importName ?
+      [importPath.length, importPath.length + importName.length - 4] :
+      null;
 
     const screen = mode === "pick"
       ? <PickScreen
