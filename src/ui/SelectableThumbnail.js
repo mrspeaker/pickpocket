@@ -34,7 +34,7 @@ class SelectableThumbnail extends Component {
     const { width, height } = this.state;
 
     return <div onClick={onToggle} className={`thumb ${selected ? "selected" :  ""}`}>
-      <img ref={"img"} src={src} />
+      <img ref={"img"} src={src} title={ src.split("/").reverse()[0] } />
       <div className="meta">{ width } x { height }</div>
     </div>;
 
