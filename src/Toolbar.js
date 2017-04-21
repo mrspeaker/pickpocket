@@ -1,7 +1,7 @@
 "use babel";
 
 import React from "react";
-const { Component } = React;
+const { Component, PropTypes } = React;
 
 const styles = {
   closeIcon: {
@@ -12,6 +12,17 @@ const styles = {
 };
 
 class Toolbar extends Component {
+
+  static propTypes = {
+    onClose: PropTypes.func.isRequired,
+    onOpenAssets: PropTypes.func.isRequired,
+    onOpenSettings: PropTypes.func.isRequired,
+    onImport: PropTypes.func.isRequired,
+    onSwitchMode: PropTypes.func.isRequired,
+    canImport: PropTypes.bool,
+    mode: PropTypes.string,
+  };
+
   render() {
     const {
       onClose,
