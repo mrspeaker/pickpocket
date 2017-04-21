@@ -64,9 +64,7 @@ class App extends Component {
     });
   };
 
-  onOpenAssets = () => {
-    exec(`open ${getAssetRoot()}`);
-  };
+  onOpenAssets = () => exec(`open ${this.state.assetPath}`);
 
   onOpenSettings = () => {
     atom.workspace.open("atom://config/packages/pickpocket");
