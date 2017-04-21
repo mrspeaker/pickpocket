@@ -20,10 +20,7 @@ import Toolbar from "./Toolbar";
 import MiniEditor from "./ui/MiniEditor";
 import Footer from "./ui/Footer";
 
-const {
-  Component,
-  PropTypes
-} = React;
+const { Component, PropTypes } = React;
 
 class App extends Component {
   static propTypes = {
@@ -76,19 +73,19 @@ class App extends Component {
     this.onClose();
   };
 
-  onImport = (doOpenOrEvent) => {
+  onImport = doOpenOrEvent => {
     const doOpen = doOpenOrEvent === true;
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
       return this.props.toggle();
     }
-    const {mode} = this.state;
+    const { mode } = this.state;
     if (mode === "fx") {
       this.onImportCanvas(doOpen, projectRoot);
       return;
     }
 
-    const {importPath, importName, assetPath, assetName} = this.state;
+    const { importPath, importName, assetPath, assetName } = this.state;
 
     copyFile(assetPath + assetName, projectRoot, importPath, importName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
@@ -98,7 +95,6 @@ class App extends Component {
   };
 
   onImportCanvas = (doOpen, projectRoot) => {
-
     const { importPath, importName, fxCanvas } = this.state;
     if (!fxCanvas) return;
     const imgData = fxCanvas.toDataURL("image/png");
@@ -110,56 +106,64 @@ class App extends Component {
     this.onClose();
   };
 
-  onImportSuccess(
-    { localPathAndName, localFullPath, fileName, path, doOpen = false }
-  ) {
+  onImportSuccess({
+    localPathAndName,
+    localFullPath,
+    fileName,
+    path,
+    doOpen = false
+  }) {
     atom.clipboard.write(`"${localPathAndName}"`);
     atom.notifications.addSuccess(`Copied ${fileName} to ${path}`);
     doOpen && this.openEditor(localFullPath);
   }
 
   onSwitchMode = () => {
-    const {mode} = this.state;
+    const { mode } = this.state;
     if (mode === "pick") {
       this.setState({
         mode: "fx"
       });
     } else {
-      this.setState({
-        mode: "pick",
-        // Eh, easiest way to reconsile lost selection in PickScreen. FIXME!
-        assetName: "",
-        importName: ""
-      }, () => {
-        // Forces mini-editor update
-        this.forceUpdate();
-      });
+      this.setState(
+        {
+          mode: "pick",
+          // Eh, easiest way to reconsile lost selection in PickScreen. FIXME!
+          assetName: "",
+          importName: ""
+        },
+        () => {
+          // Forces mini-editor update
+          this.forceUpdate();
+        }
+      );
     }
   };
 
-  onChangeAssetPath = newPath => fetchImagesFromFolder(newPath).then(res => {
-    const {path} = utils.splitPathAndFileName(newPath);
-    if (newPath !== getAssetRoot()) {
-      res.dirs.splice(0, 0, {
-        type: "directory",
-        size: 0,
-        fullPath: utils.parentPath(newPath),
-        name: ".."
+  onChangeAssetPath = newPath =>
+    fetchImagesFromFolder(newPath).then(res => {
+      const { path } = utils.splitPathAndFileName(newPath);
+      if (newPath !== getAssetRoot()) {
+        res.dirs.splice(0, 0, {
+          type: "directory",
+          size: 0,
+          fullPath: utils.parentPath(newPath),
+          name: ".."
+        });
+      }
+      this.setState({
+        dirs: res.dirs,
+        imgs: res.imgs,
+        assetPath: path
       });
-    }
-    this.setState({
-      dirs: res.dirs,
-      imgs: res.imgs,
-      assetPath: path,
     });
-  });
 
-  onSelectAssetFile = (path, fileName="") => {
+  onSelectAssetFile = (path, fileName = "") => {
     this.setState({
       importName: fileName,
       assetName: fileName
     });
-  }
+  };
 
   openEditor(fullPath) {
     const ed = atom.config.get("pickpocket.imageEditorAppName");
@@ -169,12 +173,11 @@ class App extends Component {
   }
 
   onEscape = () => {
-    const {mode, assetName} = this.state;
+    const { mode, assetName } = this.state;
     if (mode === "pick") {
       if (assetName) {
         this.onSelectAssetFile();
-      }
-      else {
+      } else {
         this.onClose();
       }
     } else {
@@ -183,7 +186,7 @@ class App extends Component {
         assetName: ""
       });
     }
-  }
+  };
 
   onClose = () => {
     this.setState({ mode: "pick" }, () => {
@@ -195,14 +198,22 @@ class App extends Component {
     this.setState({
       fxCanvas: ref
     });
-  }
+  };
 
   render() {
-    const { dirs, imgs, mode, importPath, importName, assetPath, assetName } = this.state;
+    const {
+      dirs,
+      imgs,
+      mode,
+      importPath,
+      importName,
+      assetPath,
+      assetName
+    } = this.state;
 
-    const range = importPath && importName ?
-      [importPath.length, importPath.length + importName.length - 4] :
-      null;
+    const range = importPath && importName
+      ? [importPath.length, importPath.length + importName.length - 4]
+      : null;
 
     const screen = mode === "pick"
       ? <PickScreen
@@ -218,33 +229,35 @@ class App extends Component {
           onSetFXCanvas={this.onSetFXCanvas}
         />;
 
-    return <div className="pickpocket">
-      <section>
-        <Toolbar
-          mode={mode}
-          onClose={this.onClose}
-          onOpenSettings={this.onOpenSettings}
-          onOpenAssets={this.onOpenAssets}
-          onSwitchMode={this.onSwitchMode}
-          onImport={this.onImport}
-          canImport={!!assetName}
-        />
-      </section>
-      <section style={{ paddingTop: 4 }}>
-        <MiniEditor
-          text={`${importPath}${importName}`}
-          range={range}
-          onChange={this.changeImportPath}
-          onEscape={this.onEscape}
-          onEnter={this.onImport}
-        />
-      </section>
+    return (
+      <div className="pickpocket">
+        <section>
+          <Toolbar
+            mode={mode}
+            onClose={this.onClose}
+            onOpenSettings={this.onOpenSettings}
+            onOpenAssets={this.onOpenAssets}
+            onSwitchMode={this.onSwitchMode}
+            onImport={this.onImport}
+            canImport={!!assetName}
+          />
+        </section>
+        <section style={{ paddingTop: 4 }}>
+          <MiniEditor
+            text={`${importPath}${importName}`}
+            range={range}
+            onChange={this.changeImportPath}
+            onEscape={this.onEscape}
+            onEnter={this.onImport}
+          />
+        </section>
 
-      {screen}
+        {screen}
 
-      <Footer />
+        <Footer />
 
-    </div>;
+      </div>
+    );
   }
 }
 

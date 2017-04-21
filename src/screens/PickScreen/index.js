@@ -5,24 +5,21 @@ import utils from "../../utils";
 import Assets from "./Assets";
 import PreviewImage from "../../ui/PreviewImage";
 
-const {
-  Component,
-  PropTypes
-} = React;
+const { Component, PropTypes } = React;
 
 class PickPocket extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
     assetName: PropTypes.string,
     onChangePath: PropTypes.func.isRequired,
-    onSelectFile: PropTypes.func.isRequired,
+    onSelectFile: PropTypes.func.isRequired
   };
 
   state = {
     selected: []
   };
 
-  closePreview = (e) => {
+  closePreview = e => {
     if (this.state.preview) {
       e.stopPropagation();
     }
@@ -40,11 +37,11 @@ class PickPocket extends Component {
       return;
     }
 
-    const {fileName, path} = utils.splitPathAndFileName(fullPath);
+    const { fileName, path } = utils.splitPathAndFileName(fullPath);
     this.props.onSelectFile(path, fileName);
 
     this.setState(() => ({
-      selected: [asset],
+      selected: [asset]
     }));
   };
 
@@ -60,9 +57,9 @@ class PickPocket extends Component {
             selected={selected}
             onToggle={this.onToggle}
           />
-          { showPreview ? <PreviewImage
-              asset={selected[0]}
-              onClose={this.closePreview} /> : null }
+          {showPreview
+            ? <PreviewImage asset={selected[0]} onClose={this.closePreview} />
+            : null}
         </section>
 
       </div>

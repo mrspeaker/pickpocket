@@ -12,12 +12,11 @@ import App from "./App";
 import path from "path";
 
 const defaultExamples = path.join(
-  path.dirname(
-    atom.config.getUserConfigPath()
-  ),
+  path.dirname(atom.config.getUserConfigPath()),
   "packages",
   "pickpocket",
-  "example");
+  "example"
+);
 
 export default {
   root: null,
@@ -37,7 +36,7 @@ export default {
   },
 
   activate() {
-    const root = this.root = document.createElement("div");
+    const root = (this.root = document.createElement("div"));
 
     // // TO DO: Never removeEventListener - figure out plugin lifecycle.
     // this.root.addEventListener(

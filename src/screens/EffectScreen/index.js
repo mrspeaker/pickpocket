@@ -3,13 +3,9 @@
 import React from "react";
 import Footer from "../../ui/Footer";
 
-const {
-  Component,
-  PropTypes
-} = React;
+const { Component, PropTypes } = React;
 
 class EffectScreen extends Component {
-
   static propTypes = {
     assetName: PropTypes.string.isRequired,
     assetPath: PropTypes.string.isRequired,
@@ -30,25 +26,33 @@ class EffectScreen extends Component {
     rotate90: false
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.effect();
     this.props.onSetFXCanvas(this.refs.canvas);
   }
 
-  effect () {
-
+  effect() {
     const canvas = this.refs.canvas;
-    if (!canvas || !canvas.getContext) { return; }
-    const {assetPath, assetName} = this.props;
-    const {hueRotate, saturate, contrast, brightness, flip, rotate90} = this.state;
-    const {x, y} = flip;
+    if (!canvas || !canvas.getContext) {
+      return;
+    }
+    const { assetPath, assetName } = this.props;
+    const {
+      hueRotate,
+      saturate,
+      contrast,
+      brightness,
+      flip,
+      rotate90
+    } = this.state;
+    const { x, y } = flip;
 
     const ctx = canvas.getContext("2d");
     const img = new Image();
     img.src = assetPath + assetName;
 
     img.onload = () => {
-      const {width, height} = img;
+      const { width, height } = img;
       canvas.width = rotate90 ? height : width;
       canvas.height = rotate90 ? width : height;
 
@@ -58,7 +62,7 @@ class EffectScreen extends Component {
       }
 
       if (rotate90) {
-        ctx.translate(canvas.width / 2,canvas.height / 2);
+        ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.rotate(Math.PI / 2);
         ctx.translate(-img.width / 2, -img.height / 2);
       }
@@ -89,66 +93,127 @@ class EffectScreen extends Component {
     };
   }
 
-  onSliderChange (component, e) {
+  onSliderChange(component, e) {
     this.setState({
       [component]: e.target.value
     });
   }
 
-  onFlip = (dir) => {
+  onFlip = dir => {
     const flip = Object.assign({}, this.state.flip);
     flip[dir] = !flip[dir];
-    this.setState({flip});
-  }
+    this.setState({ flip });
+  };
 
   onRotate = () => {
-    this.setState(({rotate90}) => ({
+    this.setState(({ rotate90 }) => ({
       rotate90: !rotate90
     }));
-  }
+  };
 
-  render () {
-
+  render() {
     const { assetPath, assetName } = this.props;
-    const { flip, rotate90, hueRotate, saturate, contrast, brightness } = this.state;
+    const {
+      flip,
+      rotate90,
+      hueRotate,
+      saturate,
+      contrast,
+      brightness
+    } = this.state;
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
 
-    return <div className="screen">
+    return (
+      <div className="screen">
 
-      <section className="controls">
-        <label>Hue rotate:</label>
-        <input className="slider" type="range" min="0" max="360" onChange={e => this.onSliderChange("hueRotate", e)} value={hueRotate} />
-        <span>{" "}</span>
-        <label>Saturation:</label><input className="slider" min="0" max="300" type="range" onChange={e => this.onSliderChange("saturate", e)} value={saturate} />
-        <br/>
-        <label>Contast:</label><input className="slider" type="range" min="0" max="300" onChange={e => this.onSliderChange("contrast", e)} value={contrast} />
-        <span>{" "}</span>
-        <label>Brightness:</label><input className="slider" type="range" min="0" max="300" onChange={e => this.onSliderChange("brightness", e)} value={brightness} />
-        <div>
-          <label>Flip X:</label>
-          <input type="checkbox" onChange={() => this.onFlip("x")} checked={flip.x} />{" "}
-          <span style={{display:"inline-block", width:45}} />
-          <label>Flip Y:</label>
-          <input type="checkbox" onChange={() => this.onFlip("y")} checked={flip.y} />{" "}
-          <span style={{display:"inline-block", width:45}} />
-          <label>Rotate 90:</label>
-          <input type="checkbox" onChange={this.onRotate} checked={rotate90} />
-        </div>
-      </section>
+        <section className="controls">
+          <label>Hue rotate:</label>
+          <input
+            className="slider"
+            type="range"
+            min="0"
+            max="360"
+            onChange={e => this.onSliderChange("hueRotate", e)}
+            value={hueRotate}
+          />
+          <span>{" "}</span>
+          <label>Saturation:</label>
+          <input
+            className="slider"
+            min="0"
+            max="300"
+            type="range"
+            onChange={e => this.onSliderChange("saturate", e)}
+            value={saturate}
+          />
+          <br />
+          <label>Contast:</label>
+          <input
+            className="slider"
+            type="range"
+            min="0"
+            max="300"
+            onChange={e => this.onSliderChange("contrast", e)}
+            value={contrast}
+          />
+          <span>{" "}</span>
+          <label>Brightness:</label>
+          <input
+            className="slider"
+            type="range"
+            min="0"
+            max="300"
+            onChange={e => this.onSliderChange("brightness", e)}
+            value={brightness}
+          />
+          <div>
+            <label>Flip X:</label>
+            <input
+              type="checkbox"
+              onChange={() => this.onFlip("x")}
+              checked={flip.x}
+            />
+            {" "}
+            <span style={{ display: "inline-block", width: 45 }} />
+            <label>Flip Y:</label>
+            <input
+              type="checkbox"
+              onChange={() => this.onFlip("y")}
+              checked={flip.y}
+            />
+            {" "}
+            <span style={{ display: "inline-block", width: 45 }} />
+            <label>Rotate 90:</label>
+            <input
+              type="checkbox"
+              onChange={this.onRotate}
+              checked={rotate90}
+            />
+          </div>
+        </section>
 
-      <section>
-        <div style={{textAlign: "center", paddingTop: 20, paddingBottom: 20}}>
-          <img src={ assetPath + assetName } style={{ maxWidth: "50%" }} />
-          <canvas ref="canvas" style={{verticalAlign:"middle", paddingLeft:20, maxWidth: "50%"}}/>
-        </div>
-      </section>
+        <section>
+          <div
+            style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}
+          >
+            <img src={assetPath + assetName} style={{ maxWidth: "50%" }} />
+            <canvas
+              ref="canvas"
+              style={{
+                verticalAlign: "middle",
+                paddingLeft: 20,
+                maxWidth: "50%"
+              }}
+            />
+          </div>
+        </section>
 
-      <Footer />
+        <Footer />
 
-    </div>;
+      </div>
+    );
   }
-
 }
 
 export default EffectScreen;

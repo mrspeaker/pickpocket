@@ -2,12 +2,10 @@
 
 import React from "react";
 
-const {
-  Component,
-} = React;
+const { Component } = React;
 
 class Canvas extends Component {
-  render () {
+  render() {
     return <canvas ref={() => {}} />;
   }
 }
