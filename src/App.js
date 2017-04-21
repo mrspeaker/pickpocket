@@ -249,11 +249,8 @@ class App extends Component {
             onEnter={this.onImport}
           />
         </section>
-
         {screen}
-
         <Footer />
-
       </div>
     );
   }

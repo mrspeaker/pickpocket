@@ -38,17 +38,6 @@ export default {
   activate() {
     const root = (this.root = document.createElement("div"));
 
-    // // TO DO: Never removeEventListener - figure out plugin lifecycle.
-    // this.root.addEventListener(
-    //   "keyup",
-    //   e => {
-    //     // Handle escape key
-    //     if (e.which !== 27) return;
-    //     this.toggle();
-    //   },
-    //   false
-    // );
-
     this.modal = atom.workspace.addModalPanel({ item: root });
     this.subscriptions = new CompositeDisposable();
     this.subscriptions.add(
@@ -77,29 +66,3 @@ export default {
     this.modal.destroy();
   }
 };
-/*
-  // atom functions...
-
-  atom.workspace.open("atom://config/packages/pickpocket")
-  atom.notifications.addError("Can't open your asset folder: update it in settings");
-  atom.open({ pathsToOpen: ["atom://config/packages/pickpocket/"]}, 500);
-  //const editorElement = atom.views.getView(atom.workspace.getActiveTextEditor());
-  //atom.commands.dispatch(editorElement, "settings-view:uninstall-packages");
-  //atom://config/packages/pickpocket
-
-  // https://atom.io/docs/api/v1.14.2/Config#instance-getUserConfigPath will
-  // get you to the `config.cson`, you can do
-  // `path.join(path.dirname(atom.config.getUserConfigPath()), 'packages', 'package-name')`
-  // to get the path to your package's directory ... or `__dirname` to get the
-  // directory that your current file is executing from and walk up from there
-  // or
-  // atom.packages.resolvePackagePath("pickpocket")
-
-  // Pretty sure this isn't how you're supposed to make
-  // a modal act like a modal, but whatever...
-  this.root.addEventListener( "mousedown", e => {
-    //atom.views.getView( this.editor ).focus();
-    e.preventDefault();
-    e.stopPropagation();
-  });
-*/
