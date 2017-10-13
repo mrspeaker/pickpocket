@@ -13,7 +13,10 @@ class CreateScreen extends Component {
 
   state = {
     w: 32,
-    h: 32
+    h: 32,
+    isGrid: false,
+    cols: 5,
+    rows: 2
   };
 
   componentDidMount() {
@@ -26,31 +29,48 @@ class CreateScreen extends Component {
     if (!canvas || !canvas.getContext) {
       return;
     }
-    const { w, h } = this.state;
-
+    const { w, h, isGrid, rows, cols } = this.state;
+    const width = w * (isGrid ? cols : 1);
+    const height = h * (isGrid ? rows : 1);
     const ctx = canvas.getContext("2d");
-    canvas.width = w;
-    canvas.height = h;
+    canvas.width = width;
+    canvas.height = height;
 
-    ctx.fillStyle = `hsl(${(Math.random() * 360) | 0}, 50%, 50%)`;
-    ctx.fillRect(0, 0, w, h);
+    if (!isGrid) {
+      ctx.fillStyle = `hsl(${(Math.random() * 360) | 0}, 50%, 50%)`;
+      ctx.fillRect(0, 0, width, height);
+    } else {
+      for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) {
+          const hue = (Math.random() * 360) | 0;
+          ctx.fillStyle = `hsl(${hue}, 30%, 50%)`;
+          ctx.fillRect(i * w, j * h, w, h);
+          ctx.strokeStyle = `rgb(30,30,30)`;
+          ctx.strokeRect(i * w, j * h, w, h);
+        }
+      }
+    }
   }
 
   onSize = (dim, e) => {
     this.setState({
       [dim]: parseInt(e.target.value)
-    });
+    }, () => this.create());
+  };
+
+  onGrid = () => {
+    this.setState({ isGrid: !this.state.isGrid }, () => this.create());
   };
 
   render() {
-    const { w, h } = this.state;
+    const { w, h, isGrid, cols, rows } = this.state;
 
     return (
       <div className="screen">
         <div>!!! Under construction !!!</div>
         <section className="controls">
           <button
-            title="import asset"
+            title="rnd color"
             className="btn"
             onClick={() => this.create()}
             disabled={false}
@@ -58,15 +78,54 @@ class CreateScreen extends Component {
             rnd color
           </button>
           <div>
+            <label> </label>
+            <label> </label>
             <label>Width:</label>
-            <input type="text" onChange={e => this.onSize("w", e)} value={w} />
+            <input
+              type="text"
+              style={{ width: "80px" }}
+              onChange={e => this.onSize("w", e)}
+              value={w}
+            />
             <span style={{ display: "inline-block", width: 45 }} />
             <label>Height:</label>
-            <input type="text" onChange={e => this.onSize("h", e)} value={h} />
+            <input
+              type="text"
+              style={{ width: "80px" }}
+              onChange={e => this.onSize("h", e)}
+              value={h}
+            />
             <span style={{ display: "inline-block", width: 45 }} />
           </div>
         </section>
+        <section className="controls">
+          <div>
+            <label>is grid</label>
+            <input
+              type="checkbox"
+              onChange={() => this.onGrid()}
+              checked={isGrid}
+            />
 
+            <span style={{ display: "inline-block", width: 45 }} />
+            <label>columns:</label>
+            <input
+              type="text"
+              style={{ width: "80px" }}
+              onChange={e => this.onSize("cols", e)}
+              value={cols}
+            />
+            <span style={{ display: "inline-block", width: 45 }} />
+            <label>rows:</label>
+            <input
+              type="text"
+              style={{ width: "80px" }}
+              onChange={e => this.onSize("rows", e)}
+              value={rows}
+            />
+            <span style={{ display: "inline-block", width: 45 }} />
+          </div>
+        </section>
         <section>
           <div
             style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}
