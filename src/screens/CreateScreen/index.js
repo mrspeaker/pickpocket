@@ -53,9 +53,12 @@ class CreateScreen extends Component {
   }
 
   onSize = (dim, e) => {
-    this.setState({
-      [dim]: parseInt(e.target.value)
-    }, () => this.create());
+    this.setState(
+      {
+        [dim]: parseInt(e.target.value)
+      },
+      () => this.create()
+    );
   };
 
   onGrid = () => {
@@ -64,7 +67,6 @@ class CreateScreen extends Component {
 
   render() {
     const { w, h, isGrid, cols, rows } = this.state;
-
     return (
       <div className="screen">
         <div>!!! Under construction !!!</div>
@@ -82,7 +84,7 @@ class CreateScreen extends Component {
             <label> </label>
             <label>Width:</label>
             <input
-              type="text"
+              type="number"
               style={{ width: "80px" }}
               onChange={e => this.onSize("w", e)}
               value={w}
@@ -90,7 +92,7 @@ class CreateScreen extends Component {
             <span style={{ display: "inline-block", width: 45 }} />
             <label>Height:</label>
             <input
-              type="text"
+              type="number"
               style={{ width: "80px" }}
               onChange={e => this.onSize("h", e)}
               value={h}
@@ -110,7 +112,7 @@ class CreateScreen extends Component {
             <span style={{ display: "inline-block", width: 45 }} />
             <label>columns:</label>
             <input
-              type="text"
+              type="number"
               style={{ width: "80px" }}
               onChange={e => this.onSize("cols", e)}
               value={cols}
@@ -118,7 +120,7 @@ class CreateScreen extends Component {
             <span style={{ display: "inline-block", width: 45 }} />
             <label>rows:</label>
             <input
-              type="text"
+              type="number"
               style={{ width: "80px" }}
               onChange={e => this.onSize("rows", e)}
               value={rows}
