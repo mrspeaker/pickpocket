@@ -12,15 +12,15 @@ const styles = {
 };
 
 class Toolbar extends Component {
-
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     onOpenAssets: PropTypes.func.isRequired,
     onOpenSettings: PropTypes.func.isRequired,
     onImport: PropTypes.func.isRequired,
+    onNew: PropTypes.func.isRequired,
     onSwitchMode: PropTypes.func.isRequired,
     canImport: PropTypes.bool,
-    mode: PropTypes.string,
+    mode: PropTypes.string
   };
 
   render() {
@@ -29,6 +29,7 @@ class Toolbar extends Component {
       onOpenAssets,
       onOpenSettings,
       onImport,
+      onNew,
       onSwitchMode,
       canImport,
       mode
@@ -53,8 +54,9 @@ class Toolbar extends Component {
           <span className="icon icon-desktop-download" />
           <span className="icon icon-pencil" />
         </button>
-        {mode === "pick"
-          ? <button
+        {mode === "pick" ? (
+          <span>
+            <button
               title="add some effects!"
               className="btn"
               disabled={!canImport}
@@ -62,13 +64,19 @@ class Toolbar extends Component {
             >
               <span className="icon icon-paintcan" />
             </button>
-          : <button
-              title="back to picking"
-              className="btn"
-              onClick={onSwitchMode}
-            >
-              <span className="icon icon-arrow-left" />
-            </button>}
+            <button title="create new asset" className="btn" onClick={onNew}>
+              <span className="icon icon-file" />
+            </button>
+          </span>
+        ) : (
+          <button
+            title="back to picking"
+            className="btn"
+            onClick={onSwitchMode}
+          >
+            <span className="icon icon-arrow-left" />
+          </button>
+        )}
 
         <span
           style={{

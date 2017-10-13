@@ -7,6 +7,7 @@ const { exec } = proc;
 
 import PickScreen from "./screens/PickScreen";
 import EffectScreen from "./screens/EffectScreen";
+import CreateScreen from "./screens/CreateScreen";
 
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
 import copyFile from "./file/copyFile";
@@ -78,7 +79,7 @@ class App extends Component {
       return this.props.toggle();
     }
     const { mode } = this.state;
-    if (mode === "fx") {
+    if (mode === "fx" || mode === "create") {
       this.onImportCanvas(doOpen, projectRoot);
       return;
     }
@@ -138,6 +139,14 @@ class App extends Component {
     }
   };
 
+  onNew = () => {
+    this.setState({
+      mode: "create",
+      assetName: "",
+      importName: "untitled.png"
+    });
+  };
+
   onChangeAssetPath = newPath =>
     fetchImagesFromFolder(newPath).then(res => {
       const { path } = utils.splitPathAndFileName(newPath);
@@ -181,7 +190,8 @@ class App extends Component {
     } else {
       this.setState({
         mode: "pick",
-        assetName: ""
+        assetName: "",
+        importName: ""
       });
     }
   };
@@ -209,23 +219,37 @@ class App extends Component {
       assetName
     } = this.state;
 
-    const range = importPath && importName
-      ? [importPath.length, importPath.length + importName.length - 4]
-      : null;
+    const range =
+      importPath && importName
+        ? [importPath.length, importPath.length + importName.length - 4]
+        : null;
 
-    const screen = mode === "pick"
-      ? <PickScreen
-          assets={{ dirs, imgs }}
-          assetName={assetName}
-          assetPath={assetPath}
-          onChangePath={this.onChangeAssetPath}
-          onSelectFile={this.onSelectAssetFile}
-        />
-      : <EffectScreen
-          assetPath={assetPath}
-          assetName={assetName}
-          onSetFXCanvas={this.onSetFXCanvas}
-        />;
+    let screen;
+    switch (mode) {
+      case "pick":
+        screen = (
+          <PickScreen
+            assets={{ dirs, imgs }}
+            assetName={assetName}
+            assetPath={assetPath}
+            onChangePath={this.onChangeAssetPath}
+            onSelectFile={this.onSelectAssetFile}
+          />
+        );
+        break;
+      case "fx":
+        screen = (
+          <EffectScreen
+            assetPath={assetPath}
+            assetName={assetName}
+            onSetFXCanvas={this.onSetFXCanvas}
+          />
+        );
+        break;
+      case "create":
+        screen = <CreateScreen onSetFXCanvas={this.onSetFXCanvas} />;
+        break;
+    }
 
     return (
       <div className="pickpocket">
@@ -235,9 +259,10 @@ class App extends Component {
             onClose={this.onClose}
             onOpenSettings={this.onOpenSettings}
             onOpenAssets={this.onOpenAssets}
+            onNew={this.onNew}
             onSwitchMode={this.onSwitchMode}
             onImport={this.onImport}
-            canImport={!!assetName}
+            canImport={!!importName}
           />
         </section>
         <section style={{ paddingTop: 4 }}>
