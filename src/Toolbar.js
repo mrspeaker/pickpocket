@@ -54,8 +54,11 @@ class Toolbar extends Component {
           <span className="icon icon-desktop-download" />
           <span className="icon icon-pencil" />
         </button>
+        <button title="create new asset" className="btn" onClick={onNew}>
+          <span className="icon icon-file" />
+        </button>
         {mode === "pick" ? (
-          <span>
+          <span style={{ float: "left", display: "inline-block" }}>
             <button
               title="add some effects!"
               className="btn"
@@ -64,9 +67,7 @@ class Toolbar extends Component {
             >
               <span className="icon icon-paintcan" />
             </button>
-            <button title="create new asset" className="btn" onClick={onNew}>
-              <span className="icon icon-file" />
-            </button>
+
           </span>
         ) : (
           <button
@@ -102,6 +103,7 @@ class Toolbar extends Component {
         >
           <span className="icon icon-gear" />
         </button>
+
         <div
           title="close pickpocket"
           className="icon icon-x"
