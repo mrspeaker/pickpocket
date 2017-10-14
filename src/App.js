@@ -65,7 +65,19 @@ class App extends Component {
     });
   };
 
-  onOpenAssets = () => exec(`open ${this.state.assetPath}`);
+  onOpenAssets = () => {
+    const path = this.state.assetPath;
+    switch (process.platform) {
+      case "darwin":
+        exec(`open ${path}`);
+        break;
+      case "linux":
+        exec(`xdg-open ${path}`);
+        break;
+      default:
+        console.warn("Open not implemented for ", process.platform);
+    }
+  };
 
   onOpenSettings = () => {
     atom.workspace.open("atom://config/packages/pickpocket");
