@@ -175,7 +175,14 @@ class App extends Component {
   openEditor(fullPath) {
     const ed = atom.config.get("pickpocket.imageEditorAppName");
     if (ed) {
-      exec(`open -a ${ed} ${fullPath}`);
+      switch (process.platform) {
+        case "darwin":
+          exec(`open -a ${ed} ${fullPath}`);
+          break;
+        default:
+          exec(`${ed} ${fullPath}`);
+          break;
+      }
     }
   }
 
