@@ -15,6 +15,7 @@ class CreateScreen extends Component {
     w: 32,
     h: 32,
     isGrid: false,
+    hasBorders: true,
     cols: 5,
     rows: 2
   };
@@ -29,7 +30,7 @@ class CreateScreen extends Component {
     if (!canvas || !canvas.getContext) {
       return;
     }
-    const { w, h, isGrid, rows, cols } = this.state;
+    const { w, h, isGrid, hasBorders, rows, cols } = this.state;
     const width = w * (isGrid ? cols : 1);
     const height = h * (isGrid ? rows : 1);
     const ctx = canvas.getContext("2d");
@@ -45,8 +46,10 @@ class CreateScreen extends Component {
           const hue = (Math.random() * 360) | 0;
           ctx.fillStyle = `hsl(${hue}, 30%, 50%)`;
           ctx.fillRect(i * w, j * h, w, h);
-          ctx.strokeStyle = `rgb(30,30,30)`;
-          ctx.strokeRect(i * w, j * h, w, h);
+          if (hasBorders) {
+            ctx.strokeStyle = `rgb(30,30,30)`;
+            ctx.strokeRect(i * w, j * h, w, h);
+          }
         }
       }
     }
@@ -65,8 +68,12 @@ class CreateScreen extends Component {
     this.setState({ isGrid: !this.state.isGrid }, () => this.create());
   };
 
+  onBorders = () => {
+    this.setState({ hasBorders: !this.state.hasBorders }, () => this.create());
+  };
+
   render() {
-    const { w, h, isGrid, cols, rows } = this.state;
+    const { w, h, isGrid, hasBorders, cols, rows } = this.state;
     return (
       <div className="screen">
         <div>!!! Under construction !!!</div>
@@ -80,8 +87,12 @@ class CreateScreen extends Component {
             rnd color
           </button>
           <div>
-            <label> </label>
-            <label> </label>
+            <label>is grid</label>
+            <input
+              type="checkbox"
+              onChange={() => this.onGrid()}
+              checked={isGrid}
+            />
             <label>Width:</label>
             <input
               type="number"
@@ -102,11 +113,11 @@ class CreateScreen extends Component {
         </section>
         <section className="controls">
           <div>
-            <label>is grid</label>
+            <label>borders</label>
             <input
               type="checkbox"
-              onChange={() => this.onGrid()}
-              checked={isGrid}
+              onChange={() => this.onBorders()}
+              checked={hasBorders}
             />
 
             <span style={{ display: "inline-block", width: 45 }} />
