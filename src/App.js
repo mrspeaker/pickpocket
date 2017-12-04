@@ -12,7 +12,7 @@ import CreateScreen from "./screens/CreateScreen";
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
 import copyFile from "./file/copyFile";
 import writeImage from "./file/writeImage";
-import getTreePath from "./file/getTreePath";
+import getTreeFile from "./file/getTreeFile";
 import getProjectRoot from "./file/getProjectRoot";
 import getAssetRoot from "./file/getAssetRoot";
 import utils from "./utils";
@@ -34,13 +34,23 @@ class App extends Component {
     mode: "pick",
     fxCanvas: null,
 
-    importPath: getTreePath(),
+    currentFile: getTreeFile().file,
+    importPath: getTreeFile().path,
     importName: "",
     assetPath: getAssetRoot(),
     assetName: ""
   };
 
   componentDidMount() {
+
+    const f = this.state.currentFile;
+    if (f && f.name.endsWith(".png")) {
+      this.setState({
+        mode: "img"
+      });
+    }
+
+
     fetchImagesFromFolder(getAssetRoot())
       .then(({ dirs, imgs }) => {
         this.setState({
@@ -245,6 +255,13 @@ class App extends Component {
 
     let screen;
     switch (mode) {
+      case "img":
+        screen = <div>
+          <div>{this.state.currentFile.path}</div>
+          <img src={this.state.currentFile.path} />
+          <div>{"... under construction ..."}</div>
+        </div>;
+        break;
       case "pick":
         screen = (
           <PickScreen

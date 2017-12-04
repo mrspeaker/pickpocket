@@ -17,7 +17,9 @@ class CreateScreen extends Component {
     isGrid: false,
     hasBorders: true,
     cols: 5,
-    rows: 2
+    rows: 2,
+    ctx: null,
+    moused: false
   };
 
   componentDidMount() {
@@ -34,6 +36,7 @@ class CreateScreen extends Component {
     const width = w * (isGrid ? cols : 1);
     const height = h * (isGrid ? rows : 1);
     const ctx = canvas.getContext("2d");
+    this.setState({ ctx });
     canvas.width = width;
     canvas.height = height;
 
@@ -47,8 +50,8 @@ class CreateScreen extends Component {
           ctx.fillStyle = `hsl(${hue}, 30%, 50%)`;
           ctx.fillRect(i * w, j * h, w, h);
           if (hasBorders) {
-            ctx.strokeStyle = `rgb(30,30,30)`;
-            ctx.strokeRect(i * w, j * h, w, h);
+            ctx.strokeStyle = `black`;
+            ctx.strokeRect(i * w + 0.5, j * h + 0.5, w, h);
           }
         }
       }
@@ -70,6 +73,24 @@ class CreateScreen extends Component {
 
   onBorders = () => {
     this.setState({ hasBorders: !this.state.hasBorders }, () => this.create());
+  };
+
+  clicked = (e, force) => {
+    const { ctx, moused } = this.state;
+    if (!moused && !force) {
+      return;
+    }
+    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    const offset = ctx.canvas.getBoundingClientRect();
+    ctx.fillRect(e.pageX - offset.left - 2, e.pageY - offset.top - 2, 4, 4);
+    ctx.canvas.style.cursor = "none";
+  };
+
+  moused = down => {
+    this.setState({
+      moused: down
+    });
+    if (!down) this.state.ctx.canvas.style.cursor = "crosshair";
   };
 
   render() {
@@ -145,10 +166,17 @@ class CreateScreen extends Component {
           >
             <canvas
               ref="canvas"
+              onMouseDown={e => {
+                this.moused(true);
+                this.clicked(e, true);
+              }}
+              onMouseMove={this.clicked}
+              onMouseUp={() => this.moused(false)}
+              onMouseLeave={() => this.moused(false)}
               style={{
                 verticalAlign: "middle",
-                paddingLeft: 20,
-                maxWidth: "80%"
+                maxWidth: "80%",
+                cursor: "crosshair"
               }}
             />
           </div>
