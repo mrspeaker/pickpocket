@@ -3,17 +3,8 @@
 import React from "react";
 const { Component, PropTypes } = React;
 
-const styles = {
-  closeIcon: {
-    cursor: "pointer",
-    display: "inline-block",
-    float: "right"
-  }
-};
-
 class Toolbar extends Component {
   static propTypes = {
-    onClose: PropTypes.func.isRequired,
     onOpenAssets: PropTypes.func.isRequired,
     onOpenSettings: PropTypes.func.isRequired,
     onImport: PropTypes.func.isRequired,
@@ -25,7 +16,6 @@ class Toolbar extends Component {
 
   render() {
     const {
-      onClose,
       onOpenAssets,
       onOpenSettings,
       onImport,
@@ -104,12 +94,6 @@ class Toolbar extends Component {
           <span className="icon icon-gear" />
         </button>
 
-        <div
-          title="close pickpocket"
-          className="icon icon-x"
-          onClick={onClose}
-          style={styles.closeIcon}
-        />
       </div>
     );
   }
