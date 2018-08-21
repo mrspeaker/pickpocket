@@ -25,7 +25,8 @@ export default {
   config: {
     assetFolder: {
       type: "string",
-      description: "A folder (eg /Users/mrspeaker/assets/) that contains a bunch of gif/png/jpgs",
+      description:
+        "A folder (eg /Users/mrspeaker/assets/) that contains a bunch of gif/png/jpgs",
       default: defaultExamples
     },
     imageEditorAppName: {
@@ -38,13 +39,20 @@ export default {
   activate() {
     const root = (this.root = document.createElement("div"));
 
-    this.modal = atom.workspace.addModalPanel({ item: root });
+    // this.modal = atom.workspace.addModalPanel({ item: root });
     this.subscriptions = new CompositeDisposable();
     this.subscriptions.add(
       atom.commands.add("atom-workspace", {
         "pickpocket:toggle": () => this.toggle()
       })
     );
+    this.item = {
+      element: root, //document.createElement('div'),
+      getTitle: () => "Pickpocket",
+      getURI: () => "atom://pickpocket/App",
+      getDefaultLocation: () => "right"
+    };
+    this.modal = atom.workspace.open(this.item);
   },
 
   render() {
@@ -56,7 +64,8 @@ export default {
 
   toggle() {
     this.visible = !this.visible;
-    this.modal[this.visible ? "show" : "hide"]();
+    //this.modal[this.visible ? "show" : "hide"]();
+    atom.workspace.toggle(this.item);
     this.render();
   },
 
