@@ -16,5 +16,12 @@
   "dependencies": {
     "react": "15.1.0",
     "react-dom": "15.1.0"
+  },
+  "consumedServices": {
+    "tree-view": {
+      "versions": {
+        "^1.0.0": "consumeTreeView"
+      }
+    }
   }
 }

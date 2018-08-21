@@ -35,21 +35,18 @@ class App extends Component {
     fxCanvas: null,
 
     currentFile: getTreeFile().file,
-    importPath: getTreeFile().path,
     importName: "",
     assetPath: getAssetRoot(),
     assetName: ""
   };
 
   componentDidMount() {
-
     const f = this.state.currentFile;
     if (f && f.name.endsWith(".png")) {
       this.setState({
         mode: "img"
       });
     }
-
 
     fetchImagesFromFolder(getAssetRoot())
       .then(({ dirs, imgs }) => {
@@ -68,9 +65,8 @@ class App extends Component {
   }
 
   changeImportPath = text => {
-    const { path, fileName } = utils.splitPathAndFileName(text);
+    const { fileName } = utils.splitPathAndFileName(text);
     this.setState({
-      importPath: path,
       importName: fileName
     });
   };
@@ -105,8 +101,8 @@ class App extends Component {
       this.onImportCanvas(doOpen, projectRoot);
       return;
     }
-
-    const { importPath, importName, assetPath, assetName } = this.state;
+    const importPath = getTreeFile().path;
+    const { importName, assetPath, assetName } = this.state;
 
     copyFile(assetPath + assetName, projectRoot, importPath, importName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
@@ -116,8 +112,9 @@ class App extends Component {
   };
 
   onImportCanvas = (doOpen, projectRoot) => {
-    const { importPath, importName, fxCanvas } = this.state;
+    const { importName, fxCanvas } = this.state;
     if (!fxCanvas) return;
+    const importPath = getTreeFile().path;
     const imgData = fxCanvas.toDataURL("image/png");
 
     writeImage(imgData, projectRoot, importPath, importName)
@@ -238,29 +235,20 @@ class App extends Component {
   };
 
   render() {
-    const {
-      dirs,
-      imgs,
-      mode,
-      importPath,
-      importName,
-      assetPath,
-      assetName
-    } = this.state;
+    const { dirs, imgs, mode, importName, assetPath, assetName } = this.state;
 
-    const range =
-      importPath && importName
-        ? [importPath.length, importPath.length + importName.length - 4]
-        : null;
+    const range = importName ? [0, importName.length - 4] : null;
 
     let screen;
     switch (mode) {
       case "img":
-        screen = <div>
-          <div>{this.state.currentFile.path}</div>
-          <img src={this.state.currentFile.path} />
-          <div>{"... under construction ..."}</div>
-        </div>;
+        screen = (
+          <div>
+            <div>{this.state.currentFile.path}</div>
+            <img src={this.state.currentFile.path} />
+            <div>{"... under construction ..."}</div>
+          </div>
+        );
         break;
       case "pick":
         screen = (
@@ -303,7 +291,7 @@ class App extends Component {
         </section>
         <section style={{ paddingTop: 4 }}>
           <MiniEditor
-            text={`${importPath}${importName}`}
+            text={`${importName}`}
             range={range}
             onChange={this.changeImportPath}
             onEscape={this.onEscape}

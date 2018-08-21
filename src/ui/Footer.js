@@ -9,10 +9,9 @@ const styles = {
   },
   gitLink: {
     color: "#777",
-    marginBottom: -8,
     position: "absolute",
     bottom: 0,
-    right: 0
+    right: 10
   }
 };
 
@@ -20,7 +19,7 @@ const Footer = () => (
   <footer className="header" style={styles.container}>
     <a style={styles.gitLink} href="https://github.com/mrspeaker/pickpocket">
       PickPocket by Mr Speaker
-    </a>
+    </a>;
   </footer>
 );
 

@@ -20,7 +20,6 @@ const defaultExamples = path.join(
 
 export default {
   root: null,
-  modal: null,
   item: null,
   visible: false,
 
@@ -41,7 +40,6 @@ export default {
   activate() {
     const root = (this.root = document.createElement("div"));
 
-    // this.modal = atom.workspace.addModalPanel({ item: root });
     this.subscriptions = new CompositeDisposable();
     this.subscriptions.add(
       atom.commands.add("atom-workspace", {
@@ -49,17 +47,11 @@ export default {
       })
     );
     this.item = {
-      element: root, //document.createElement('div'),
+      element: root,
       getTitle: () => "Pickpocket",
       getURI: () => "atom://pickpocket/App",
       getDefaultLocation: () => "right"
     };
-    atom.workspace.onDidOpen((a) => {
-      console.log("Didi open", a);
-    });
-    // this.modal = atom.workspace.open(this.item).then(i => {
-    //   console.log(i, "!!!");
-    // })
   },
 
   render() {
@@ -70,7 +62,6 @@ export default {
   },
 
   toggle() {
-    //this.modal[this.visible ? "show" : "hide"]();
     atom.workspace.toggle(this.item).then(() => {
       this.visible = !this.visible;
       console.log(this.visible);
@@ -81,6 +72,5 @@ export default {
   deactivate() {
     ReactDOM.unmountComponentAtNode(this.root);
     this.subscriptions.dispose();
-    this.modal.destroy();
   }
 };
