@@ -21,7 +21,9 @@ const defaultExamples = path.join(
 export default {
   root: null,
   modal: null,
+  item: null,
   visible: false,
+
   config: {
     assetFolder: {
       type: "string",
@@ -52,7 +54,12 @@ export default {
       getURI: () => "atom://pickpocket/App",
       getDefaultLocation: () => "right"
     };
-    this.modal = atom.workspace.open(this.item);
+    atom.workspace.onDidOpen((a) => {
+      console.log("Didi open", a);
+    });
+    // this.modal = atom.workspace.open(this.item).then(i => {
+    //   console.log(i, "!!!");
+    // })
   },
 
   render() {
@@ -63,10 +70,12 @@ export default {
   },
 
   toggle() {
-    this.visible = !this.visible;
     //this.modal[this.visible ? "show" : "hide"]();
-    atom.workspace.toggle(this.item);
-    this.render();
+    atom.workspace.toggle(this.item).then(() => {
+      this.visible = !this.visible;
+      console.log(this.visible);
+      this.render();
+    });
   },
 
   deactivate() {
