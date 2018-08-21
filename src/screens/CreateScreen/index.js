@@ -14,10 +14,10 @@ class CreateScreen extends Component {
   state = {
     w: 32,
     h: 32,
-    isGrid: false,
-    hasBorders: true,
+    isGrid: true,
+    hasBorders: false,
     cols: 5,
-    rows: 2,
+    rows: 4,
     ctx: null,
     moused: false
   };
@@ -44,6 +44,7 @@ class CreateScreen extends Component {
       ctx.fillStyle = `hsl(${(Math.random() * 360) | 0}, 50%, 50%)`;
       ctx.fillRect(0, 0, width, height);
     } else {
+      ctx.lineWidth = 1;
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols; i++) {
           const hue = (Math.random() * 360) | 0;
@@ -51,7 +52,7 @@ class CreateScreen extends Component {
           ctx.fillRect(i * w, j * h, w, h);
           if (hasBorders) {
             ctx.strokeStyle = `black`;
-            ctx.strokeRect(i * w + 0.5, j * h + 0.5, w, h);
+            ctx.strokeRect(i * w - 0.5, j * h - 0.5, w, h);
           }
         }
       }
@@ -108,7 +109,7 @@ class CreateScreen extends Component {
             rnd color
           </button>
           <div>
-            <label>is grid</label>
+            <label>sprite sheet</label>
             <input
               type="checkbox"
               onChange={() => this.onGrid()}
