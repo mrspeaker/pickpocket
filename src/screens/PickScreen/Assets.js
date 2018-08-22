@@ -21,17 +21,19 @@ class Assets extends Component {
       <div className="thumbs">
         {[...dirs, ...imgs].map(
           asset =>
-            (asset.type === "directory"
-              ? <SelectableFolder
-                  onToggle={() => onToggle(asset)}
-                  name={asset.name}
-                  selected={selected.indexOf(asset) !== -1}
-                />
-              : <SelectableThumbnail
-                  onToggle={() => onToggle(asset)}
-                  src={asset.fullPath}
-                  selected={selected.indexOf(asset) !== -1}
-                />)
+            asset.type === "directory" ? (
+              <SelectableFolder
+                onToggle={() => onToggle(asset)}
+                name={asset.name}
+                selected={selected.indexOf(asset) !== -1}
+              />
+            ) : (
+              <SelectableThumbnail
+                onToggle={() => onToggle(asset)}
+                src={asset.fullPath}
+                selected={selected.indexOf(asset) !== -1}
+              />
+            )
         )}
       </div>
     );

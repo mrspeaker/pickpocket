@@ -17,8 +17,6 @@ import getProjectRoot from "./file/getProjectRoot";
 import getAssetRoot from "./file/getAssetRoot";
 import utils from "./utils";
 
-import Toolbar from "./Toolbar";
-import MiniEditor from "./ui/MiniEditor";
 import Footer from "./ui/Footer";
 
 const { Component, PropTypes } = React;
@@ -85,12 +83,8 @@ class App extends Component {
     }
   };
 
-  onOpenSettings = () => {
-    atom.workspace.open("atom://config/packages/pickpocket");
-    this.onClose();
-  };
-
   onImport = doOpenOrEvent => {
+    console.log("oh, hallo");
     const doOpen = doOpenOrEvent === true;
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
@@ -256,8 +250,11 @@ class App extends Component {
             assets={{ dirs, imgs }}
             assetName={assetName}
             assetPath={assetPath}
+            onOpenAssets={this.onOpenAssets}
+            onClose={this.onClose}
             onChangePath={this.onChangeAssetPath}
             onSelectFile={this.onSelectAssetFile}
+            onImport={this.onImport}
           />
         );
         break;
@@ -277,27 +274,6 @@ class App extends Component {
 
     return (
       <div className="pickpocket">
-        <section>
-          <Toolbar
-            mode={mode}
-            onClose={this.onClose}
-            onOpenSettings={this.onOpenSettings}
-            onOpenAssets={this.onOpenAssets}
-            onNew={this.onNew}
-            onSwitchMode={this.onSwitchMode}
-            onImport={this.onImport}
-            canImport={!!importName}
-          />
-        </section>
-        <section style={{ paddingTop: 4 }}>
-          <MiniEditor
-            text={`${importName}`}
-            range={range}
-            onChange={this.changeImportPath}
-            onEscape={this.onEscape}
-            onEnter={this.onImport}
-          />
-        </section>
         {screen}
         <Footer />
       </div>

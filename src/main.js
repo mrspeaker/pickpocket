@@ -64,7 +64,6 @@ export default {
   toggle() {
     atom.workspace.toggle(this.item).then(() => {
       this.visible = !this.visible;
-      console.log(this.visible);
       this.render();
     });
   },

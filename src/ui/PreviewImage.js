@@ -5,6 +5,7 @@ import utils from "../utils";
 
 const { Component, PropTypes } = React;
 
+// TODO: move Less styles for #preview here.
 const styles = {
   container: {
     backgroundSize: "contain",
@@ -22,10 +23,9 @@ const styles = {
   }
 };
 
-class PreviewImage extends Component {
+class PreviewScreen extends Component {
   static propTypes = {
-    asset: PropTypes.object.isRequired,
-    onClose: PropTypes.func.isRequired
+    asset: PropTypes.object.isRequired
   };
 
   state = {
@@ -47,7 +47,7 @@ class PreviewImage extends Component {
   }
 
   render() {
-    const { asset, onClose } = this.props;
+    const { asset } = this.props;
     const { width, height } = this.state;
     const { fullPath, size } = asset;
     const style = Object.assign({}, styles.container, {
@@ -55,7 +55,7 @@ class PreviewImage extends Component {
     });
 
     return (
-      <div className="preview" onClick={onClose} style={style}>
+      <div className="preview" style={style}>
         <div style={styles.meta}>
           {`${width} x ${height}`}, {utils.toKb(size)}
         </div>
@@ -64,4 +64,4 @@ class PreviewImage extends Component {
   }
 }
 
-export default PreviewImage;
+export default PreviewScreen;

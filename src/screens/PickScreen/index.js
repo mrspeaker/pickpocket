@@ -1,11 +1,20 @@
 "use babel";
+/* global atom */
 
 import React from "react";
 import utils from "../../utils";
+
+import Toolbar from "./Toolbar";
 import Assets from "./Assets";
-import PreviewImage from "../../ui/PreviewImage";
+import PreviewScreen from "../PreviewScreen";
 
 const { Component, PropTypes } = React;
+
+const styles = {
+  scroll: {
+    overflowY: "auto"
+  }
+};
 
 class PickPocket extends Component {
   static propTypes = {
@@ -45,23 +54,38 @@ class PickPocket extends Component {
     }));
   };
 
+  onOpenSettings = () => {
+    atom.workspace.open("atom://config/packages/pickpocket");
+    this.props.onClose();
+  };
+
   render() {
-    const { assets, assetName } = this.props;
+    const { assets, assetName, onImport, onOpenAssets } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
     return (
       <div className="screen">
         <section>
+          <Toolbar
+            onOpenSettings={this.onOpenSettings}
+            onOpenAssets={onOpenAssets}
+            onNew={() => alert("temporarily disabled!")}
+          />
+        </section>
+        <section style={styles.scroll}>
           <Assets
             assets={assets}
             selected={selected}
             onToggle={this.onToggle}
           />
-          {showPreview
-            ? <PreviewImage asset={selected[0]} onClose={this.closePreview} />
-            : null}
         </section>
-
+        {showPreview ? (
+          <PreviewScreen
+            asset={selected[0]}
+            onClose={this.closePreview}
+            onImport={onImport}
+          />
+        ) : null}
       </div>
     );
   }

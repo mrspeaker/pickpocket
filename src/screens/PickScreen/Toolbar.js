@@ -27,48 +27,9 @@ class Toolbar extends Component {
 
     return (
       <div className="btn-group toolbar" style={{ width: "100%" }}>
-        <button
-          title="import asset"
-          className="btn"
-          onClick={onImport}
-          disabled={!canImport}
-        >
-          <span className="icon icon-desktop-download" />
-        </button>
-        <button
-          title="import asset, then open in editor"
-          className="btn"
-          disabled={!canImport}
-          onClick={() => onImport(true)}
-        >
-          <span className="icon icon-desktop-download" />
-          <span className="icon icon-pencil" />
-        </button>
         <button title="create new asset" className="btn" onClick={onNew}>
           <span className="icon icon-file" />
         </button>
-        {mode === "pick" ? (
-          <span style={{ float: "left", display: "inline-block" }}>
-            <button
-              title="add some effects!"
-              className="btn"
-              disabled={!canImport}
-              onClick={onSwitchMode}
-            >
-              <span className="icon icon-paintcan" />
-            </button>
-
-          </span>
-        ) : (
-          <button
-            title="back to picking"
-            className="btn"
-            onClick={onSwitchMode}
-          >
-            <span className="icon icon-arrow-left" />
-          </button>
-        )}
-
         <span
           style={{
             float: "left",

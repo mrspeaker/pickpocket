@@ -3,7 +3,7 @@
 
 const getTreeFile = () => {
   // Grab current path from tree-view
-  const out = { path: "", file: null }
+  const out = { path: "", file: null };
   const tree = atom.packages.getActivePackage("tree-view");
   if (!tree) {
     return out;
@@ -23,7 +23,10 @@ const getTreeFile = () => {
   }
   const folderPath = !isFile
     ? selectedPath
-    : selectedPath.split("/").slice(0, -1).join("/");
+    : selectedPath
+      .split("/")
+      .slice(0, -1)
+      .join("/");
   const [, relativePath] = atom.project.relativizePath(folderPath);
   const trailing = relativePath ? "/" : "";
   out.path = `/${relativePath}${trailing}`;
