@@ -4,7 +4,6 @@ import React from "react";
 
 const styles = {
   container: {
-    fontSize: "7pt",
     height: 5
   },
   gitLink: {
@@ -17,7 +16,7 @@ const styles = {
 
 const Footer = () => (
   <footer className="header" style={styles.container}>
-    <a style={styles.gitLink} href="https://github.com/mrspeaker/pickpocket">
+    <a className="text-smaller" style={styles.gitLink} href="https://github.com/mrspeaker/pickpocket">
       PickPocket by Mr Speaker
     </a>;
   </footer>

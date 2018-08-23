@@ -12,43 +12,33 @@ class Toolbar extends Component {
     const { onImport } = this.props;
 
     return (
-      <div className="btn-group toolbar" style={{ width: "100%" }}>
-        <button
-          title="import asset"
-          className="btn"
-          onClick={onImport}
-        >
-          <span className="icon icon-desktop-download" />
-        </button>
-        <button
-          title="import asset, then open in editor"
-          className="btn"
-          onClick={() => onImport(true)}
-        >
-          <span className="icon icon-desktop-download" />
-          <span className="icon icon-pencil" />
-        </button>
+      <div className="btn-toolbar toolbar">
+        <div class="btn-group">
+          <button
+            title="import asset"
+            className="btn icon icon-desktop-download"
+            onClick={() => onImport(false)}
+          >
+            import
+          </button>
+          <button
+            title="import asset, then open in editor"
+            className="btn icon icon-pencil"
+            onClick={() => onImport(true)}
+          >
+            import + edit
+          </button>
+        </div>
 
-        <span
-          style={{
-            float: "left",
-            display: "inline-block",
-            width: 10,
-            height: 10
-          }}
-        >
-          {" "}
-        </span>
-
-        <span style={{ float: "left", display: "inline-block" }}>
+        <div class="btn-group">
           <button
             title="add some effects!"
-            className="btn"
+            className="btn icon icon-paintcan"
             onClick={() => alert("temporarily disabled!")}
           >
-            <span className="icon icon-paintcan" />
+            effects
           </button>
-        </span>
+        </div>
       </div>
     );
   }

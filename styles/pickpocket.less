@@ -69,7 +69,7 @@
         bottom: 0;
         right: 0px;
         font-size: 6pt;
-        color: #666;
+        color: @text-color-subtle;
         text-shadow: 0px 0px 5px #000;
         padding: 0px 2px;
       }
@@ -82,20 +82,23 @@
   }
 
   .toolbar {
-    background-color: #444;
-    padding:2px;
-    button span {
-      border-radius:1px;
-    }
-    .icon::before {
-      margin-right: 0 !important;
-      line-height: 1.8 !important;
-    }
+    background-color: @app-background-color; //@pane-item-background-color;
+    margin-left: 0px !important;
+    //   padding:2px;
+    // .icon::before {
+    //   //line-height: 1.8 !important;
+    //   padding: 2px;
+    // }
+  }
+
+  .textContainer {
+    padding: 4px;
+    background-color: @app-background-color;
   }
 
   .controls {
     padding: 4px;
-    background-color: #1b1d23;
+    background-color: @button-background-color;
     color: #666;
 
     label {

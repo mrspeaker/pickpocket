@@ -83,8 +83,7 @@ class App extends Component {
     }
   };
 
-  onImport = doOpenOrEvent => {
-    console.log("oh, hallo");
+  onImport = (name, doOpenOrEvent) => {
     const doOpen = doOpenOrEvent === true;
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
@@ -96,9 +95,10 @@ class App extends Component {
       return;
     }
     const importPath = getTreeFile().path;
+    // TODO: importName should be redundant now
     const { importName, assetPath, assetName } = this.state;
 
-    copyFile(assetPath + assetName, projectRoot, importPath, importName)
+    copyFile(assetPath + assetName, projectRoot, importPath, name || importName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
 
