@@ -30,7 +30,12 @@ class App extends Component {
     dirs: [],
     imgs: [],
     mode: "pick",
+    pickFrom: "assets",
+
     fxCanvas: null,
+
+    projDirs: [],
+    projImgs: [],
 
     currentFile: getTreeFile().file,
     importName: "",
@@ -228,10 +233,30 @@ class App extends Component {
     });
   };
 
+  onToggleSource = () => {
+    console.log("hol")
+    this.setState(({ pickFrom }) => ({
+      pickFrom: pickFrom === "assets" ? "project" : "assets"
+    }));
+  };
+
   render() {
-    const { dirs, imgs, mode, importName, assetPath, assetName } = this.state;
+    const {
+      dirs,
+      imgs,
+      mode,
+      pickFrom,
+      projDirs,
+      projImgs,
+      importName,
+      assetPath,
+      assetName
+    } = this.state;
 
     const range = importName ? [0, importName.length - 4] : null;
+
+    const curDirs = pickFrom === "assets" ? dirs : projDirs;
+    const curImgs = pickFrom === "assets" ? imgs : projImgs;
 
     let screen;
     switch (mode) {
@@ -247,7 +272,7 @@ class App extends Component {
       case "pick":
         screen = (
           <PickScreen
-            assets={{ dirs, imgs }}
+            assets={{ dirs: curDirs, imgs: curImgs }}
             assetName={assetName}
             assetPath={assetPath}
             onOpenAssets={this.onOpenAssets}
@@ -255,6 +280,8 @@ class App extends Component {
             onChangePath={this.onChangeAssetPath}
             onSelectFile={this.onSelectAssetFile}
             onImport={this.onImport}
+            onNew={this.onNew}
+            onToggleSource={this.onToggleSource}
           />
         );
         break;
@@ -268,7 +295,12 @@ class App extends Component {
         );
         break;
       case "create":
-        screen = <CreateScreen onSetFXCanvas={this.onSetFXCanvas} />;
+        screen = (
+          <CreateScreen
+            onSetFXCanvas={this.onSetFXCanvas}
+            onSwitchMode={this.onSwitchMode}
+          />
+        );
         break;
     }
 

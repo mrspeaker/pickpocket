@@ -2,13 +2,15 @@
 
 import React from "react";
 import Footer from "../../ui/Footer";
+import Toolbar from "./Toolbar";
 
 const { Component, PropTypes } = React;
 
 class CreateScreen extends Component {
   static propTypes = {
     assetPath: PropTypes.string.isRequired,
-    onSetFXCanvas: PropTypes.func.isRequired
+    onSetFXCanvas: PropTypes.func.isRequired,
+    onSwitchMode: PropTypes.func.isRequired
   };
 
   state = {
@@ -98,6 +100,12 @@ class CreateScreen extends Component {
     const { w, h, isGrid, hasBorders, cols, rows } = this.state;
     return (
       <div className="screen">
+        <section>
+          <Toolbar
+            onBack={this.props.onSwitchMode}
+            onImport={() => {}}
+          />
+        </section>
         <div>!!! Under construction !!!</div>
         <section className="controls">
           <button

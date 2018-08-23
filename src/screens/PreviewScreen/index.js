@@ -54,7 +54,7 @@ class PreviewScreen extends Component {
             text={fileName}
             range={fileName === asset.name ? [0, fileName.length - 4] : null}
             onChange={this.onChangeFileName}
-            onEscape={() => {}}
+            onEscape={onClose}
             onEnter={() => {}}
           />
         </section>

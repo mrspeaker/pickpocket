@@ -60,7 +60,14 @@ class PickPocket extends Component {
   };
 
   render() {
-    const { assets, assetName, onImport, onOpenAssets } = this.props;
+    const {
+      assets,
+      assetName,
+      onImport,
+      onOpenAssets,
+      onNew,
+      onToggleSource
+    } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
     return (
@@ -69,7 +76,8 @@ class PickPocket extends Component {
           <Toolbar
             onOpenSettings={this.onOpenSettings}
             onOpenAssets={onOpenAssets}
-            onNew={() => alert("temporarily disabled!")}
+            onNew={onNew}
+            onToggleSource={onToggleSource}
           />
         </section>
         <section style={styles.scroll}>

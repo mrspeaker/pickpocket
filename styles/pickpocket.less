@@ -1,4 +1,5 @@
 @import "ui-variables";
+// see ctrl-shft-p "styleguide" for variables
 
 .pickpocket {
   width: 100%;
@@ -82,9 +83,9 @@
   }
 
   .toolbar {
-    background-color: @app-background-color; //@pane-item-background-color;
+    background-color: @base-background-color; //@app-background-color; //@pane-item-background-color;
     margin-left: 0px !important;
-    //   padding:2px;
+    padding:@component-padding;
     // .icon::before {
     //   //line-height: 1.8 !important;
     //   padding: 2px;
@@ -92,8 +93,8 @@
   }
 
   .textContainer {
-    padding: 4px;
-    background-color: @app-background-color;
+    padding: @component-padding;
+    background-color: @base-background-color; //@app-background-color;
   }
 
   .controls {

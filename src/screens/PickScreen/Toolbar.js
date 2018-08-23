@@ -11,17 +11,16 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { onOpenAssets, onOpenSettings, onNew } = this.props;
-
+    const { onOpenAssets, onOpenSettings, onNew, onToggleSource } = this.props;
     return (
       <div className="btn-toolbar toolbar">
         <div class="btn-group">
           <button
-            title="create new asset"
+            title="generate new asset"
             className="btn icon icon-file"
             onClick={onNew}
           >
-            create
+            generate
           </button>
         </div>
 
@@ -31,7 +30,7 @@ class Toolbar extends Component {
             onClick={onOpenAssets}
             title="open asset folder"
           >
-            go to assets
+            open assets
           </button>
           <button
             className="btn icon icon-gear"
@@ -39,6 +38,13 @@ class Toolbar extends Component {
             title="go to pickpocket settings"
           >
             settings
+          </button>
+          <button
+            className="btn icon icon-gear"
+            onClick={onToggleSource}
+            title="toggle source"
+          >
+            tog
           </button>
         </div>
       </div>
