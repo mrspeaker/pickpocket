@@ -55,8 +55,11 @@ export default {
   },
 
   render() {
+    if (!this.visible) {
+      return;
+    }
     ReactDOM.render(
-      this.visible ? <App toggle={() => this.toggle()} /> : <div />,
+      <App toggle={() => this.toggle()} />,
       this.root
     );
   },
