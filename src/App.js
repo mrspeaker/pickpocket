@@ -30,7 +30,7 @@ class App extends Component {
     dirs: [],
     imgs: [],
     mode: "pick",
-    pickFrom: "assets",
+    pickFromAssets: true,
 
     fxCanvas: null,
 
@@ -186,7 +186,7 @@ class App extends Component {
 
   onChangeAssetPath = newPath =>
     fetchImagesFromFolder(newPath).then(res => {
-      const { pickFrom } = this.state;
+      const { pickFromAssets } = this.state;
       const { path } = utils.splitPathAndFileName(newPath);
       if (newPath !== getAssetRoot()) {
         res.dirs.splice(0, 0, {
@@ -197,8 +197,8 @@ class App extends Component {
         });
       }
       this.setState({
-        [pickFrom === "assets" ? "dirs" : "projDirs"]: res.dirs,
-        [pickFrom === "assets" ? "imgs" : "projImgs"]: res.imgs,
+        [pickFromAssets ? "dirs" : "projDirs"]: res.dirs,
+        [pickFromAssets ? "imgs" : "projImgs"]: res.imgs,
         assetPath: path
       });
     });
@@ -254,9 +254,8 @@ class App extends Component {
   };
 
   onToggleSource = () => {
-    console.log("hol");
-    this.setState(({ pickFrom }) => ({
-      pickFrom: pickFrom === "assets" ? "project" : "assets"
+    this.setState(({ pickFromAssets }) => ({
+      pickFromAssets: !pickFromAssets
     }));
   };
 
@@ -265,18 +264,15 @@ class App extends Component {
       dirs,
       imgs,
       mode,
-      pickFrom,
+      pickFromAssets,
       projDirs,
       projImgs,
-      importName,
       assetPath,
       assetName
     } = this.state;
 
-    const range = importName ? [0, importName.length - 4] : null;
-
-    const curDirs = pickFrom === "assets" ? dirs : projDirs;
-    const curImgs = pickFrom === "assets" ? imgs : projImgs;
+    const curDirs = pickFromAssets ? dirs : projDirs;
+    const curImgs = pickFromAssets ? imgs : projImgs;
 
     let screen;
     switch (mode) {
