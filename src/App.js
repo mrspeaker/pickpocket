@@ -44,12 +44,31 @@ class App extends Component {
   };
 
   componentDidMount() {
+    // TODO: remove/fix this
     const f = this.state.currentFile;
     if (f && f.name.endsWith(".png")) {
       this.setState({
         mode: "img"
       });
     }
+
+    // WIP: testing showing local images.
+    const dirs = atom.project.getDirectories();
+    dirs[0].getEntries((err, entries) => {
+      entries.forEach(f => {
+        if (f.isSymbolicLink()) return;
+        if (f.getBaseName() === "res") {
+          fetchImagesFromFolder(f.getPath() + "/")
+            .then(({ dirs, imgs }) => {
+              this.setState({
+                projDirs: dirs,
+                projImgs: imgs
+              });
+            })
+            .catch(console.error);
+        }
+      });
+    });
 
     fetchImagesFromFolder(getAssetRoot())
       .then(({ dirs, imgs }) => {
@@ -167,6 +186,7 @@ class App extends Component {
 
   onChangeAssetPath = newPath =>
     fetchImagesFromFolder(newPath).then(res => {
+      const { pickFrom } = this.state;
       const { path } = utils.splitPathAndFileName(newPath);
       if (newPath !== getAssetRoot()) {
         res.dirs.splice(0, 0, {
@@ -177,8 +197,8 @@ class App extends Component {
         });
       }
       this.setState({
-        dirs: res.dirs,
-        imgs: res.imgs,
+        [pickFrom === "assets" ? "dirs" : "projDirs"]: res.dirs,
+        [pickFrom === "assets" ? "imgs" : "projImgs"]: res.imgs,
         assetPath: path
       });
     });
@@ -234,7 +254,7 @@ class App extends Component {
   };
 
   onToggleSource = () => {
-    console.log("hol")
+    console.log("hol");
     this.setState(({ pickFrom }) => ({
       pickFrom: pickFrom === "assets" ? "project" : "assets"
     }));

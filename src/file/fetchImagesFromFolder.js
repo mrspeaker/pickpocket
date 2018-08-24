@@ -3,16 +3,17 @@
 import fs from "fs";
 import path from "path";
 
-export default assetRoot =>
+//TODO: Can be rewritten using Atom functions
+// instead of fs? atom.projct.getDirectories()... etc
+export default folder =>
   new Promise((res, rej) => {
-    if (!fs.existsSync(assetRoot)) {
+    if (!fs.existsSync(folder)) {
       return {
         dirs: [],
         imgs: []
       };
     }
-
-    fs.readdir(assetRoot, (err, files) => {
+    fs.readdir(folder, (err, files) => {
       let dirs = [];
       let imgs = [];
 
@@ -21,14 +22,14 @@ export default assetRoot =>
       }
 
       files.forEach(f => {
-        const fullPath = assetRoot + f;
+        const fullPath = folder + f;
         let file;
         try {
           file = fs.statSync(fullPath);
         } catch (e) {
+          console.log("Couldn't stat", e);
           return;
         }
-
         if (file.isDirectory()) {
           dirs.push({
             type: "directory",
