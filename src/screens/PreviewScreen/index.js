@@ -38,26 +38,28 @@ class PreviewScreen extends Component {
   };
 
   onImport = doEdit => {
-    const { asset: name } = this.props;
+    const { asset } = this.props;
     const { fileName } = this.state;
-    this.props.onImport(fileName || name, doEdit);
+    this.props.onImport(asset, fileName, doEdit);
   };
 
   render() {
-    const { asset, onClose } = this.props;
+    const { asset, onClose, isProjectAssets } = this.props;
     const fileName = this.state.fileName || asset.name;
     return (
       <section style={styles.screen} id="fooop">
         <Toolbar mode={"pick"} onImport={this.onImport} />
-        <section className="textContainer">
-          <MiniEditor
-            text={fileName}
-            range={fileName === asset.name ? [0, fileName.length - 4] : null}
-            onChange={this.onChangeFileName}
-            onEscape={onClose}
-            onEnter={() => {}}
-          />
-        </section>
+        {isProjectAssets && (
+          <section className="textContainer">
+            <MiniEditor
+              text={fileName}
+              range={fileName === asset.name ? [0, fileName.length - 4] : null}
+              onChange={this.onChangeFileName}
+              onEscape={onClose}
+              onEnter={() => {}}
+            />
+          </section>
+        )}
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>
           <PreviewImage asset={asset} />
         </div>

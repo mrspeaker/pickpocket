@@ -66,7 +66,8 @@ class PickPocket extends Component {
       onImport,
       onOpenAssets,
       onNew,
-      onToggleSource
+      onToggleSource,
+      isProjectAssets
     } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
@@ -92,6 +93,7 @@ class PickPocket extends Component {
             asset={selected[0]}
             onClose={this.closePreview}
             onImport={onImport}
+            isProjectAssets={isProjectAssets}
           />
         ) : null}
       </div>

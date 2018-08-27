@@ -10,6 +10,7 @@ import EffectScreen from "./screens/EffectScreen";
 import CreateScreen from "./screens/CreateScreen";
 
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
+import fetchAllImages from "./file/fetchAllImages";
 import copyFile from "./file/copyFile";
 import writeImage from "./file/writeImage";
 import getTreeFile from "./file/getTreeFile";
@@ -38,6 +39,8 @@ class App extends Component {
     projImgs: [],
 
     currentFile: getTreeFile().file,
+
+    // TODO: not sure this is needed in state anymore.
     importName: "",
     assetPath: getAssetRoot(),
     assetName: ""
@@ -52,23 +55,7 @@ class App extends Component {
       });
     }
 
-    // WIP: testing showing local images.
-    const dirs = atom.project.getDirectories();
-    dirs[0].getEntries((err, entries) => {
-      entries.forEach(f => {
-        if (f.isSymbolicLink()) return;
-        if (f.getBaseName() === "res") {
-          fetchImagesFromFolder(f.getPath() + "/")
-            .then(({ dirs, imgs }) => {
-              this.setState({
-                projDirs: dirs,
-                projImgs: imgs
-              });
-            })
-            .catch(console.error);
-        }
-      });
-    });
+    this.fetchProjectImages();
 
     fetchImagesFromFolder(getAssetRoot())
       .then(({ dirs, imgs }) => {
@@ -107,22 +94,27 @@ class App extends Component {
     }
   };
 
-  onImport = (name, doOpenOrEvent) => {
+  onImport = (asset, saveName, doOpenOrEvent) => {
+    const { pickFromAssets, mode } = this.state;
+    if (!pickFromAssets) {
+      this.openEditor(asset.fullPath);
+      return;
+    }
+
     const doOpen = doOpenOrEvent === true;
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
       return this.props.toggle();
     }
-    const { mode } = this.state;
+
     if (mode === "fx" || mode === "create") {
       this.onImportCanvas(doOpen, projectRoot);
       return;
     }
     const importPath = getTreeFile().path;
-    // TODO: importName should be redundant now
-    const { importName, assetPath, assetName } = this.state;
+    const { fullPath, name } = asset;
 
-    copyFile(assetPath + assetName, projectRoot, importPath, name || importName)
+    copyFile(fullPath, projectRoot, importPath, saveName || name)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
 
@@ -152,6 +144,7 @@ class App extends Component {
     atom.clipboard.write(`"${localPathAndName}"`);
     atom.notifications.addSuccess(`Copied ${fileName} to ${path}`);
     doOpen && this.openEditor(localFullPath);
+    this.fetchProjectImages();
   }
 
   onSwitchMode = () => {
@@ -202,6 +195,13 @@ class App extends Component {
         assetPath: path
       });
     });
+
+  fetchProjectImages () {
+    // TODO: should only be done sync? On toggle?
+    fetchAllImages().then(({ imgs }) => {
+      this.setState({ projImgs: imgs });
+    });
+  }
 
   onSelectAssetFile = (path, fileName = "") => {
     this.setState({
@@ -291,6 +291,7 @@ class App extends Component {
             assets={{ dirs: curDirs, imgs: curImgs }}
             assetName={assetName}
             assetPath={assetPath}
+            isProjectAssets={pickFromAssets}
             onOpenAssets={this.onOpenAssets}
             onClose={this.onClose}
             onChangePath={this.onChangeAssetPath}
