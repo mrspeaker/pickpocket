@@ -9,24 +9,26 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { onImport } = this.props;
+    const { onImport, isProjectAssets } = this.props;
 
     return (
       <div className="btn-toolbar toolbar">
         <div class="btn-group">
-          <button
-            title="import asset"
-            className="btn icon icon-desktop-download"
-            onClick={() => onImport(false)}
-          >
-            import
-          </button>
+          {isProjectAssets && (
+            <button
+              title="import asset"
+              className="btn icon icon-desktop-download"
+              onClick={() => onImport(false)}
+            >
+              import
+            </button>
+          )}
           <button
             title="import asset, then open in editor"
             className="btn icon icon-pencil"
             onClick={() => onImport(true)}
           >
-            import + edit
+            {isProjectAssets ? "import +" : ""}edit
           </button>
         </div>
 

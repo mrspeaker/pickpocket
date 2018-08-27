@@ -48,7 +48,7 @@ class PreviewScreen extends Component {
     const fileName = this.state.fileName || asset.name;
     return (
       <section style={styles.screen} id="fooop">
-        <Toolbar mode={"pick"} onImport={this.onImport} />
+        <Toolbar mode={"pick"} onImport={this.onImport} isProjectAssets={isProjectAssets} />
         {isProjectAssets && (
           <section className="textContainer">
             <MiniEditor
