@@ -9,12 +9,12 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { onImport, isProjectAssets } = this.props;
+    const { onImport, pickFromAssets } = this.props;
 
     return (
       <div className="btn-toolbar toolbar">
         <div class="btn-group">
-          {isProjectAssets && (
+          {pickFromAssets && (
             <button
               title="import asset"
               className="btn icon icon-desktop-download"
@@ -28,7 +28,7 @@ class Toolbar extends Component {
             className="btn icon icon-pencil"
             onClick={() => onImport(true)}
           >
-            {isProjectAssets ? "import +" : ""}edit
+            {pickFromAssets ? "import +" : ""}edit
           </button>
         </div>
 

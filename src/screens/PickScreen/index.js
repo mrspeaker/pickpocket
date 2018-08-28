@@ -67,10 +67,12 @@ class PickPocket extends Component {
       onOpenAssets,
       onNew,
       onToggleSource,
-      isProjectAssets
+      pickFromAssets
     } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
+    const noLocalImages =
+      !pickFromAssets && assets.dirs.length === 0 && assets.imgs.length === 0;
     return (
       <div className="screen">
         <section>
@@ -79,6 +81,7 @@ class PickPocket extends Component {
             onOpenAssets={onOpenAssets}
             onNew={onNew}
             onToggleSource={onToggleSource}
+            pickFromAssets={pickFromAssets}
           />
         </section>
         <section style={styles.scroll}>
@@ -87,13 +90,18 @@ class PickPocket extends Component {
             selected={selected}
             onToggle={this.onToggle}
           />
+          {noLocalImages ? (
+            <div className="text-subtle component-padding">
+              No images found in the current project
+            </div>
+          ) : null}
         </section>
         {showPreview ? (
           <PreviewScreen
             asset={selected[0]}
             onClose={this.closePreview}
             onImport={onImport}
-            isProjectAssets={isProjectAssets}
+            pickFromAssets={pickFromAssets}
           />
         ) : null}
       </div>

@@ -11,7 +11,13 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { onOpenAssets, onOpenSettings, onNew, onToggleSource } = this.props;
+    const {
+      onOpenAssets,
+      onOpenSettings,
+      onNew,
+      onToggleSource,
+      pickFromAssets
+    } = this.props;
     return (
       <div className="btn-toolbar toolbar">
         <div class="btn-group">
@@ -39,13 +45,15 @@ class Toolbar extends Component {
           >
             settings
           </button>
-          <button
-            className="btn icon icon-gear"
-            onClick={onToggleSource}
-            title="toggle source"
-          >
-            tog
-          </button>
+          <label className="input-label">
+            <input
+              className="input-toggle"
+              type="checkbox"
+              checked={!pickFromAssets}
+              onChange={onToggleSource}
+            />
+            Local
+          </label>
         </div>
       </div>
     );

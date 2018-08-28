@@ -44,12 +44,12 @@ class PreviewScreen extends Component {
   };
 
   render() {
-    const { asset, onClose, isProjectAssets } = this.props;
+    const { asset, onClose, pickFromAssets } = this.props;
     const fileName = this.state.fileName || asset.name;
     return (
       <section style={styles.screen} id="fooop">
-        <Toolbar mode={"pick"} onImport={this.onImport} isProjectAssets={isProjectAssets} />
-        {isProjectAssets && (
+        <Toolbar mode={"pick"} onImport={this.onImport} pickFromAssets={pickFromAssets} />
+        {pickFromAssets && (
           <section className="textContainer">
             <MiniEditor
               text={fileName}

@@ -291,7 +291,7 @@ class App extends Component {
             assets={{ dirs: curDirs, imgs: curImgs }}
             assetName={assetName}
             assetPath={assetPath}
-            isProjectAssets={pickFromAssets}
+            pickFromAssets={pickFromAssets}
             onOpenAssets={this.onOpenAssets}
             onClose={this.onClose}
             onChangePath={this.onChangeAssetPath}
