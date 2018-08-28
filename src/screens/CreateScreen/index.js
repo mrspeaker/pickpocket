@@ -17,7 +17,7 @@ class CreateScreen extends Component {
     w: 32,
     h: 32,
     isGrid: true,
-    hasBorders: false,
+    hasBorders: true,
     cols: 5,
     rows: 4,
     ctx: null,
@@ -50,7 +50,9 @@ class CreateScreen extends Component {
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols; i++) {
           const hue = (Math.random() * 360) | 0;
-          ctx.fillStyle = `hsl(${hue}, 30%, 50%)`;
+          const sat = ((1 - (Math.random() * Math.random())) * 100) | 0;
+          const bri = (Math.random() * 100) | 0;
+          ctx.fillStyle = `hsl(${hue}, ${sat}%, ${bri}%)`;
           ctx.fillRect(i * w, j * h, w, h);
           if (hasBorders) {
             ctx.strokeStyle = `black`;
@@ -101,72 +103,74 @@ class CreateScreen extends Component {
     return (
       <div className="screen">
         <section>
-          <Toolbar
-            onBack={this.props.onSwitchMode}
-            onImport={() => {}}
-          />
+          <Toolbar onBack={this.props.onSwitchMode} onImport={() => {}} />
         </section>
-        <div>!!! Under construction !!!</div>
-        <section className="controls">
-          <button
-            title="rnd color"
-            className="btn"
-            onClick={() => this.create()}
-            disabled={false}
+        <section className="controls block">
+          <div
+            className="text-warning"
+            style={{ textAlign: "center", marginBottom: "8px" }}
           >
-            rnd color
-          </button>
-          <div>
-            <label>sprite sheet</label>
-            <input
-              type="checkbox"
-              onChange={() => this.onGrid()}
-              checked={isGrid}
-            />
-            <label>Width:</label>
+            Under construction!
+          </div>
+          <div className="block">
+            <label>width:</label>
             <input
               type="number"
-              style={{ width: "80px" }}
+              className="input-number short-text"
               onChange={e => this.onSize("w", e)}
               value={w}
             />
-            <span style={{ display: "inline-block", width: 45 }} />
-            <label>Height:</label>
+            <label>height:</label>
             <input
               type="number"
-              style={{ width: "80px" }}
+              className="input-number short-text"
               onChange={e => this.onSize("h", e)}
               value={h}
             />
-            <span style={{ display: "inline-block", width: 45 }} />
           </div>
-        </section>
-        <section className="controls">
-          <div>
-            <label>borders</label>
-            <input
-              type="checkbox"
-              onChange={() => this.onBorders()}
-              checked={hasBorders}
-            />
 
-            <span style={{ display: "inline-block", width: 45 }} />
+          <div className="block">
             <label>columns:</label>
             <input
               type="number"
-              style={{ width: "80px" }}
+              className="input-number short-text"
               onChange={e => this.onSize("cols", e)}
               value={cols}
             />
-            <span style={{ display: "inline-block", width: 45 }} />
             <label>rows:</label>
             <input
               type="number"
-              style={{ width: "80px" }}
+              className="input-number short-text"
               onChange={e => this.onSize("rows", e)}
               value={rows}
             />
-            <span style={{ display: "inline-block", width: 45 }} />
+          </div>
+
+          <div className="block">
+            <label>sprite sheet:</label>
+            <input
+              type="checkbox"
+              className="input-checkbox"
+              onChange={() => this.onGrid()}
+              checked={isGrid}
+            />
+            <label>borders:</label>
+            <input
+              type="checkbox"
+              className="input-checkbox"
+              onChange={() => this.onBorders()}
+              checked={hasBorders}
+            />
+          </div>
+          <div className="block">
+            <button
+              title="rnd color"
+              className="btn"
+              onClick={() => this.create()}
+              disabled={false}
+            >
+              rnd color
+            </button>
           </div>
         </section>
         <section>

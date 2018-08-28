@@ -97,11 +97,15 @@
 
   .controls {
     padding: 4px;
-    background-color: @button-background-color;
-    color: #666;
+    background-color: @base-background-color;
 
     label {
-      width: 70px;
+      width: 75px;
+      padding-left: 3px;
+    }
+
+    .short-text {
+      width: 75px;
     }
 
     .slider {
@@ -109,28 +113,5 @@
       width: 188px;
     }
 
-    input[type="range"] {
-      -webkit-appearance: none;
-      background-color: #1b1d23;
-    }
-
-    input[type="range"]::-webkit-slider-runnable-track {
-      background: #282c34;
-      border-radius: 5px;
-      height: 12px;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      border: none;
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      background: #888;
-    }
-
-    input[type="checkbox"] {
-      background-color: #888;
-    }
   }
 }
