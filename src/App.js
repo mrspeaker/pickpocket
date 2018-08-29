@@ -6,7 +6,6 @@ import proc from "child_process";
 const { exec } = proc;
 
 import PickScreen from "./screens/PickScreen";
-import EffectScreen from "./screens/EffectScreen";
 import CreateScreen from "./screens/CreateScreen";
 
 import fetchImagesFromFolder from "./file/fetchImagesFromFolder";
@@ -299,15 +298,6 @@ class App extends Component {
             onImport={this.onImport}
             onNew={this.onNew}
             onToggleSource={this.onToggleSource}
-          />
-        );
-        break;
-      case "fx":
-        screen = (
-          <EffectScreen
-            assetPath={assetPath}
-            assetName={assetName}
-            onSetFXCanvas={this.onSetFXCanvas}
           />
         );
         break;

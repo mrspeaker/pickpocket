@@ -7,7 +7,7 @@ import Toolbar from "./Toolbar";
 import MiniEditor from "../../ui/MiniEditor";
 import PreviewImage from "../../ui/PreviewImage";
 
-import EffectScreen from "../EffectScreen";
+import Effector from "../../ui/Effector";
 
 const { Component, PropTypes } = React;
 
@@ -59,7 +59,12 @@ class PreviewScreen extends Component {
     const fileName = this.state.fileName || asset.name;
     return (
       <section style={styles.screen} id="fooop">
-        <Toolbar mode={"pick"} onImport={this.onImport} onFx={this.onFx} pickFromAssets={pickFromAssets} />
+        <Toolbar
+          mode={"pick"}
+          onImport={this.onImport}
+          onFx={this.onFx}
+          pickFromAssets={pickFromAssets}
+        />
         {pickFromAssets && (
           <section className="textContainer">
             <MiniEditor
@@ -71,7 +76,7 @@ class PreviewScreen extends Component {
             />
           </section>
         )}
-        { showFx ?  <EffectScreen asset={asset} /> : null }
+        {showFx ? <Effector asset={asset} /> : null}
 
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>
           <PreviewImage asset={asset} />

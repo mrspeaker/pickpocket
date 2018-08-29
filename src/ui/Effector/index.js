@@ -4,7 +4,7 @@ import React from "react";
 
 const { Component, PropTypes } = React;
 
-class EffectScreen extends Component {
+class Effector extends Component {
   static propTypes = {
     onSetFXCanvas: PropTypes.func.isRequired
   };
@@ -221,4 +221,4 @@ class EffectScreen extends Component {
   }
 }
 
-export default EffectScreen;
+export default Effector;
