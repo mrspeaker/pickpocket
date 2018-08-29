@@ -15,21 +15,19 @@ class Toolbar extends Component {
     return (
       <div className="btn-toolbar toolbar">
         <div class="btn-group">
-          {pickFromAssets && (
-            <button
-              title="import asset"
-              className="btn icon icon-desktop-download"
-              onClick={() => onImport(false)}
-            >
-              import
-            </button>
-          )}
+          <button
+            title="import asset"
+            className="btn icon icon-desktop-download"
+            onClick={() => onImport(false)}
+          >
+            {pickFromAssets ? "import" : "save"}
+          </button>
           <button
             title="import asset, then open in editor"
             className="btn icon icon-pencil"
             onClick={() => onImport(true)}
           >
-            {pickFromAssets ? "import +" : ""}edit
+            {pickFromAssets ? "import +" : "save"} + edit
           </button>
         </div>
 

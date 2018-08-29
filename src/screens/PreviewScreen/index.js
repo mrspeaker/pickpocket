@@ -65,17 +65,16 @@ class PreviewScreen extends Component {
           onFx={this.onFx}
           pickFromAssets={pickFromAssets}
         />
-        {pickFromAssets && (
-          <section className="textContainer">
-            <MiniEditor
-              text={fileName}
-              range={fileName === asset.name ? [0, fileName.length - 4] : null}
-              onChange={this.onChangeFileName}
-              onEscape={onClose}
-              onEnter={() => {}}
-            />
-          </section>
-        )}
+        <section className="textContainer">
+          <MiniEditor
+            text={fileName}
+            range={fileName === asset.name ? [0, fileName.length - 4] : null}
+            onChange={this.onChangeFileName}
+            onEscape={onClose}
+            onEnter={() => {}}
+          />
+        </section>
+
         {showFx ? <Effector asset={asset} /> : null}
 
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>

@@ -96,6 +96,7 @@ class App extends Component {
   onImport = (asset, saveName, doOpenOrEvent) => {
     const { pickFromAssets, mode } = this.state;
     if (!pickFromAssets) {
+      // // TODO: ::: doOpenOrEvent
       this.openEditor(asset.fullPath);
       return;
     }
@@ -120,13 +121,16 @@ class App extends Component {
     this.onClose();
   };
 
-  onImportCanvas = (doOpen, projectRoot) => {
-    const { importName, fxCanvas } = this.state;
+  onImportCanvas = (assetName, doOpen) => {
+    console.log("Need to import that canvas yo", doOpen, projectRoot);
+    const { fxCanvas } = this.state;
+
     if (!fxCanvas) return;
     const importPath = getTreeFile().path;
     const imgData = fxCanvas.toDataURL("image/png");
 
-    writeImage(imgData, projectRoot, importPath, importName)
+    const projectRoot = getProjectRoot();
+    writeImage(imgData, projectRoot, importPath, assetName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
 
@@ -306,6 +310,7 @@ class App extends Component {
           <CreateScreen
             onSetFXCanvas={this.onSetFXCanvas}
             onSwitchMode={this.onSwitchMode}
+            onImport={this.onImportCanvas}
           />
         );
         break;

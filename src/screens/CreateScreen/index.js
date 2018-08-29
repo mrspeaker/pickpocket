@@ -3,6 +3,7 @@
 import React from "react";
 import Footer from "../../ui/Footer";
 import Toolbar from "./Toolbar";
+import MiniEditor from "../../ui/MiniEditor";
 
 const { Component, PropTypes } = React;
 
@@ -50,7 +51,7 @@ class CreateScreen extends Component {
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols; i++) {
           const hue = (Math.random() * 360) | 0;
-          const sat = ((1 - (Math.random() * Math.random())) * 100) | 0;
+          const sat = ((1 - Math.random() * Math.random()) * 100) | 0;
           const bri = (Math.random() * 100) | 0;
           ctx.fillStyle = `hsl(${hue}, ${sat}%, ${bri}%)`;
           ctx.fillRect(i * w, j * h, w, h);
@@ -100,10 +101,21 @@ class CreateScreen extends Component {
 
   render() {
     const { w, h, isGrid, hasBorders, cols, rows } = this.state;
+    const { onSwitchMode, onImport } = this.props;
+    const fileName = "boop.png";
     return (
       <div className="screen">
         <section>
-          <Toolbar onBack={this.props.onSwitchMode} onImport={() => {}} />
+          <Toolbar onBack={onSwitchMode} onImport={(doOpen) => onImport(fileName, doOpen)} />
+        </section>
+        <section className="textContainer">
+          <MiniEditor
+            text={fileName}
+            range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
+            onChange={() => {}}
+            onEscape={() => {}}
+            onEnter={() => {}}
+          />
         </section>
         <section className="controls block">
           <div
