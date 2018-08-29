@@ -1,14 +1,11 @@
 "use babel";
 
 import React from "react";
-import Footer from "../../ui/Footer";
 
 const { Component, PropTypes } = React;
 
 class EffectScreen extends Component {
   static propTypes = {
-    assetName: PropTypes.string.isRequired,
-    assetPath: PropTypes.string.isRequired,
     onSetFXCanvas: PropTypes.func.isRequired
   };
 
@@ -28,7 +25,7 @@ class EffectScreen extends Component {
 
   componentDidMount() {
     this.effect();
-    this.props.onSetFXCanvas(this.refs.canvas);
+    //this.props.onSetFXCanvas(this.refs.canvas);
   }
 
   effect() {
@@ -36,7 +33,9 @@ class EffectScreen extends Component {
     if (!canvas || !canvas.getContext) {
       return;
     }
-    const { assetPath, assetName } = this.props;
+    const { asset } = this.props;
+    const { fullPath: assetPath, naame: assetName } = asset;
+
     const {
       hueRotate,
       saturate,
@@ -124,43 +123,66 @@ class EffectScreen extends Component {
 
     this.effect(); // TODO: move to Canvas, do effects reactively.
 
-    return (
-      <div className="screen">
+    /*
+    <section>
+      <div
+        style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}
+      >
+        <img src={assetPath + assetName} style={{ maxWidth: "50%" }} />
+        <canvas
+          ref="canvas"
+          style={{
+            verticalAlign: "middle",
+            paddingLeft: 20,
+            maxWidth: "50%"
+          }}
+        />
+      </div>
+    </section>
+    */
 
+    return (
+      <div>
         <section className="controls">
+          <div
+            className="text-warning block"
+            style={{ textAlign: "center", marginBottom: "8px" }}
+          >
+            Under construction!
+          </div>
           <label>Hue rotate:</label>
           <input
-            className="slider"
             type="range"
+            className="slider input-range"
             min="0"
             max="360"
             onChange={e => this.onSliderChange("hueRotate", e)}
             value={hueRotate}
           />
-          <span>{" "}</span>
+          <span> </span>
           <label>Saturation:</label>
           <input
-            className="slider"
             min="0"
             max="300"
             type="range"
+            className="slider input-range"
             onChange={e => this.onSliderChange("saturate", e)}
             value={saturate}
           />
           <br />
           <label>Contast:</label>
           <input
-            className="slider"
             type="range"
+            className="slider input-range"
             min="0"
             max="300"
             onChange={e => this.onSliderChange("contrast", e)}
             value={contrast}
           />
-          <span>{" "}</span>
+          <span> </span>
           <label>Brightness:</label>
           <input
-            className="slider"
+            className="slider input-range"
             type="range"
             min="0"
             max="300"
@@ -171,45 +193,28 @@ class EffectScreen extends Component {
             <label>Flip X:</label>
             <input
               type="checkbox"
+              className="input-checkbox"
               onChange={() => this.onFlip("x")}
               checked={flip.x}
-            />
-            {" "}
+            />{" "}
             <span style={{ display: "inline-block", width: 45 }} />
             <label>Flip Y:</label>
             <input
               type="checkbox"
+              className="input-checkbox"
               onChange={() => this.onFlip("y")}
               checked={flip.y}
-            />
-            {" "}
+            />{" "}
             <span style={{ display: "inline-block", width: 45 }} />
             <label>Rotate 90:</label>
             <input
               type="checkbox"
+              className="input-checkbox"
               onChange={this.onRotate}
               checked={rotate90}
             />
           </div>
         </section>
-
-        <section>
-          <div
-            style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}
-          >
-            <img src={assetPath + assetName} style={{ maxWidth: "50%" }} />
-            <canvas
-              ref="canvas"
-              style={{
-                verticalAlign: "middle",
-                paddingLeft: 20,
-                maxWidth: "50%"
-              }}
-            />
-          </div>
-        </section>
-
-        <Footer />
 
       </div>
     );

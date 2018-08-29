@@ -7,6 +7,8 @@ import Toolbar from "./Toolbar";
 import MiniEditor from "../../ui/MiniEditor";
 import PreviewImage from "../../ui/PreviewImage";
 
+import EffectScreen from "../EffectScreen";
+
 const { Component, PropTypes } = React;
 
 const styles = {
@@ -28,7 +30,8 @@ class PreviewScreen extends Component {
   };
 
   state = {
-    fileName: null
+    fileName: null,
+    showFx: false
   };
 
   onChangeFileName = text => {
@@ -43,12 +46,20 @@ class PreviewScreen extends Component {
     this.props.onImport(asset, fileName, doEdit);
   };
 
+  onFx = () => {
+    const { showFx } = this.state;
+    this.setState({
+      showFx: !showFx
+    });
+  };
+
   render() {
     const { asset, onClose, pickFromAssets } = this.props;
+    const { showFx } = this.state;
     const fileName = this.state.fileName || asset.name;
     return (
       <section style={styles.screen} id="fooop">
-        <Toolbar mode={"pick"} onImport={this.onImport} pickFromAssets={pickFromAssets} />
+        <Toolbar mode={"pick"} onImport={this.onImport} onFx={this.onFx} pickFromAssets={pickFromAssets} />
         {pickFromAssets && (
           <section className="textContainer">
             <MiniEditor
@@ -60,6 +71,8 @@ class PreviewScreen extends Component {
             />
           </section>
         )}
+        { showFx ?  <EffectScreen asset={asset} /> : null }
+
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>
           <PreviewImage asset={asset} />
         </div>

@@ -5,11 +5,12 @@ const { Component, PropTypes } = React;
 
 class Toolbar extends Component {
   static propTypes = {
-    onImport: PropTypes.func.isRequired
+    onImport: PropTypes.func.isRequired,
+    onFx: PropTypes.func.isRequired
   };
 
   render() {
-    const { onImport, pickFromAssets } = this.props;
+    const { onImport, pickFromAssets, onFx } = this.props;
 
     return (
       <div className="btn-toolbar toolbar">
@@ -36,7 +37,7 @@ class Toolbar extends Component {
           <button
             title="add some effects!"
             className="btn icon icon-paintcan"
-            onClick={() => alert("temporarily disabled!")}
+            onClick={onFx}
           >
             effects
           </button>
