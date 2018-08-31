@@ -1,7 +1,7 @@
 "use babel";
 /* global atom */
 
-import gitPathIsIgnored from "./gitPathIsIgnored";
+import isGitPathIgnored from "./isGitPathIgnored";
 
 function getEntries(folder) {
   return new Promise((res, rej) => {
@@ -24,7 +24,7 @@ async function fetchAllImages(
       const ac = await allFiles;
 
       // Don't process git-ignored paths
-      if (useGitIgnore && gitPathIsIgnored(f.getPath())) {
+      if (useGitIgnore && isGitPathIgnored(f.getPath())) {
         return ac;
       }
 
