@@ -27,7 +27,7 @@ class Toolbar extends Component {
             className="btn icon icon-pencil"
             onClick={() => onImport(true)}
           >
-            {pickFromAssets ? "import +" : "save"} + edit
+            {pickFromAssets ? "import" : "save"} + edit
           </button>
         </div>
 

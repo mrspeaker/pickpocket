@@ -122,7 +122,6 @@ class App extends Component {
   };
 
   onImportCanvas = (assetName, doOpen) => {
-    console.log("Need to import that canvas yo", doOpen, projectRoot);
     const { fxCanvas } = this.state;
 
     if (!fxCanvas) return;
