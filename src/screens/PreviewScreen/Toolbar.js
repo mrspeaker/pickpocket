@@ -17,17 +17,18 @@ class Toolbar extends Component {
         <div class="btn-group">
           <button
             title="import asset"
+            disabled={!pickFromAssets}
             className="btn icon icon-desktop-download"
             onClick={() => onImport(false)}
           >
-            {pickFromAssets ? "import" : "save"}
+            {pickFromAssets ? "import" : "save as"}
           </button>
           <button
             title="import asset, then open in editor"
             className="btn icon icon-pencil"
             onClick={() => onImport(true)}
           >
-            {pickFromAssets ? "import" : "save"} + edit
+            {pickFromAssets ? "import + edit" : "edit"}
           </button>
         </div>
 
