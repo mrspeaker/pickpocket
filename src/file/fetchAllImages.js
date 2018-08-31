@@ -1,7 +1,7 @@
 "use babel";
 /* global atom */
 
-import readGitIgnore from "./readGitIgnore";
+import gitPathIsIgnored from "./gitPathIsIgnored";
 
 function getEntries(folder) {
   return new Promise((res, rej) => {
@@ -19,29 +19,21 @@ async function fetchAllImages(
   useGitIgnore = true,
   maxDepth = 20
 ) {
-  let gitignores = null;
-  if (useGitIgnore) {
-    // Read gitignore file
-    gitignores = await readGitIgnore();
-  }
-
-  console.log("should ignore:", gitignores);
-  // From folder, recurse all dirs
-  //  if dir in gitignore, skip
-  //    For files in dir
-  //      if img, add.
   async function getImagesInDir(entries, depth) {
     return await entries.reduce(async (allFiles, f) => {
       const ac = await allFiles;
-      if (f.isDirectory()) {
-        if (
-          depth <= 0 ||
-          f.getBaseName().includes("node_modules") ||
-          f.getBaseName().includes("git")
-        ) {
-          return ac;
-        }
 
+      // Don't process git-ignored paths
+      if (useGitIgnore && gitPathIsIgnored(f.getPath())) {
+        return ac;
+      }
+
+      if (depth <= 0) {
+        console.warn("too many folders");
+        return ac;
+      }
+
+      if (f.isDirectory()) {
         const nextEntries = await getEntries(f);
         const nestedAc = await getImagesInDir(nextEntries, depth--);
         return [...ac, ...nestedAc];
