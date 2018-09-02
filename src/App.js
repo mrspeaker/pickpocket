@@ -364,6 +364,7 @@ class App extends Component {
               generate
             </button>
             <button
+              style={{float:"right"}}
               className="btn icon icon-gear"
               onClick={this.onOpenSettings}
               title="go to pickpocket settings"
