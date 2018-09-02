@@ -198,7 +198,7 @@ class App extends Component {
       });
     });
 
-  fetchProjectImages () {
+  fetchProjectImages() {
     // TODO: should only be done sync? On toggle?
     fetchAllImages().then(({ imgs }) => {
       this.setState({ projImgs: imgs });
@@ -225,6 +225,11 @@ class App extends Component {
       }
     }
   }
+
+  onOpenSettings = () => {
+    atom.workspace.open("atom://config/packages/pickpocket");
+    //this.onClose();
+  };
 
   onEscape = () => {
     const { mode, assetName } = this.state;
@@ -276,6 +281,10 @@ class App extends Component {
     const curDirs = pickFromAssets ? dirs : projDirs;
     const curImgs = pickFromAssets ? imgs : projImgs;
 
+    const isProject = mode === "pick" && !pickFromAssets;
+    const isAssets = mode === "pick" && !isProject;
+    const isGenerate = mode === "create";
+
     let screen;
     switch (mode) {
       case "img":
@@ -317,6 +326,50 @@ class App extends Component {
 
     return (
       <div className="pickpocket">
+        <div className="btn-toolbar toolbar">
+          <div class="btn-group">
+            <button
+              title="generate new asset"
+              className={`btn icon icon-file-media ${isProject ? "selected": ""}`}
+              onClick={() => {
+                this.setState({
+                  pickFromAssets: false,
+                  mode: "pick"
+                });
+              }}
+            >
+              project
+            </button>
+            <button
+              title="generate new asset"
+              className={`btn icon icon-package ${isAssets ? "selected": ""}`}
+              onClick={() => {
+                this.setState({
+                  pickFromAssets: true,
+                  mode: "pick"
+                });
+              }}
+            >
+              pocket
+            </button>
+            <button
+              title="generate new asset"
+              className={`btn icon icon-pulse ${isGenerate ? "selected": ""}`}
+              onClick={() => {
+                this.setState({
+                  mode: "create"
+                });
+              }}
+            >
+              generate
+            </button>
+            <button
+              className="btn icon icon-gear"
+              onClick={this.onOpenSettings}
+              title="go to pickpocket settings"
+            />
+          </div>
+        </div>
         {screen}
         <Footer />
       </div>

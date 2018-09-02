@@ -11,18 +11,6 @@ import Effector from "../../ui/Effector";
 
 const { Component, PropTypes } = React;
 
-const styles = {
-  screen: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    display: "flex",
-    flexDirection: "column"
-  }
-};
-
 class PreviewScreen extends Component {
   static propTypes = {
     asset: PropTypes.object.isRequired,
@@ -58,7 +46,7 @@ class PreviewScreen extends Component {
     const { showFx } = this.state;
     const fileName = this.state.fileName || asset.name;
     return (
-      <section style={styles.screen} id="fooop">
+      <section className="fs-overlay">
         <Toolbar
           mode={"pick"}
           onImport={this.onImport}

@@ -1,5 +1,4 @@
 "use babel";
-/* global atom */
 
 import React from "react";
 import utils from "../../utils";
@@ -20,8 +19,9 @@ class PickPocket extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
     assetName: PropTypes.string,
-    onChangePath: PropTypes.func.isRequired,
-    onSelectFile: PropTypes.func.isRequired
+    onImport: PropTypes.func.isRequired,
+    onSelectFile: PropTypes.func.isRequired,
+    pickFromAssets: PropTypes.bool
   };
 
   state = {
@@ -54,47 +54,25 @@ class PickPocket extends Component {
     }));
   };
 
-  onOpenSettings = () => {
-    atom.workspace.open("atom://config/packages/pickpocket");
-    this.props.onClose();
-  };
-
   render() {
-    const {
-      assets,
-      assetName,
-      onImport,
-      onOpenAssets,
-      onNew,
-      onToggleSource,
-      pickFromAssets
-    } = this.props;
+    const { assets, assetName, onImport, pickFromAssets } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
     const noLocalImages =
       !pickFromAssets && assets.dirs.length === 0 && assets.imgs.length === 0;
     return (
       <div className="screen">
-        <section>
-          <Toolbar
-            onOpenSettings={this.onOpenSettings}
-            onOpenAssets={onOpenAssets}
-            onNew={onNew}
-            onToggleSource={onToggleSource}
-            pickFromAssets={pickFromAssets}
-          />
-        </section>
         <section style={styles.scroll}>
+          {noLocalImages ? (
+            <div className="text-subtle component-padding">
+              {"No images found in the current project"}
+            </div>
+          ) : null}
           <Assets
             assets={assets}
             selected={selected}
             onToggle={this.onToggle}
           />
-          {noLocalImages ? (
-            <div className="text-subtle component-padding">
-              No images found in the current project
-            </div>
-          ) : null}
         </section>
         {showPreview ? (
           <PreviewScreen

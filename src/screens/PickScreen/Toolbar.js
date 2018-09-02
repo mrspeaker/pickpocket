@@ -20,15 +20,6 @@ class Toolbar extends Component {
     } = this.props;
     return (
       <div className="btn-toolbar toolbar">
-        <div class="btn-group">
-          <button
-            title="generate new asset"
-            className="btn icon icon-file"
-            onClick={onNew}
-          >
-            generate
-          </button>
-        </div>
 
         <div class="btn-group">
           <button
@@ -38,22 +29,6 @@ class Toolbar extends Component {
           >
             open assets
           </button>
-          <button
-            className="btn icon icon-gear"
-            onClick={onOpenSettings}
-            title="go to pickpocket settings"
-          >
-            settings
-          </button>
-          <label className="input-label">
-            <input
-              className="input-toggle"
-              type="checkbox"
-              checked={!pickFromAssets}
-              onChange={onToggleSource}
-            />
-            Local
-          </label>
         </div>
       </div>
     );
