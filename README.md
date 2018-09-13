@@ -10,7 +10,7 @@ PickPocket is an [Atom package](https://atom.io/packages/pickpocket) for grabbin
 * Launch PickPocket with **`ctrl-alt-p` (`pickpocket:toggle`)**.
 * Select image (and rename it if you want) then hit `import`.
 
-The image is copy & renamed to the target dir. However, the assets you can choose are just a few examples (from [`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example)) to get you started. You need to bring your own!
+The image is copied & renamed to the currently selected directory in your project. However, the assets you can choose are just a few examples (from [`<plugin root>/example`](https://github.com/mrspeaker/pickpocket/tree/master/example)) to get you started. You need to bring your own!
 
 * Dump a bunch of image assets in a directory somewhere, and put this location in `settings`.
 

@@ -106,12 +106,6 @@ class CreateScreen extends Component {
     return (
       <div className="screen">
         <section className="textContainer">
-          <div
-            className="text-warning"
-            style={{ textAlign: "center", marginBottom: "8px" }}
-          >
-            Under construction!
-          </div>
           <MiniEditor
             text={fileName}
             range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
