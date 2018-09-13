@@ -105,19 +105,6 @@ class CreateScreen extends Component {
     const fileName = "boop.png";
     return (
       <div className="screen">
-        <section className="textContainer">
-          <MiniEditor
-            text={fileName}
-            range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
-            onChange={() => {}}
-            onEscape={() => {}}
-            onEnter={() => {}}
-          />
-          <Toolbar
-            onBack={onSwitchMode}
-            onImport={doOpen => onImport(fileName, doOpen)}
-          />
-        </section>
         <section className="controls block">
           <div className="block">
             <label>width:</label>
@@ -179,6 +166,21 @@ class CreateScreen extends Component {
               rnd color
             </button>
           </div>
+        </section>
+        <section>
+          <Toolbar
+            onBack={onSwitchMode}
+            onImport={doOpen => onImport(fileName, doOpen)}
+          />
+        </section>
+        <section className="textContainer">
+          <MiniEditor
+            text={fileName}
+            range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
+            onChange={() => {}}
+            onEscape={() => {}}
+            onEnter={() => {}}
+          />
         </section>
         <section>
           <div

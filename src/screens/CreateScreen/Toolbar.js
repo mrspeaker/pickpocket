@@ -21,6 +21,13 @@ class Toolbar extends Component {
           >
             import
           </button>
+          <button
+            title="import asset"
+            className="btn icon icon-desktop-download"
+            onClick={() => onImport(true)}
+          >
+            import + edit
+          </button>
         </div>
       </div>
     );
