@@ -56,7 +56,7 @@ class CreateScreen extends Component {
           ctx.fillStyle = `hsl(${hue}, ${sat}%, ${bri}%)`;
           ctx.fillRect(i * w, j * h, w, h);
           if (hasBorders) {
-            ctx.strokeStyle = `black`;
+            ctx.strokeStyle = "#000";
             ctx.strokeRect(i * w - 0.5, j * h - 0.5, w, h);
           }
         }
@@ -105,10 +105,13 @@ class CreateScreen extends Component {
     const fileName = "boop.png";
     return (
       <div className="screen">
-        <section>
-          <Toolbar onBack={onSwitchMode} onImport={(doOpen) => onImport(fileName, doOpen)} />
-        </section>
         <section className="textContainer">
+          <div
+            className="text-warning"
+            style={{ textAlign: "center", marginBottom: "8px" }}
+          >
+            Under construction!
+          </div>
           <MiniEditor
             text={fileName}
             range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
@@ -116,14 +119,12 @@ class CreateScreen extends Component {
             onEscape={() => {}}
             onEnter={() => {}}
           />
+          <Toolbar
+            onBack={onSwitchMode}
+            onImport={doOpen => onImport(fileName, doOpen)}
+          />
         </section>
         <section className="controls block">
-          <div
-            className="text-warning"
-            style={{ textAlign: "center", marginBottom: "8px" }}
-          >
-            Under construction!
-          </div>
           <div className="block">
             <label>width:</label>
             <input

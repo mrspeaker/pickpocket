@@ -29,9 +29,11 @@ class PreviewScreen extends Component {
   };
 
   onImport = doEdit => {
-    const { asset } = this.props;
-    const { fileName } = this.state;
-    this.props.onImport(asset, fileName, doEdit);
+    const { props, state }  = this;
+    const { asset } = props;
+    const { fileName } = state;
+    props.onImport(asset, fileName, doEdit);
+    props.onClose();
   };
 
   onFx = () => {

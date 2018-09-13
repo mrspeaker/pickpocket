@@ -117,8 +117,6 @@ class App extends Component {
     copyFile(fullPath, projectRoot, importPath, saveName || name)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
-
-    this.onClose();
   };
 
   onImportCanvas = (assetName, doOpen) => {
@@ -132,8 +130,6 @@ class App extends Component {
     writeImage(imgData, projectRoot, importPath, assetName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
-
-    this.onClose();
   };
 
   onImportSuccess({
@@ -228,7 +224,6 @@ class App extends Component {
 
   onOpenSettings = () => {
     atom.workspace.open("atom://config/packages/pickpocket");
-    //this.onClose();
   };
 
   onEscape = () => {
@@ -304,7 +299,6 @@ class App extends Component {
             assetPath={assetPath}
             pickFromAssets={pickFromAssets}
             onOpenAssets={this.onOpenAssets}
-            onClose={this.onClose}
             onChangePath={this.onChangeAssetPath}
             onSelectFile={this.onSelectAssetFile}
             onImport={this.onImport}

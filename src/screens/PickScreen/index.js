@@ -66,6 +66,13 @@ class PickPocket extends Component {
           {noLocalImages ? (
             <div className="text-subtle component-padding">
               {"No images found in the current project"}
+              <button
+                title="import asset"
+                className="btn icon"
+                onClick={() => {}}
+              >
+                Import some!
+              </button>
             </div>
           ) : null}
           <Assets
