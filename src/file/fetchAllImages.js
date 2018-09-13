@@ -4,6 +4,7 @@
 import isGitPathIgnored from "./isGitPathIgnored";
 
 function getEntries(folder) {
+  if (!folder) return Promise.resolve([]);
   return new Promise((res, rej) => {
     folder.getEntries((err, entries) => {
       if (err) {

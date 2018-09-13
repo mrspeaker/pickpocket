@@ -104,7 +104,7 @@ class App extends Component {
     const doOpen = doOpenOrEvent === true;
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
-      return this.props.toggle();
+      return;// this.props.toggle();
     }
 
     if (mode === "fx" || mode === "create") {
@@ -127,6 +127,8 @@ class App extends Component {
     const imgData = fxCanvas.toDataURL("image/png");
 
     const projectRoot = getProjectRoot();
+    if (!projectRoot) return;
+    
     writeImage(imgData, projectRoot, importPath, assetName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
