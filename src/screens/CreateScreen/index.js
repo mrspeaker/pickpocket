@@ -22,7 +22,8 @@ class CreateScreen extends Component {
     cols: 5,
     rows: 4,
     ctx: null,
-    moused: false
+    moused: false,
+    fileName: "untitled.png"
   };
 
   componentDidMount() {
@@ -92,6 +93,12 @@ class CreateScreen extends Component {
     ctx.canvas.style.cursor = "none";
   };
 
+  onChangeFileName = text => {
+    this.setState({
+      fileName: text
+    });
+  };
+
   moused = down => {
     this.setState({
       moused: down
@@ -100,9 +107,8 @@ class CreateScreen extends Component {
   };
 
   render() {
-    const { w, h, isGrid, hasBorders, cols, rows } = this.state;
+    const { w, h, isGrid, hasBorders, cols, rows, fileName } = this.state;
     const { onSwitchMode, onImport } = this.props;
-    const fileName = "boop.png";
     return (
       <div className="screen">
         <section className="controls block">
@@ -177,7 +183,7 @@ class CreateScreen extends Component {
           <MiniEditor
             text={fileName}
             range={fileName.endsWith(".png") ? [0, fileName.length - 4] : null}
-            onChange={() => {}}
+            onChange={this.onChangeFileName}
             onEscape={() => {}}
             onEnter={() => {}}
           />
