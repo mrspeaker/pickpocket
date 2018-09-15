@@ -34,8 +34,7 @@ class Effector extends Component {
       return;
     }
     const { asset } = this.props;
-    const { fullPath: assetPath, naame: assetName } = asset;
-
+    const { fullPath } = asset;
     const {
       hueRotate,
       saturate,
@@ -48,8 +47,7 @@ class Effector extends Component {
 
     const ctx = canvas.getContext("2d");
     const img = new Image();
-    img.src = assetPath + assetName;
-
+    img.src = fullPath;
     img.onload = () => {
       const { width, height } = img;
       canvas.width = rotate90 ? height : width;
@@ -89,29 +87,29 @@ class Effector extends Component {
         //ctx.globalAlpha = a / 100;
         ctx.drawImage(tint, 0, 0);
       }
+      this.props.onEffect(this.refs.canvas);
     };
   }
 
   onSliderChange(component, e) {
     this.setState({
       [component]: e.target.value
-    });
+    }, this.effect);
   }
 
   onFlip = dir => {
     const flip = Object.assign({}, this.state.flip);
     flip[dir] = !flip[dir];
-    this.setState({ flip });
+    this.setState({ flip }, this.effect);
   };
 
   onRotate = () => {
     this.setState(({ rotate90 }) => ({
       rotate90: !rotate90
-    }));
+    }), this.effect);
   };
 
   render() {
-    const { assetPath, assetName } = this.props;
     const {
       flip,
       rotate90,
@@ -121,25 +119,7 @@ class Effector extends Component {
       brightness
     } = this.state;
 
-    this.effect(); // TODO: move to Canvas, do effects reactively.
-
-    /*
-    <section>
-      <div
-        style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}
-      >
-        <img src={assetPath + assetName} style={{ maxWidth: "50%" }} />
-        <canvas
-          ref="canvas"
-          style={{
-            verticalAlign: "middle",
-            paddingLeft: 20,
-            maxWidth: "50%"
-          }}
-        />
-      </div>
-    </section>
-    */
+    //this.effect(); // TODO: move to Canvas, do effects reactively.
 
     return (
       <div>
@@ -215,7 +195,7 @@ class Effector extends Component {
             />
           </div>
         </section>
-
+        <canvas style={{display: "none", position:"absolute", top: 0, left:0}}ref="canvas" />
       </div>
     );
   }

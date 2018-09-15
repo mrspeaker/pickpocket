@@ -19,7 +19,8 @@ class PreviewScreen extends Component {
 
   state = {
     fileName: null,
-    showFx: false
+    showFx: false,
+    isEffected: false
   };
 
   onChangeFileName = text => {
@@ -28,8 +29,12 @@ class PreviewScreen extends Component {
     });
   };
 
+  onEffect = canvas => {
+    this.setState({ canvas: canvas.toDataURL() });
+  };
+
   onImport = doEdit => {
-    const { props, state }  = this;
+    const { props, state } = this;
     const { asset } = props;
     const { fileName } = state;
     props.onImport(asset, fileName, doEdit);
@@ -45,7 +50,7 @@ class PreviewScreen extends Component {
 
   render() {
     const { asset, onClose, pickFromAssets } = this.props;
-    const { showFx } = this.state;
+    const { showFx, canvas } = this.state;
     const fileName = this.state.fileName || asset.name;
     return (
       <section className="fs-overlay">
@@ -65,10 +70,16 @@ class PreviewScreen extends Component {
           />
         </section>
 
-        {showFx ? <Effector asset={asset} /> : null}
-
+        {showFx ? <Effector asset={asset} onEffect={this.onEffect} /> : null}
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>
-          <PreviewImage asset={asset} />
+          <PreviewImage asset={asset}>
+            {canvas ? (
+              <img
+                src={canvas}
+                style={{ position: "absolute", left: 0, top: 0 }}
+              />
+            ) : null}
+          </PreviewImage>
         </div>
       </section>
     );
