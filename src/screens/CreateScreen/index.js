@@ -112,7 +112,7 @@ class CreateScreen extends Component {
     return (
       <div className="screen">
         <section className="controls block">
-          <div className="block">
+          <div className="block control-line">
             <label>width:</label>
             <input
               type="number"
@@ -129,7 +129,7 @@ class CreateScreen extends Component {
             />
           </div>
 
-          <div className="block">
+          <div className="block control-line">
             <label>columns:</label>
             <input
               type="number"
@@ -146,7 +146,7 @@ class CreateScreen extends Component {
             />
           </div>
 
-          <div className="block">
+          <div className="block control-line">
             <label>sprite sheet:</label>
             <input
               type="checkbox"
