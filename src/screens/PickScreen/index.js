@@ -20,6 +20,7 @@ class PickPocket extends Component {
     assets: PropTypes.array.isRequired,
     assetName: PropTypes.string,
     onImport: PropTypes.func.isRequired,
+    onImportCanvas: PropTypes.func.isRequired,
     onSelectFile: PropTypes.func.isRequired,
     pickFromAssets: PropTypes.bool
   };
@@ -55,7 +56,7 @@ class PickPocket extends Component {
   };
 
   render() {
-    const { assets, assetName, onImport, pickFromAssets } = this.props;
+    const { assets, assetName, onImport, onImportCanvas, pickFromAssets } = this.props;
     const { selected } = this.state;
     const showPreview = assetName && selected.length;
     const noLocalImages =
@@ -86,6 +87,7 @@ class PickPocket extends Component {
             asset={selected[0]}
             onClose={this.closePreview}
             onImport={onImport}
+            onImportCanvas={onImportCanvas}
             pickFromAssets={pickFromAssets}
           />
         ) : null}

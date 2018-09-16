@@ -123,7 +123,7 @@ class Effector extends Component {
 
     return (
       <div>
-        <section className="controls">
+        <section className="controls" style={{userSelect: "none"}}>
           <div
             className="text-warning block"
             style={{ textAlign: "center", marginBottom: "8px" }}

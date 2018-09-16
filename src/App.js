@@ -94,7 +94,7 @@ class App extends Component {
   };
 
   onImport = (asset, saveName, doOpenOrEvent) => {
-    const { pickFromAssets, mode } = this.state;
+    const { pickFromAssets } = this.state;
     if (!pickFromAssets) {
       // // TODO: ::: doOpenOrEvent
       this.openEditor(asset.fullPath);
@@ -107,10 +107,6 @@ class App extends Component {
       return;// this.props.toggle();
     }
 
-    if (mode === "fx" || mode === "create") {
-      this.onImportCanvas(doOpen, projectRoot);
-      return;
-    }
     const importPath = getTreeFile().path;
     const { fullPath, name } = asset;
 
@@ -128,11 +124,21 @@ class App extends Component {
 
     const projectRoot = getProjectRoot();
     if (!projectRoot) return;
-    
+
     writeImage(imgData, projectRoot, importPath, assetName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
       .catch(err => err && atom.notifications.addError(err));
   };
+
+  onImportCanvas2 = (imgData, saveName, doOpen) => {
+    const importPath = getTreeFile().path;
+    const projectRoot = getProjectRoot();
+    if (!projectRoot) return;
+
+    writeImage(imgData, projectRoot, importPath, saveName)
+      .then(res => this.onImportSuccess({ ...res, doOpen }))
+      .catch(err => err && atom.notifications.addError(err));
+  }
 
   onImportSuccess({
     localPathAndName,
@@ -304,6 +310,7 @@ class App extends Component {
             onChangePath={this.onChangeAssetPath}
             onSelectFile={this.onSelectAssetFile}
             onImport={this.onImport}
+            onImportCanvas={this.onImportCanvas2}
             onNew={this.onNew}
             onToggleSource={this.onToggleSource}
           />

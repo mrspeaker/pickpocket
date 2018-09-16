@@ -19,9 +19,16 @@ class PreviewScreen extends Component {
 
   state = {
     fileName: null,
+    canvas: null,
     showFx: false,
     isEffected: false
   };
+
+  componentDidMount() {
+    this.setState({
+      fileName: this.props.asset.name
+    });
+  }
 
   onChangeFileName = text => {
     this.setState({
@@ -30,14 +37,19 @@ class PreviewScreen extends Component {
   };
 
   onEffect = canvas => {
-    this.setState({ canvas: canvas.toDataURL() });
+    this.setState({ canvas: canvas.toDataURL(), isEffected: true });
   };
 
   onImport = doEdit => {
     const { props, state } = this;
     const { asset } = props;
-    const { fileName } = state;
-    props.onImport(asset, fileName, doEdit);
+    const { fileName, isEffected, canvas } = state;
+
+    if (isEffected) {
+      props.onImportCanvas(canvas, fileName, doEdit);
+    } else {
+      props.onImport(asset, fileName, doEdit);
+    }
     props.onClose();
   };
 
@@ -50,8 +62,8 @@ class PreviewScreen extends Component {
 
   render() {
     const { asset, onClose, pickFromAssets } = this.props;
-    const { showFx, canvas } = this.state;
-    const fileName = this.state.fileName || asset.name;
+    const { showFx, canvas, fileName } = this.state;
+    const displayName = fileName || asset.name;
     return (
       <section className="fs-overlay">
         <Toolbar
@@ -62,8 +74,8 @@ class PreviewScreen extends Component {
         />
         <section className="textContainer">
           <MiniEditor
-            text={fileName}
-            range={fileName === asset.name ? [0, fileName.length - 4] : null}
+            text={displayName}
+            range={displayName === asset.name ? [0, displayName.length - 4] : null}
             onChange={this.onChangeFileName}
             onEscape={onClose}
             onEnter={() => {}}
@@ -72,14 +84,7 @@ class PreviewScreen extends Component {
 
         {showFx ? <Effector asset={asset} onEffect={this.onEffect} /> : null}
         <div onClick={onClose} style={{ position: "relative", height: "100%" }}>
-          <PreviewImage asset={asset}>
-            {canvas ? (
-              <img
-                src={canvas}
-                style={{ position: "absolute", left: 0, top: 0 }}
-              />
-            ) : null}
-          </PreviewImage>
+          <PreviewImage asset={asset} preview={canvas} />
         </div>
       </section>
     );

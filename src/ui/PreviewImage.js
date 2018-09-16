@@ -47,16 +47,16 @@ class PreviewScreen extends Component {
   }
 
   render() {
-    const { asset, children } = this.props;
+    const { asset, preview } = this.props;
     const { width, height } = this.state;
     const { fullPath, size } = asset;
     const style = Object.assign({}, styles.container, {
-      backgroundImage: `url("${fullPath}")`,
+      backgroundImage: `url("${preview || fullPath}")`
     });
 
     return (
       <div className="preview" style={style}>
-        { children ? children : null }
+        {preview ? <img src={fullPath} className="previewThumbnail" /> : null}
         <div style={styles.meta}>
           {`${width} x ${height}`}, {utils.toKb(size)}
         </div>
