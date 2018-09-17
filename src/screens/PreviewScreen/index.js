@@ -69,6 +69,7 @@ class PreviewScreen extends Component {
         <Toolbar
           mode={"pick"}
           onImport={this.onImport}
+          onClose={onClose}
           onFx={this.onFx}
           pickFromAssets={pickFromAssets}
         />
