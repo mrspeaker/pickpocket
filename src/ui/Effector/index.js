@@ -119,17 +119,9 @@ class Effector extends Component {
       brightness
     } = this.state;
 
-    //this.effect(); // TODO: move to Canvas, do effects reactively.
-
     return (
       <div>
         <section className="controls" style={{userSelect: "none"}}>
-          <div
-            className="text-warning block"
-            style={{ textAlign: "center", marginBottom: "8px" }}
-          >
-            Under construction!
-          </div>
           <label>Hue rotate:</label>
           <input
             type="range"
