@@ -23,11 +23,10 @@ class Toolbar extends Component {
           />
           <button
             title="import asset"
-            disabled={!pickFromAssets}
             className="btn icon icon-desktop-download"
             onClick={() => onImport(false)}
           >
-            {pickFromAssets ? "save" : "save as"}
+            save
           </button>
           <button
             title="import asset, then open in editor"

@@ -9,9 +9,7 @@ const { Component, PropTypes } = React;
 
 class CreateScreen extends Component {
   static propTypes = {
-    assetPath: PropTypes.string.isRequired,
-    onSetFXCanvas: PropTypes.func.isRequired,
-    onSwitchMode: PropTypes.func.isRequired
+    assetPath: PropTypes.string.isRequired
   };
 
   state = {
@@ -27,7 +25,6 @@ class CreateScreen extends Component {
   };
 
   componentDidMount() {
-    this.props.onSetFXCanvas(this.refs.canvas);
     this.create();
   }
 
@@ -108,7 +105,7 @@ class CreateScreen extends Component {
 
   render() {
     const { w, h, isGrid, hasBorders, cols, rows, fileName } = this.state;
-    const { onSwitchMode, onImport } = this.props;
+    const { onImportCanvas } = this.props;
     return (
       <div className="screen">
         <section className="controls block">
@@ -175,8 +172,9 @@ class CreateScreen extends Component {
         </section>
         <section>
           <Toolbar
-            onBack={onSwitchMode}
-            onImport={doOpen => onImport(fileName, doOpen)}
+            onImport={doOpen =>
+              onImportCanvas(this.refs.canvas.toDataURL(), fileName, doOpen)
+            }
           />
         </section>
         <section className="textContainer">

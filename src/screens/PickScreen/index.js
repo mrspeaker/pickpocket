@@ -18,10 +18,8 @@ const styles = {
 class PickPocket extends Component {
   static propTypes = {
     assets: PropTypes.array.isRequired,
-    assetName: PropTypes.string,
     onImport: PropTypes.func.isRequired,
     onImportCanvas: PropTypes.func.isRequired,
-    onSelectFile: PropTypes.func.isRequired,
     pickFromAssets: PropTypes.bool
   };
 
@@ -36,10 +34,9 @@ class PickPocket extends Component {
     this.setState({
       selected: []
     });
-    this.props.onSelectFile(null);
   };
 
-  onToggle = asset => {
+  onAssetSelect = asset => {
     const { type, fullPath } = asset;
 
     if (type === "directory") {
@@ -47,18 +44,15 @@ class PickPocket extends Component {
       return;
     }
 
-    const { fileName, path } = utils.splitPathAndFileName(fullPath);
-    this.props.onSelectFile(path, fileName);
-
     this.setState(() => ({
       selected: [asset]
     }));
   };
 
   render() {
-    const { assets, assetName, onImport, onImportCanvas, pickFromAssets } = this.props;
+    const { assets, onImport, onImportCanvas, pickFromAssets } = this.props;
     const { selected } = this.state;
-    const showPreview = assetName && selected.length;
+    const showPreview = selected.length;
     const noLocalImages =
       !pickFromAssets && assets.dirs.length === 0 && assets.imgs.length === 0;
     return (
@@ -79,7 +73,7 @@ class PickPocket extends Component {
           <Assets
             assets={assets}
             selected={selected}
-            onToggle={this.onToggle}
+            onToggle={this.onAssetSelect}
           />
         </section>
         {showPreview ? (
