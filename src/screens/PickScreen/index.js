@@ -60,14 +60,8 @@ class PickPocket extends Component {
         <section style={styles.scroll}>
           {noLocalImages ? (
             <div className="text-subtle component-padding">
-              {"No images found in the current project"}
-              <button
-                title="import asset"
-                className="btn icon"
-                onClick={() => {}}
-              >
-                Import some!
-              </button>
+              <div>{"No images found in the current project"}</div>
+              <div>{"Import some from your Pocket!"}</div>
             </div>
           ) : null}
           <Assets
