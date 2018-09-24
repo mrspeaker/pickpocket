@@ -14,19 +14,21 @@ const { Component, PropTypes } = React;
 class PreviewScreen extends Component {
   static propTypes = {
     asset: PropTypes.object.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    onImport: PropTypes.func.isRequired,
+    pickFromAssets: PropTypes.bool.isRequired
   };
 
   state = {
     fileName: null,
     canvas: null,
-    showFx: false,
-    isEffected: false
+    showFx: false
   };
 
   componentDidMount() {
+    const { asset } = this.props;
     this.setState({
-      fileName: this.props.asset.name
+      fileName: asset.name
     });
   }
 
@@ -37,19 +39,15 @@ class PreviewScreen extends Component {
   };
 
   onEffect = canvas => {
-    this.setState({ canvas: canvas.toDataURL(), isEffected: true });
+    this.setState({ canvas: canvas.toDataURL() });
   };
 
   onImport = doEdit => {
     const { props, state } = this;
     const { asset } = props;
-    const { fileName, isEffected, canvas } = state;
+    const { fileName, canvas } = state;
 
-    if (isEffected) {
-      props.onImportCanvas(canvas, fileName, doEdit);
-    } else {
-      props.onImport(asset, fileName, doEdit);
-    }
+    props.onImport(asset, fileName, doEdit, canvas);
     props.onClose();
   };
 

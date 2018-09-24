@@ -55,7 +55,7 @@ class App extends Component {
       });
   }
 
-  onPath = (path) => {
+  onPath = path => {
     switch (process.platform) {
       case "darwin":
         exec(`open ${path}`);
@@ -68,36 +68,41 @@ class App extends Component {
     }
   };
 
-  onImport = (asset, saveName, doOpen) => {
+  onImport = (asset, saveName, doOpen, canvas) => {
     const { pickFromAssets } = this.state;
-    if (!pickFromAssets) {
-      // TODO: If effected or filename changed, save the file.
-      if (doOpen) {
-        this.openEditor(asset.fullPath);
-      }
-      return;
-    }
 
+    /*
+      TODO: need to figure out what should happen with local imgs when hit save/edit
+
+    */
+
+    // Can't save if no project root
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
       return;
     }
 
-    const importPath = getTreeFile().path;
-    const { fullPath, name } = asset;
+    const src = canvas || asset.fullPath;
+    let root, path;
+    if (pickFromAssets) {
+      root = projectRoot;
+      path = getTreeFile().path;
+    } else {
+      root = asset.fullPath.includes(projectRoot) ? projectRoot : "";
+      path = asset.fullPath.slice(root.length).slice(0, -asset.name.length);
+    }
 
-    copyFile(fullPath, projectRoot, importPath, saveName || name)
+    const importFunc = src === canvas ? writeImage : copyFile;
+
+    if (canvas && !saveName.toLowerCase().endsWith(".png")) {
+      if (!confirm("NOTE! Currently effected images will only be saved in PNG format. Still want to save?")) {
+        return;
+      }
+    }
+
+    return importFunc(src, root, path, saveName)
       .then(res => this.onImportSuccess({ ...res, doOpen }))
-      .catch(err => err && atom.notifications.addError(err));
-  };
-
-  onImportCanvas = (imgData, saveName, doOpen) => {
-    const importPath = getTreeFile().path;
-    const projectRoot = getProjectRoot();
-    if (!projectRoot) return;
-
-    writeImage(imgData, projectRoot, importPath, saveName)
-      .then(res => this.onImportSuccess({ ...res, doOpen }))
+      .then(() => doOpen && this.openEditor(root + path + saveName))
       .catch(err => err && atom.notifications.addError(err));
   };
 
@@ -127,7 +132,7 @@ class App extends Component {
       }
       this.setState({
         [pickFromAssets ? "dirs" : "projDirs"]: res.dirs,
-        [pickFromAssets ? "imgs" : "projImgs"]: res.imgs,
+        [pickFromAssets ? "imgs" : "projImgs"]: res.imgs
       });
     });
 
@@ -168,7 +173,7 @@ class App extends Component {
   };
 
   render() {
-    const { dirs, imgs, projDirs, projImgs, mode, pickFromAssets  } = this.state;
+    const { dirs, imgs, projDirs, projImgs, mode, pickFromAssets } = this.state;
 
     const curDirs = pickFromAssets ? dirs : projDirs;
     const curImgs = pickFromAssets ? imgs : projImgs;
@@ -186,13 +191,12 @@ class App extends Component {
             pickFromAssets={pickFromAssets}
             onChangePath={this.onChangeAssetPath}
             onImport={this.onImport}
-            onImportCanvas={this.onImportCanvas}
             onToggleSource={this.onToggleSource}
           />
         );
         break;
       case "create":
-        screen = <CreateScreen onImportCanvas={this.onImportCanvas} />;
+        screen = <CreateScreen onImport={this.onImport} />;
         break;
     }
 

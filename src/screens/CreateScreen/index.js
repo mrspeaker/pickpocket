@@ -105,7 +105,7 @@ class CreateScreen extends Component {
 
   render() {
     const { w, h, isGrid, hasBorders, cols, rows, fileName } = this.state;
-    const { onImportCanvas } = this.props;
+    const { onImport } = this.props;
     return (
       <div className="screen">
         <section className="controls block">
@@ -173,7 +173,7 @@ class CreateScreen extends Component {
         <section>
           <Toolbar
             onImport={doOpen =>
-              onImportCanvas(this.refs.canvas.toDataURL(), fileName, doOpen)
+              onImport(null, fileName, doOpen, this.refs.canvas.toDataURL())
             }
           />
         </section>
