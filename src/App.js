@@ -70,33 +70,39 @@ class App extends Component {
 
   onImport = (asset, saveName, doOpen, canvas) => {
     const { pickFromAssets } = this.state;
-
-    /*
-      TODO: need to figure out what should happen with local imgs when hit save/edit
-
-    */
+    const isLocal = !pickFromAssets;
 
     // Can't save if no project root
     const projectRoot = getProjectRoot();
     if (!projectRoot) {
-      return;
+      return Promise.reject("No root folder");
     }
 
     const src = canvas || asset.fullPath;
     let root, path;
-    if (pickFromAssets) {
-      root = projectRoot;
-      path = getTreeFile().path;
-    } else {
+    if (isLocal) {
       root = asset.fullPath.includes(projectRoot) ? projectRoot : "";
       path = asset.fullPath.slice(root.length).slice(0, -asset.name.length);
+    } else {
+      root = projectRoot;
+      path = getTreeFile().path;
     }
 
+    // Only open the file (local file, no edits)
+    if (isLocal && doOpen && !canvas) {
+      return Promise.resolve(this.openEditor(root + path + saveName));
+    }
+
+    // Write or copy the file
     const importFunc = src === canvas ? writeImage : copyFile;
 
     if (canvas && !saveName.toLowerCase().endsWith(".png")) {
-      if (!confirm("NOTE! Currently effected images will only be saved in PNG format. Still want to save?")) {
-        return;
+      if (
+        !confirm(
+          "NOTE! Currently effected images will only be saved in PNG format. Still want to save?"
+        )
+      ) {
+        return Promise.resolve();
       }
     }
 

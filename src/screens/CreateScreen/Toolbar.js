@@ -22,11 +22,11 @@ class Toolbar extends Component {
             import
           </button>
           <button
-            title="import asset"
+            title="import asset and open in editor"
             className="btn icon icon-desktop-download"
             onClick={() => onImport(true)}
           >
-            import + edit
+            import + open
           </button>
         </div>
       </div>
