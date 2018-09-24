@@ -3,7 +3,6 @@
 import React from "react";
 import utils from "../../utils";
 
-import Toolbar from "./Toolbar";
 import Assets from "./Assets";
 import PreviewScreen from "../PreviewScreen";
 

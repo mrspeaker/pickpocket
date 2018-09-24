@@ -211,7 +211,7 @@ class App extends Component {
         <div className="btn-toolbar toolbar">
           <div class="btn-group">
             <button
-              title="generate new asset"
+              title="current project assets"
               className={`btn icon icon-file-media ${
                 isProject ? "selected" : ""
               }`}
@@ -225,7 +225,7 @@ class App extends Component {
               project
             </button>
             <button
-              title="generate new asset"
+              title="pickpocket assets"
               className={`btn icon icon-package ${isAssets ? "selected" : ""}`}
               onClick={() => {
                 this.setState({
