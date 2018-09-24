@@ -14,14 +14,20 @@ The image is copied & renamed to the currently selected directory in your projec
 
 * Dump a bunch of image assets in a directory somewhere, and put this location in `settings`.
 
-If you select `import, then edit`, the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
+If you select `import + open`, the local copy will be opened in your image editor (`aseprite` by default: change this in `settings`). When you import an image, the local path is also copied to the clipboard as a string - so you can paste it into your code.
+
+## Local project viewer
+
+The `project` tab will show images already in your local project. You can `open` them in the current editor, or rename them to save-as a new duplicate image. You can also apply some effects with the `effects` button.
 
 ## Effects
 
-Select an image and hit `effects` ![fx](https://cloud.githubusercontent.com/assets/129330/23103327/c67b95ee-f687-11e6-8fd7-3de171d18687.png). This switches to effects mode where you can modify it before importing.
+Select either a `project` or `pocket` image and hit `effects` ![fx](https://cloud.githubusercontent.com/assets/129330/23103327/c67b95ee-f687-11e6-8fd7-3de171d18687.png). This turns on effects mode where you can modify it before importing.
 Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
 
 ![effects screen](https://cloud.githubusercontent.com/assets/129330/23129662/88ba08e2-f751-11e6-95c1-11e569f98264.png)
+
+Note: the effects are applied using HTML5 canvas, and the saved files will (for now) only be PNG files.
 
 ## Roadmap
 
