@@ -5,7 +5,8 @@ PickPocket is an [Atom package](https://atom.io/packages/pickpocket) for grabbin
 ![PickPocket](https://user-images.githubusercontent.com/129330/46024384-afbf5b80-c0b4-11e8-964d-14d410cc9159.png)
 
 (previous non-dock version:)
-![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
+
+![PickPocket modal](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
 ## Usage
 
@@ -35,6 +36,4 @@ Note: the effects are applied using HTML5 canvas, and the saved files will (for 
 
 ## Roadmap
 
-Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3).
-
-![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072516/e57a0e00-5036-11e6-9293-493de4d643b1.png)
+Here's [some things I'm thinking about](https://github.com/mrspeaker/pickpocket/issues/3). Let me know if you have any suggestions for features you'd like to see.
