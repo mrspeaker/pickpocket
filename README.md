@@ -2,6 +2,9 @@
 
 PickPocket is an [Atom package](https://atom.io/packages/pickpocket) for grabbing existing art assets from a collection and copying them into your current project. A file manager for game prototyping.
 
+![PickPocket](https://user-images.githubusercontent.com/129330/46024384-afbf5b80-c0b4-11e8-964d-14d410cc9159.png)
+
+(previous non-dock version:)
 ![PickPocket](https://cloud.githubusercontent.com/assets/129330/17072386/ca12ef8e-5035-11e6-8626-19ccd95f3266.gif)
 
 ## Usage
