@@ -28,7 +28,7 @@ The `project` tab will show images already in your local project. You can `open`
 Select either a `project` or `pocket` image and hit `effects` ![fx](https://cloud.githubusercontent.com/assets/129330/23103327/c67b95ee-f687-11e6-8fd7-3de171d18687.png). This turns on effects mode where you can modify it before importing.
 Currently there are a few effects you can apply: Flip x and y, rotate 90 degrees as well as some color effects (hue rotate, saturation, contrast, brightness). More to come.
 
-![effects screen](https://user-images.githubusercontent.com/129330/46024634-3c6a1980-c0b5-11e8-8bd0-bc9ffd03b22c.png")
+![effects screen](https://user-images.githubusercontent.com/129330/46024634-3c6a1980-c0b5-11e8-8bd0-bc9ffd03b22c.png)
 
 Note: the effects are applied using HTML5 canvas, and the saved files will (for now) only be PNG files.
 
